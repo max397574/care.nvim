@@ -1,4 +1,0 @@
---- An item returned by a completion source
----@class neocomplete.completion_item: lsp.CompletionItem
---- The kind of the completion item
----@field kind? string|lsp.CompletionItemKind

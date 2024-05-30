@@ -9,7 +9,7 @@ categories: [
     types
 ]
 created: 2023-11-15T17:42:46+0100
-updated: 2024-05-30T20:39:09+0100
+updated: 2024-05-31T11:34:53+0100
 tangle: {
     languages: {
         lua: ../lua/neocomplete/types/source.lua
@@ -70,10 +70,10 @@ TODO: decide about object-orientation of sources
 ** `complete()`
    This is arguably the most important function of each source. This function returns completions.
    The function takes in a {:./index:* Completion Context}[completion context] and should return a
-   list of {:./completion_item:}[completion items].
+   list of {:./entry:}[entries].
 
    #tangle
    @code lua
    --- Returns completion in the provided context
-   ---@field complete fun(completion_context: neocomplete.completion_context, callback: fun(items: neocomplete.completion_item[])): nil
+   ---@field complete fun(completion_context: neocomplete.completion_context, callback: fun(items: neocomplete.entry[])): nil
    @end
