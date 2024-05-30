@@ -5,4 +5,4 @@
 --- Characters which should trigger new completions of the source
 ---@field get_trigger_characters? fun(): string[]
 --- Returns completion in the provided context
----@field complete fun(completion_context: neocomplete.completion_context, callback: fun(items: neocomplete.completion_item[])): neocomplete.completion_item[]
+---@field complete fun(completion_context: neocomplete.completion_context, callback: fun(items: neocomplete.completion_item[])): nil

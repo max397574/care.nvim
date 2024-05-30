@@ -1,7 +1,5 @@
 local lsp_source = {}
 
---- @alias vim.lsp.CompletionResult lsp.CompletionList | lsp.CompletionItem[]
-
 lsp_source.clients = {}
 
 -- function lsp_source.setup()

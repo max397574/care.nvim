@@ -9,7 +9,7 @@ categories: [
     types
 ]
 created: 2023-11-15T17:42:46+0100
-updated: 2024-05-29T11:33:36+0100
+updated: 2024-05-30T20:39:09+0100
 tangle: {
     languages: {
         lua: ../lua/neocomplete/types/source.lua
@@ -75,5 +75,5 @@ TODO: decide about object-orientation of sources
    #tangle
    @code lua
    --- Returns completion in the provided context
-   ---@field complete fun(completion_context: neocomplete.completion_context, callback: fun(items: neocomplete.completion_item[])): neocomplete.completion_item[]
+   ---@field complete fun(completion_context: neocomplete.completion_context, callback: fun(items: neocomplete.completion_item[])): nil
    @end
