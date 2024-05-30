@@ -1,0 +1,2 @@
+--- An entry for the neocomplete completion menu
+---@class neocomplete.entry: lsp.CompletionItem

@@ -1,0 +1,16 @@
+--- Context provided to completion sources
+---@class neocomplete.context
+--- Context changed since previous
+---@field changed fun(neocomplete.context): boolean
+--- Create a new context
+---@field new fun(neocomplete.context?): neocomplete.context
+--- The previous context
+---@field previous neocomplete.context?
+--- The cursor position
+---@field cursor neocomplete.context.cursor
+--- The number of the buffer
+---@field bufnr integer
+--- A cursor position
+---@class neocomplete.context.cursor
+---@field row integer
+---@field col integer

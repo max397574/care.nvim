@@ -1,0 +1,8 @@
+--- A completion source for neocomplete.nvim
+---@class neocomplete.source
+--- Whether the source will provide completions in the current context or not
+---@field is_available? fun(): boolean
+--- Characters which should trigger new completions of the source
+---@field get_trigger_characters? fun(): string[]
+--- Returns completion in the provided context
+---@field complete fun(completion_context: neocomplete.completion_context, callback: fun(items: neocomplete.completion_item[])): neocomplete.completion_item[]

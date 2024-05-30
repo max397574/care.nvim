@@ -1,0 +1,74 @@
+@document.meta
+title: Core
+description: Type description of neocomplete.nvim source
+authors: [
+    max397574
+]
+categories: [
+    docs,
+    types
+]
+created: 2023-11-15T17:42:46+0100
+updated: 2024-05-29T16:24:09+0100
+tangle: {
+    languages: {
+        lua: ../lua/neocomplete/types/core.lua
+    }
+    scope: tagged
+    delimiter: none
+}
+version: 1.1.1
+@end
+
+* General
+  #tangle
+  @code lua
+  --- The core of neocomplete where the main api functions are defined
+  ---@class neocomplete.core
+  @end
+
+** New
+   Creates a new core instance
+   #tangle
+   @code lua
+   --- Create a new instance of the core
+   ---@field new fun(): neocomplete.core
+   @end
+
+** Context
+   #tangle
+   @code lua
+   --- Context instance of the core
+   ---@field context neocomplete.context
+   @end
+
+** Menu
+   #tangle
+   @code lua
+   --- Menu instance of the core
+   ---@field menu neocomplete.menu
+   @end
+
+** Complete
+   The main function which starts the completion
+   #tangle
+   @code lua
+   --- Complete
+   ---@field complete fun(neocomplete.core): nil
+   @end
+
+** On Change
+   #tangle
+   @code lua
+   --- The function that gets invoked when the text changes
+   ---@field on_change fun(neocomplete.core): nil
+   @end
+
+** Setup
+   The setup function is used to setup neocomplete so it will actually provide autocompletion when
+   typing.
+   #tangle
+   @code lua
+   --- Setup core (for now autocommands)
+   ---@field setup fun(self: neocomplete.core): nil
+   @end

@@ -1,0 +1,34 @@
+--- Configuration for neocomplete.nvim
+---@class neocomplete.config
+--- Configuration for the ui of neocomplete
+---@field ui neocomplete.config.ui
+--- Function used to expand snippets
+---@field snippet_expansion fun(string): nil
+--- Configuration for the ui of neocomplete
+---@field enabled fun(): boolean
+--- The main class for the ui configuration of neocomplete.nvim
+---@class neocomplete.config.ui
+--- Configuration of the completion menu of neocomplete.nvim
+---@field menu neocomplete.config.ui.menu
+--- Configuration of the documentation view of neocomplete.nvim
+---@field docs_view neocomplete.config.ui.docs
+--- The icons for the different compltion item kinds
+---@field type_icons neocomplete.config.ui.type_icons
+--- Configuration of the completion menu of neocomplete.nvim
+---@class neocomplete.config.ui.menu
+--- Maximum height of the menu
+---@field max_height integer
+--- The border of the completion menu
+---@field border string|string[]|string[][]
+--- How an entry should be formatted
+---@field format_entry fun(neocomplete.entry): { [1]: string, [2]: string }[][]
+--- How the sections in the menu should be aligned
+---@field alignment ("left"|"center"|"right")[]
+--- Configuration of the completion menu of neocomplete.nvim
+---@class neocomplete.config.ui.docs
+--- Maximum height of the documentation view
+---@field max_height integer
+--- The border of the documentation view
+---@field border string|string[]|string[][]
+--- The icons used for the different completion item types
+---@alias neocomplete.config.ui.type_icons table<string, string>

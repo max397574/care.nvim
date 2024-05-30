@@ -1,0 +1,33 @@
+@document.meta
+title: Misc
+description: Misc types
+authors: [
+    max397574
+]
+categories: [
+    docs,
+    types
+]
+created: 2024-05-29T11:30:25+0100
+updated: 2024-05-29T11:32:14+0100
+tangle: {
+    languages: {
+        lua: ../lua/neocomplete/types/misc.lua
+    }
+    scope: tagged
+    delimiter: none
+}
+version: 1.1.1
+@end
+
+
+* Completion context
+  a combination of context and lsp completion context
+  #tangle
+  @code lua
+  --- Context provided to completion sources
+  ---@class neocomplete.completion_context
+  ---@field completion_context lsp.CompletionContext
+  ---@field context neocomplete.context
+  @end
+

@@ -1,0 +1,14 @@
+--- The core of neocomplete where the main api functions are defined
+---@class neocomplete.core
+--- Create a new instance of the core
+---@field new fun(): neocomplete.core
+--- Context instance of the core
+---@field context neocomplete.context
+--- Menu instance of the core
+---@field menu neocomplete.menu
+--- Complete
+---@field complete fun(neocomplete.core): nil
+--- The function that gets invoked when the text changes
+---@field on_change fun(neocomplete.core): nil
+--- Setup core (for now autocommands)
+---@field setup fun(self: neocomplete.core): nil

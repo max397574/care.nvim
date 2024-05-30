@@ -1,0 +1,4 @@
+--- Context provided to completion sources
+---@class neocomplete.completion_context
+---@field completion_context lsp.CompletionContext
+---@field context neocomplete.context

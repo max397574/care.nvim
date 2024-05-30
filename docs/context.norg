@@ -1,0 +1,77 @@
+@document.meta
+title: Index
+description: Type description of context
+authors: [
+    max397574
+]
+categories: [
+    docs,
+    types
+]
+created: 2023-11-15T17:42:46+0100
+updated: 2024-05-28T20:54:48+0100
+tangle: {
+    languages: {
+        lua: ../lua/neocomplete/types/context.lua
+    }
+    scope: tagged
+    delimiter: none
+}
+version: 1.1.1
+@end
+
+* Completion Context
+  #tangle
+  @code lua
+  --- Context provided to completion sources
+  ---@class neocomplete.context
+  @end
+
+** Changed
+   Whether the context changed in comparison to the previous one
+   #tangle
+   @code lua
+   --- Context changed since previous
+   ---@field changed fun(neocomplete.context): boolean
+   @end
+
+** New
+   Create a new context
+   #tangle
+   @code lua
+   --- Create a new context
+   ---@field new fun(neocomplete.context?): neocomplete.context
+   @end
+
+** Previous
+   The previous context which is used to determine whether the context changed or not
+   #tangle
+   @code lua
+   --- The previous context
+   ---@field previous neocomplete.context?
+   @end
+
+** Cursor
+   #tangle
+   @code lua
+   --- The cursor position
+   ---@field cursor neocomplete.context.cursor
+   @end
+
+** Bufnr
+   Number of the buffer
+   #tangle
+   @code lua
+   --- The number of the buffer
+   ---@field bufnr integer
+   @end
+
+
+   #tangle
+   @code lua
+   --- A cursor position
+   ---@class neocomplete.context.cursor
+   ---@field row integer
+   ---@field col integer
+   @end
+
