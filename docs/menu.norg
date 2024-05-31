@@ -50,6 +50,12 @@ version: 1.1.1
    ---@field open_win fun(self: neocomplete.menu): nil
    @end
 
+** Is open
+   #tangle
+   @code lua
+   --- Opens window for the menu
+   ---@field is_open fun(self: neocomplete.menu): boolean
+   @end
 
 ** Select next
    #tangle

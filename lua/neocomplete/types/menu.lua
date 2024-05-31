@@ -6,6 +6,7 @@
 ---@field draw fun(self: neocomplete.menu): nil
 --- Opens window for the menu
 ---@field open_win fun(self: neocomplete.menu): nil
+---@field is_open fun(self: neocomplete.menu): boolean
 --- Select next entry in menu
 ---@field select_next fun(self: neocomplete.menu, count: integer): nil
 --- Select previous entry in menu

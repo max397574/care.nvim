@@ -277,4 +277,8 @@ function Menu:confirm()
     self:close()
 end
 
+function Menu:is_open()
+    return self.winnr ~= nil
+end
+
 return Menu
