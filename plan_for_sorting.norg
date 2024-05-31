@@ -1,0 +1,13 @@
+~ (x) store entries per source
+~ (x) get new completions per source (or don't :D) (trigger chars or manual)
+~ (x) go through sources and have independent offset
+      -> to get offset keyword pattern is needed (the one used to strip away things when having insert text) individual per source
+~~ (x) implemente default keyword pattern
+~~ (x) add functionality for sources to configure their keyword pattern
+~ (x) get all the characters since the offset (used for sorting)
+~ (x) use these characters for filtering
+~ (x) get matches with fzy.lua
+~ (x) eliminate entries which aren't matching
+~ (x) sort other entries by score
+~ ( ) get top xy entries where xy is max entries per source (config option)
+~  ( )  sort entries by priority of source if there is (todo yet)

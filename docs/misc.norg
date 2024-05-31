@@ -9,7 +9,7 @@ categories: [
     types
 ]
 created: 2024-05-29T11:30:25+0100
-updated: 2024-05-29T11:32:14+0100
+updated: 2024-06-07T21:33:41+0100
 tangle: {
     languages: {
         lua: ../lua/neocomplete/types/misc.lua
@@ -31,3 +31,11 @@ version: 1.1.1
   ---@field context neocomplete.context
   @end
 
+* Reason
+  #tangle
+  @code lua
+  --- Reason for triggering completion
+  ---@alias neocomplete.completionReason
+  ---| 1 # Auto
+  ---| 2 # Manual
+  @end

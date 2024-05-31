@@ -9,7 +9,7 @@ categories: [
     types
 ]
 created: 2023-11-15T17:42:46+0100
-updated: 2024-05-31T11:34:53+0100
+updated: 2024-06-08T14:53:02+0100
 tangle: {
     languages: {
         lua: ../lua/neocomplete/types/source.lua
@@ -19,8 +19,6 @@ tangle: {
 }
 version: 1.1.1
 @end
-
-TODO: decide about object-orientation of sources
 
 * General
   The sources are used to get get completions for neocomplete.nvim.
@@ -67,6 +65,21 @@ TODO: decide about object-orientation of sources
    ---@field get_trigger_characters? fun(): string[]
    @end
 
+** Keyword pattern
+   `get_keyword_pattern` function has higher priority
+   #tangle
+   @code lua
+   --- Keyword pattern for this source
+   ---@field keyword_pattern? string
+   @end
+
+   #tangle
+   @code lua
+   --- Get keyword pattern for this source
+   ---@field get_keyword_pattern? fun(self: neocomplete.source): string
+   @end
+
+
 ** `complete()`
    This is arguably the most important function of each source. This function returns completions.
    The function takes in a {:./index:* Completion Context}[completion context] and should return a
@@ -75,5 +88,5 @@ TODO: decide about object-orientation of sources
    #tangle
    @code lua
    --- Returns completion in the provided context
-   ---@field complete fun(completion_context: neocomplete.completion_context, callback: fun(items: neocomplete.entry[])): nil
+   ---@field complete fun(completion_context: neocomplete.completion_context, callback: fun(items: neocomplete.entry[], is_incomplete?: boolean)): nil
    @end

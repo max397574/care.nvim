@@ -4,6 +4,8 @@
 ---@field ui neocomplete.config.ui
 --- Function used to expand snippets
 ---@field snippet_expansion fun(string): nil
+--- Pattern used to determine keywords
+---@field keyword_pattern string
 --- Configuration for the ui of neocomplete
 ---@field enabled fun(): boolean
 --- The main class for the ui configuration of neocomplete.nvim

@@ -7,7 +7,7 @@
 --- Menu instance of the core
 ---@field menu neocomplete.menu
 --- Complete
----@field complete fun(neocomplete.core): nil
+---@field complete fun(self: neocomplete.core, reason: neocomplete.completionReason?): nil
 --- The function that gets invoked when the text changes
 ---@field on_change fun(neocomplete.core): nil
 --- Setup core (for now autocommands)

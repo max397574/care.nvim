@@ -47,15 +47,16 @@ version: 1.1.1
    #tangle
    @code lua
    --- Opens window for the menu
-   ---@field open_win fun(self: neocomplete.menu): nil
+   ---@field open_win fun(self: neocomplete.menu, offset: integer): nil
    @end
 
 ** Is open
    #tangle
    @code lua
-   --- Opens window for the menu
+   --- Returns true if completion window is visible
    ---@field is_open fun(self: neocomplete.menu): boolean
    @end
+
 
 ** Select next
    #tangle
@@ -75,7 +76,7 @@ version: 1.1.1
    #tangle
    @code lua
    --- Opens the menu with specified entries
-   ---@field open fun(self: neocomplete.menu, entries: neocomplete.entry[]): nil
+   ---@field open fun(self: neocomplete.menu, entries: neocomplete.entry[], offset: integer): nil
    @end
 
 ** Close

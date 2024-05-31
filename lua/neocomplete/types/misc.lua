@@ -2,3 +2,7 @@
 ---@class neocomplete.completion_context
 ---@field completion_context lsp.CompletionContext
 ---@field context neocomplete.context
+--- Reason for triggering completion
+---@alias neocomplete.completionReason
+---| 1 # Auto
+---| 2 # Manual

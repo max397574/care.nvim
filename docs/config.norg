@@ -55,6 +55,14 @@ version: 1.1.1
    ---@field snippet_expansion fun(string): nil
    @end
 
+** Keyword pattern
+   Pattern used to determine keywords, used to determine what to use for filtering and 
+   #tangle
+   @code lua
+   --- Pattern used to determine keywords
+   ---@field keyword_pattern string
+   @end
+
 ** Enabled
    This function can be used to disable neocomplete in certain contexts. By default this disables
    neocomplete in prompts.

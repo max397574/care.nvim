@@ -1,0 +1,67 @@
+@document.meta
+title: Internal source
+description: Type description of internal neovim source
+authors: [
+    max397574
+]
+categories: [
+    docs,
+    types
+]
+created: 2024-05-31T12:48:14+0100
+updated: 2024-06-08T14:48:14+0100
+tangle: {
+    languages: {
+        lua: ../lua/neocomplete/types/internal_source.lua
+    }
+    scope: tagged
+    delimiter: none
+}
+version: 1.1.1
+@end
+
+* General
+  The internal sources are used on top of {:./source:}[completion sources] to store additional
+  metadata about which the source author doesn't have to care.
+
+  #tangle
+  @code lua
+  --- Internal class for neocomplete to store source metadata
+  ---@class neocomplete.internal_source
+  @end
+
+** Source
+  #tangle
+  @code lua
+  --- The external completion source
+  ---@field source neocomplete.source
+  @end
+
+
+** Entries
+   #tangle
+   @code lua
+   --- The entries recieved by last completion
+   ---@field entries neocomplete.entry[]
+   @end
+
+** New
+   #tangle
+   @code lua
+   --- The entries recieved by last completion
+   ---@field new fun(completion_source: neocomplete.source): neocomplete.internal_source
+   @end
+
+** Incomplete
+   #tangle
+   @code lua
+   --- Whether the source is incomplete
+   ---@field incomplete boolean
+   @end
+
+** Get offset
+   #tangle
+   @code lua
+   --- The entries recieved by last completion
+   ---@field get_offset fun(self: neocomplete.internal_source, context: neocomplete.context): integer
+   @end

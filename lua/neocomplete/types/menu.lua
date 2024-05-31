@@ -5,14 +5,15 @@
 --- Draws the menu
 ---@field draw fun(self: neocomplete.menu): nil
 --- Opens window for the menu
----@field open_win fun(self: neocomplete.menu): nil
+---@field open_win fun(self: neocomplete.menu, offset: integer): nil
+--- Opens window for the menu
 ---@field is_open fun(self: neocomplete.menu): boolean
 --- Select next entry in menu
 ---@field select_next fun(self: neocomplete.menu, count: integer): nil
 --- Select previous entry in menu
 ---@field select_prev fun(self: neocomplete.menu, count: integer): nil
 --- Opens the menu with specified entries
----@field open fun(self: neocomplete.menu, entries: neocomplete.entry[]): nil
+---@field open fun(self: neocomplete.menu, entries: neocomplete.entry[], offset: integer): nil
 --- Closes the window of the menu
 ---@field close fun(self: neocomplete.menu): nil
 --- Gets the currently selected entry

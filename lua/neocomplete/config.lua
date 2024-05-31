@@ -56,6 +56,7 @@ config.defaults = {
     snippet_expansion = function(snippet_body)
         vim.snippet.expand(snippet_body)
     end,
+    keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
     enabled = function()
         local enabled = true
         if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt" then

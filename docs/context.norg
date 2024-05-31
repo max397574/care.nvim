@@ -9,7 +9,7 @@ categories: [
     types
 ]
 created: 2023-11-15T17:42:46+0100
-updated: 2024-05-28T20:54:48+0100
+updated: 2024-06-07T21:22:41+0100
 tangle: {
     languages: {
         lua: ../lua/neocomplete/types/context.lua
@@ -66,6 +66,16 @@ version: 1.1.1
    ---@field bufnr integer
    @end
 
+** Reason
+   Reason for triggering completion
+   #tangle
+   @code lua
+   --- Reason for triggering completion
+   ---@field reason neocomplete.completionReason?
+   @end
+
+
+
 
    #tangle
    @code lua
@@ -74,4 +84,3 @@ version: 1.1.1
    ---@field row integer
    ---@field col integer
    @end
-

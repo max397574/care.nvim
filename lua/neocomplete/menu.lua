@@ -104,34 +104,39 @@ function Menu:draw()
             column = column + length
         end
     end
-    -- TODO: do properly once filtering is implemented
-    -- for line, entry_text in ipairs(entry_texts) do
-    --     for char_idx = 1, #entry_text do
-    --         local char = entry_text:sub(char_idx, char_idx)
-    --         if self.input:find(char, 1, true) then
-    --             vim.api.nvim_buf_add_highlight(
-    --                 self.buf,
-    --                 self.ns,
-    --                 "@neocomplete.match",
-    --                 line - 1,
-    --                 char_idx - 1,
-    --                 char_idx
-    --             )
-    --         end
-    --     end
-    -- end
+    for line, entry in ipairs(self.entries) do
+        for _, idx in ipairs(entry.matches or {}) do
+            vim.api.nvim_buf_add_highlight(self.buf, self.ns, "@neocomplete.match", line - 1, idx - 1, idx)
+        end
+    end
 end
 
-function Menu:open_win()
+function Menu:open_win(offset)
+    local cursor = vim.api.nvim_win_get_cursor(0)
+    local screenpos = vim.fn.screenpos(0, cursor[1], cursor[2] + 1)
+    local space_below = vim.o.lines - screenpos.row - 3 - vim.o.cmdheight
+
     local width, _ = format_utils.get_width(self.entries)
+    local space_above = vim.fn.line(".") - vim.fn.line("w0") - 1
+    -- local space_below = vim.fn.line("w$") - vim.fn.line(".")
+    local available_space = math.max(space_above, space_below)
+    local wanted_space = math.min(#self.entries, self.config.ui.menu.max_height)
+    local position = "below"
+    if space_below < wanted_space then
+        position = "above"
+        if space_above < wanted_space then
+            position = space_above > space_below and "above" or "below"
+        end
+    end
+    local height = math.min(#self.entries, self.config.ui.menu.max_height, available_space)
     Menu.winnr = vim.api.nvim_open_win(self.buf, false, {
         relative = "cursor",
-        height = math.min(#self.entries, self.config.ui.menu.max_height),
+        height = height,
         width = width,
         style = "minimal",
         border = self.config.ui.menu.border,
-        row = 1,
-        col = 1,
+        row = position == "below" and 1 or -(height + 2),
+        col = -offset,
     })
     vim.wo[self.winnr][self.buf].scrolloff = 0
 end
@@ -167,7 +172,7 @@ function Menu:select_prev(count)
     self:draw()
 end
 
-function Menu:open(entries)
+function Menu:open(entries, offset)
     self.entries = entries
     if not entries or #entries < 1 then
         return
@@ -177,7 +182,7 @@ function Menu:open(entries)
     end
     self.index = 0
     if not self.winnr then
-        self:open_win()
+        self:open_win(offset)
         self:draw()
     end
 end
@@ -207,6 +212,7 @@ end
 
 ---@param entry neocomplete.entry
 function Menu:complete(entry)
+    vim.print(entry)
     entry = normalize_entry(entry)
     local current_buf = vim.api.nvim_get_current_buf()
     local cursor_row, cursor_col = unpack(vim.api.nvim_win_get_cursor(0)) --- @type integer, integer
@@ -214,8 +220,8 @@ function Menu:complete(entry)
     cursor_row = cursor_row - 1
     local line = vim.api.nvim_get_current_line()
     local line_to_cursor = line:sub(1, cursor_col)
-    -- TODO: will this work for all sources?
-    local word_boundary = vim.fn.match(line_to_cursor, "\\k*$")
+    -- Can add $ to keyword pattern because we just match on line to cursor
+    local word_boundary = vim.fn.match(line_to_cursor, self.config.keyword_pattern .. "$")
 
     local prefix = line:sub(word_boundary + 1, cursor_col)
 

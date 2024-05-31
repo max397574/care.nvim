@@ -4,5 +4,9 @@
 ---@field is_available? fun(): boolean
 --- Characters which should trigger new completions of the source
 ---@field get_trigger_characters? fun(): string[]
+--- Keyword pattern for this source
+---@field keyword_pattern? string
+--- Get keyword pattern for this source
+---@field get_keyword_pattern? fun(self: neocomplete.source): string
 --- Returns completion in the provided context
----@field complete fun(completion_context: neocomplete.completion_context, callback: fun(items: neocomplete.entry[])): nil
+---@field complete fun(completion_context: neocomplete.completion_context, callback: fun(items: neocomplete.entry[], is_incomplete?: boolean)): nil

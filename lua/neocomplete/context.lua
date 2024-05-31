@@ -7,6 +7,7 @@ local context = {}
 ---@param previous neocomplete.context?
 ---@return neocomplete.context
 function context.new(previous)
+    ---@type neocomplete.context
     local self = setmetatable({}, { __index = context })
     previous = previous or {}
     previous.previous = nil

@@ -59,14 +59,18 @@ function lsp_source.new(client)
             params.context = context.completion_context
             ---@type lsp.CompletionItem
             local items
+            local is_incomplete
             client.request(vim.lsp.protocol.Methods.textDocument_completion, params, function(err, result)
                 if err then
                     vim.print(err)
                 end
                 if result then
+                    if result.isIncomplete then
+                        is_incomplete = true
+                    end
                     items = get_items(result)
                 end
-                callback(items)
+                callback(items, is_incomplete)
             end)
         end,
         get_trigger_characters = function()
