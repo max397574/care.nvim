@@ -10,6 +10,7 @@ config.defaults = {
         menu = {
             max_height = 10,
             border = "rounded",
+            position = "auto",
             format_entry = function(entry)
                 local type_icons = config.options.ui.type_icons
                 local entry_kind = type(entry.kind) == "string" and entry.kind

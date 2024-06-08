@@ -119,6 +119,14 @@ version: 1.1.1
    ---@field border string|string[]|string[][]
    @end
 
+** Position
+   If the menu should be displayed on top, bottom or automatically
+   #tangle
+   @code lua
+   --- Position of the menu
+   ---@field position "auto"|"bottom"|"top"
+   @end
+
    Another field is `format_entry`. This is a function which recieves an entry of the completion
    menu and determines how it's formatted. For that a table with text-highlight chunks like
    `:h nvim_buf_set_extmarks()` is used. You can create sections which are represented by tables

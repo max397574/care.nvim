@@ -22,6 +22,8 @@
 ---@field max_height integer
 --- The border of the completion menu
 ---@field border string|string[]|string[][]
+--- Position of the menu
+---@field position "auto"|"bottom"|"top"
 --- How an entry should be formatted
 ---@field format_entry fun(neocomplete.entry): { [1]: string, [2]: string }[][]
 --- How the sections in the menu should be aligned

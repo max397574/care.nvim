@@ -122,13 +122,23 @@ function Menu:open_win(offset)
     local available_space = math.max(space_above, space_below)
     local wanted_space = math.min(#self.entries, self.config.ui.menu.max_height)
     local position = "below"
-    if space_below < wanted_space then
-        position = "above"
-        if space_above < wanted_space then
-            position = space_above > space_below and "above" or "below"
+    local config_position = self.config.ui.menu.position
+    local height
+    if config_position == "auto" then
+        if space_below < wanted_space then
+            position = "above"
+            if space_above < wanted_space then
+                position = space_above > space_below and "above" or "below"
+            end
         end
+        height = math.min(wanted_space, available_space)
+    elseif config_position == "bottom" then
+        position = "below"
+        height = math.min(wanted_space, space_below)
+    elseif config_position == "top" then
+        position = "above"
+        height = math.min(wanted_space, space_above)
     end
-    local height = math.min(#self.entries, self.config.ui.menu.max_height, available_space)
     Menu.winnr = vim.api.nvim_open_win(self.buf, false, {
         relative = "cursor",
         height = height,
