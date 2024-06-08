@@ -13,7 +13,9 @@ function sorter.sort(entries, prefix)
 
     local filter_texts = {}
 
-    for _, entry in ipairs(entries) do
+    for i, entry in ipairs(entries) do
+        entries[i].score = nil
+        entries[i].matches = nil
         table.insert(filter_texts, get_filter_text(entry))
     end
 
