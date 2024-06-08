@@ -285,6 +285,8 @@ function Menu:complete(entry)
 end
 
 function Menu:confirm()
+    -- Set undo point
+    vim.o.ul = vim.o.ul
     local entry = self:get_active_entry()
     if not entry then
         return
