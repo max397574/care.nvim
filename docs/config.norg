@@ -16,7 +16,7 @@ tangle: {
     delimiter: none
 }
 created: 2023-11-17T16:29:17+0100
-updated: 2023-11-17T16:32:27+0100
+updated: 2024-06-09T11:35:45+0100
 version: 1.1.1
 @end
 
@@ -32,7 +32,7 @@ version: 1.1.1
   rest of the configuration which is for configuring neocomplete itself.
 
 ** UI
-   In the ui field the completion-menu, the docs-view and the format of the entries are configured.
+   In the ui field the completion menu, the docs view and the format of the entries are configured.
    There is also a field for configuring type icons.
    #tangle
    @code lua
@@ -56,7 +56,8 @@ version: 1.1.1
    @end
 
 ** Keyword pattern
-   Pattern used to determine keywords, used to determine what to use for filtering and 
+   Pattern used to determine keywords, used to determine what to use for filtering and what to
+   remove if insert text is used.
    #tangle
    @code lua
    --- Pattern used to determine keywords
@@ -66,7 +67,6 @@ version: 1.1.1
 ** Enabled
    This function can be used to disable neocomplete in certain contexts. By default this disables
    neocomplete in prompts.
-
    #tangle
    @code lua
    --- Configuration for the ui of neocomplete
@@ -82,7 +82,8 @@ version: 1.1.1
   --- The main class for the ui configuration of neocomplete.nvim
   ---@class neocomplete.config.ui
   @end
-  The most important part for many users will be the `menu` field. It's used to configure the completion menu.
+  The most important part for many users will be the `menu` field. It's used to configure the
+  completion menu.
   #tangle
   @code lua
   --- Configuration of the completion menu of neocomplete.nvim
@@ -110,6 +111,7 @@ version: 1.1.1
    --- Configuration of the completion menu of neocomplete.nvim
    ---@class neocomplete.config.ui.menu
    @end
+
    It includes some basic window properties like the border and the maximum height of the window.
    #tangle
    @code lua
@@ -180,7 +182,6 @@ version: 1.1.1
 
 ** Type Icons
    This is a table which defines the different icons.
-
    #tangle
    @code lua
    --- The icons used for the different completion item types

@@ -11,7 +11,6 @@ function Menu.new()
     self.entries = nil
     self.ns = vim.api.nvim_create_namespace("neocomplete")
     self.config = require("neocomplete.config").options
-    self.input = "e"
     self.buf = vim.api.nvim_create_buf(false, true)
     self.winnr = nil
     self.index = 0
@@ -152,6 +151,7 @@ function Menu:open_win(offset)
 end
 
 function Menu:close()
+    -- TODO: reset more things?
     pcall(vim.api.nvim_win_close, self.winnr, true)
     Menu.winnr = nil
 end

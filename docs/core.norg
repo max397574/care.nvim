@@ -9,7 +9,7 @@ categories: [
     types
 ]
 created: 2023-11-15T17:42:46+0100
-updated: 2024-06-07T21:25:42+0100
+updated: 2024-06-09T10:21:16+0100
 tangle: {
     languages: {
         lua: ../lua/neocomplete/types/core.lua
@@ -21,36 +21,26 @@ version: 1.1.1
 @end
 
 * General
+  This module is for the core of neocomplete. There all comes together with the menu being opened
+  and the completion triggered.
   #tangle
   @code lua
-  --- The core of neocomplete where the main api functions are defined
+  --- The core module of neocomplete
   ---@class neocomplete.core
   @end
 
 ** New
-   Creates a new core instance
+   Use this function to create a new instance.
    #tangle
    @code lua
    --- Create a new instance of the core
    ---@field new fun(): neocomplete.core
    @end
 
-** Context
-   #tangle
-   @code lua
-   --- Context instance of the core
-   ---@field context neocomplete.context
-   @end
-
-** Menu
-   #tangle
-   @code lua
-   --- Menu instance of the core
-   ---@field menu neocomplete.menu
-   @end
-
+* Methods
 ** Complete
-   The main function which starts the completion
+   This function starts the completion. It goes through all the sources, triggers them (completion
+   or sorting) and opens the menu with the result.
    #tangle
    @code lua
    --- Complete
@@ -58,6 +48,8 @@ version: 1.1.1
    @end
 
 ** On Change
+   This function is invoked on every text change. It updates the context field and triggers
+   completion if it changed.
    #tangle
    @code lua
    --- The function that gets invoked when the text changes
@@ -66,9 +58,27 @@ version: 1.1.1
 
 ** Setup
    The setup function is used to setup neocomplete so it will actually provide autocompletion when
-   typing.
+   typing by setting up an autocommand.
    #tangle
    @code lua
    --- Setup core (for now autocommands)
    ---@field setup fun(self: neocomplete.core): nil
+   @end
+
+* Fields
+** Context
+   This is used to store the current context. There is always a new one created in `on_change` and
+   compared to see if it changed.
+   #tangle
+   @code lua
+   --- Context instance of the core
+   ---@field context neocomplete.context
+   @end
+
+** Menu
+   In this field a menu instance which is used in core is stored.
+   #tangle
+   @code lua
+   --- Menu instance of the core
+   ---@field menu neocomplete.menu
    @end

@@ -9,7 +9,7 @@ categories: [
     types
 ]
 created: 2024-05-31T12:48:14+0100
-updated: 2024-06-08T14:48:14+0100
+updated: 2024-06-09T14:53:09+0100
 tangle: {
     languages: {
         lua: ../lua/neocomplete/types/internal_source.lua
@@ -22,8 +22,7 @@ version: 1.1.1
 
 * General
   The internal sources are used on top of {:./source:}[completion sources] to store additional
-  metadata about which the source author doesn't have to care.
-
+  metadata about which the source author doesn't have to care and sometimes can't know.
   #tangle
   @code lua
   --- Internal class for neocomplete to store source metadata
@@ -31,14 +30,17 @@ version: 1.1.1
   @end
 
 ** Source
-  #tangle
-  @code lua
-  --- The external completion source
-  ---@field source neocomplete.source
-  @end
+   This field is used to store the source written by the source author.
+   #tangle
+   @code lua
+   --- The external completion source
+   ---@field source neocomplete.source
+   @end
 
 
 ** Entries
+   In the entries field entries gotten from the source are stored. This is used to be able to sort
+   and filter the entries when not getting new ones.
    #tangle
    @code lua
    --- The entries recieved by last completion
@@ -46,6 +48,7 @@ version: 1.1.1
    @end
 
 ** New
+   This function creates a new instance.
    #tangle
    @code lua
    --- The entries recieved by last completion
@@ -53,6 +56,8 @@ version: 1.1.1
    @end
 
 ** Incomplete
+   Here a boolean is set which shows whether the source already completed all it's entries or not.
+   This is mostly used by sources for performance reasons.
    #tangle
    @code lua
    --- Whether the source is incomplete
@@ -60,6 +65,9 @@ version: 1.1.1
    @end
 
 ** Get offset
+   With this function the offset of the source is determined. The offset describes at which point
+   the completions for this source start. This is required to be able to remove that text if needed
+   and to determine the characters used for filtering and sorting.
    #tangle
    @code lua
    --- The entries recieved by last completion

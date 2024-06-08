@@ -6,7 +6,7 @@
 ---@field draw fun(self: neocomplete.menu): nil
 --- Opens window for the menu
 ---@field open_win fun(self: neocomplete.menu, offset: integer): nil
---- Opens window for the menu
+--- Returns true if completion window is visible
 ---@field is_open fun(self: neocomplete.menu): boolean
 --- Select next entry in menu
 ---@field select_next fun(self: neocomplete.menu, count: integer): nil
@@ -20,7 +20,7 @@
 ---@field get_active_entry fun(self: neocomplete.menu): neocomplete.entry?
 --- Selects the current entry and inserts it's text
 ---@field confirm fun(self: neocomplete.menu): nil
---- Selects the current entry and inserts it's text
+--- Completes with the given entry
 ---@field complete fun(self: neocomplete.menu, entry: neocomplete.entry): nil
 --- Entries of the menu
 ---@field entries neocomplete.entry[]
@@ -28,8 +28,6 @@
 ---@field ns integer
 --- Neocomplete config to be used in the menu
 ---@field config neocomplete.config
---- Input of the user which is fuzzy matched
----@field input string
 --- Buffer of the menu
 ---@field buf integer
 --- Window of menu

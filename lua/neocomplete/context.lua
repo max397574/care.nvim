@@ -10,6 +10,7 @@ function context.new(previous)
     ---@type neocomplete.context
     local self = setmetatable({}, { __index = context })
     previous = previous or {}
+    -- reset so table doesn't get too big
     previous.previous = nil
     self.previous = previous and vim.deepcopy(previous)
     self.bufnr = vim.api.nvim_get_current_buf()

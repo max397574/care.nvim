@@ -9,7 +9,7 @@ categories: [
     types
 ]
 created: 2023-11-15T17:42:46+0100
-updated: 2024-06-07T21:22:41+0100
+updated: 2024-06-09T14:47:28+0100
 tangle: {
     languages: {
         lua: ../lua/neocomplete/types/context.lua
@@ -21,14 +21,18 @@ version: 1.1.1
 @end
 
 * Completion Context
+  This is a class representing the current state. It includes buffer number and cursor position. It
+  is passed to completion sources to get completions.
   #tangle
   @code lua
   --- Context provided to completion sources
   ---@class neocomplete.context
   @end
 
+* Methods
 ** Changed
-   Whether the context changed in comparison to the previous one
+   Whether the context changed in comparison to the previous one. This is used to check whether to
+   get new completions or not.
    #tangle
    @code lua
    --- Context changed since previous
@@ -36,15 +40,19 @@ version: 1.1.1
    @end
 
 ** New
-   Create a new context
+   Create a new context. This takes the previous one as argument. This one is stored to determine if
+   the context changed or not when completing.
+   The previous context of the previous one is deleted so this data structure doesn't grow really
+   large.
    #tangle
    @code lua
    --- Create a new context
-   ---@field new fun(neocomplete.context?): neocomplete.context
+   ---@field new fun(previous: neocomplete.context?): neocomplete.context
    @end
 
+* Fields
 ** Previous
-   The previous context which is used to determine whether the context changed or not
+   The previous context which is used to determine whether the context changed or not.
    #tangle
    @code lua
    --- The previous context
@@ -52,6 +60,7 @@ version: 1.1.1
    @end
 
 ** Cursor
+   The cursor positon.
    #tangle
    @code lua
    --- The cursor position
@@ -59,7 +68,7 @@ version: 1.1.1
    @end
 
 ** Bufnr
-   Number of the buffer
+   Number of the buffer.
    #tangle
    @code lua
    --- The number of the buffer
@@ -67,16 +76,14 @@ version: 1.1.1
    @end
 
 ** Reason
-   Reason for triggering completion
+   Reason for triggering completion.
    #tangle
    @code lua
    --- Reason for triggering completion
    ---@field reason neocomplete.completionReason?
    @end
 
-
-
-
+* Misc
    #tangle
    @code lua
    --- A cursor position

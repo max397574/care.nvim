@@ -3,7 +3,7 @@
 --- Context changed since previous
 ---@field changed fun(neocomplete.context): boolean
 --- Create a new context
----@field new fun(neocomplete.context?): neocomplete.context
+---@field new fun(previous: neocomplete.context?): neocomplete.context
 --- The previous context
 ---@field previous neocomplete.context?
 --- The cursor position

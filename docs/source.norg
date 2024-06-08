@@ -9,7 +9,7 @@ categories: [
     types
 ]
 created: 2023-11-15T17:42:46+0100
-updated: 2024-06-08T14:53:02+0100
+updated: 2024-06-09T11:50:40+0100
 tangle: {
     languages: {
         lua: ../lua/neocomplete/types/source.lua
@@ -66,7 +66,11 @@ version: 1.1.1
    @end
 
 ** Keyword pattern
-   `get_keyword_pattern` function has higher priority
+   The keyword pattern is used to overwrite the keyword pattern from the config per source. It
+   should basically represent the format of entries the source will provide as regex.
+   It can either be provided as a string with `keyword_pattern` or dynamically with
+   `get_keyword_pattern`.
+   The `get_keyword_pattern` function has higher priority and will overwrite the string if provided.
    #tangle
    @code lua
    --- Keyword pattern for this source
@@ -80,7 +84,7 @@ version: 1.1.1
    @end
 
 
-** `complete()`
+** Complete
    This is arguably the most important function of each source. This function returns completions.
    The function takes in a {:./index:* Completion Context}[completion context] and should return a
    list of {:./entry:}[entries].

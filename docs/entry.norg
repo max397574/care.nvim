@@ -9,7 +9,7 @@ categories: [
     types
 ]
 created: 2023-11-15T17:42:46+0100
-updated: 2024-06-08T14:15:40+0100
+updated: 2024-06-09T11:30:24+0100
 tangle: {
     languages: {
         lua: ../lua/neocomplete/types/entry.lua
@@ -21,7 +21,7 @@ version: 1.1.1
 @end
 
 * General
-  Entries are the items in the completion menu.
+  Entries are the basic items in the completion menu. They are a superset of the lsp completion item.
   #tangle
   @code lua
   --- An entry for the neocomplete completion menu
@@ -29,7 +29,8 @@ version: 1.1.1
   @end
 
 ** Matches
-   Position of matches during filtering
+   Position of matches which were found during filtering. This is just used to highlight them in the
+   completion menu with `@neocomplete.match`.
    #tangle
    @code lua
    --- Matches in filter text
@@ -37,19 +38,18 @@ version: 1.1.1
    @end
 
 ** Score
-   Score from filtering
+   This is the score obtained from filtering. It is used to sort which happens in the
+   `neocomplete.sorter` module.
    #tangle
    @code lua
    --- Score from filtering
    ---@field score number
    @end
 
-
 ** Kind
    The optional `kind` property is used to determine the kind of the completion item. This is often
    used to display an icon representing it. In neocomplete this can either be a number like in the
-   lsp-specification of a string.
-
+   lsp-specification or a string.
    #tangle
    @code lua
    --- The kind of the completion item

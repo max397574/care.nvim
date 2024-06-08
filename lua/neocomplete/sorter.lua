@@ -1,5 +1,8 @@
+--- Used for filtering and sorting entries. This uses fzy-lua under the hood.
 local sorter = {}
 
+--- Filters and sorts entries by a prefix using fzy algorithm
+--- Sets `score` and `matches` field of remaining entries
 ---@param entries neocomplete.entry[]
 ---@param prefix string
 ---@return neocomplete.entry[]

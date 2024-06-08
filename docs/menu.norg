@@ -9,7 +9,7 @@ categories: [
     types
 ]
 created: 2024-05-29T11:30:25+0100
-updated: 2024-05-30T17:41:03+0100
+updated: 2024-06-08T23:03:45+0100
 tangle: {
     languages: {
         lua: ../lua/neocomplete/types/menu.lua
@@ -21,15 +21,23 @@ version: 1.1.1
 @end
 
 * General
+  This is the main class of the neocomplete completion menu. The menu is used to display completion
+  entries and also contains the logic for selecting and inserting the completions.
   #tangle
   @code lua
   --- The completion menu of neocomplete
   ---@class neocomplete.menu
   @end
 
+* Internals
+** Index
+   The index is used to determine the selected entry. It is used to get this entry when confirming
+   the completion.
+   The function to select the next and previous entries simply change this index.
+
 * Methods
 ** New
-   Creates a new instance
+   Creates a new instance of the completion menu.
    #tangle
    @code lua
    --- Create a new instance of the menu
@@ -37,6 +45,9 @@ version: 1.1.1
    @end
 
 ** Draw
+   Draws the menu. This includes formatting the entries with the function from the config and
+   setting the virtual text used to display the labels. It also adds the highlights for the selected
+   entry and for the matched chars.
    #tangle
    @code lua
    --- Draws the menu
@@ -44,6 +55,8 @@ version: 1.1.1
    @end
 
 ** Open win
+   This function opens the window for the completion menu. It contains the logic to determine it's
+   dimensions and position.
    #tangle
    @code lua
    --- Opens window for the menu
@@ -51,6 +64,8 @@ version: 1.1.1
    @end
 
 ** Is open
+   This is a function which can be used to determine whether the completion menu is open or not.
+   This is especially useful for mappings which have a fallback action when the menu isn't visible.
    #tangle
    @code lua
    --- Returns true if completion window is visible
@@ -59,6 +74,8 @@ version: 1.1.1
 
 
 ** Select next
+   This function can be used to select the next entry. It accepts a count to skip over some entries.
+   It automatically wraps at the bottom and jumps up again.
    #tangle
    @code lua
    --- Select next entry in menu
@@ -66,6 +83,7 @@ version: 1.1.1
    @end
 
 ** Select prev
+   This function is used to select the previous entry analogous to {** Select next}
    #tangle
    @code lua
    --- Select previous entry in menu
@@ -73,6 +91,8 @@ version: 1.1.1
    @end
 
 ** Open
+   The `open` function is used to open the completion menu with a specified set of entries. This
+   includes opening the window and displaying the text.
    #tangle
    @code lua
    --- Opens the menu with specified entries
@@ -80,6 +100,7 @@ version: 1.1.1
    @end
 
 ** Close
+   This function closes the menu and resets some internal things.
    #tangle
    @code lua
    --- Closes the window of the menu
@@ -87,6 +108,8 @@ version: 1.1.1
    @end
 
 ** Get active entry
+   With this function you can get the currently selected entry. This can be used for the docs view
+   or some other api functions. It is also used when the selection is confirmed.
    #tangle
    @code lua
    --- Gets the currently selected entry
@@ -94,21 +117,27 @@ version: 1.1.1
    @end
 
 ** Confirm
+   This is the function to trigger the completion with a selected entry. It gets the selected entry
+   closes the menu and completes.
    #tangle
    @code lua
    --- Selects the current entry and inserts it's text
    ---@field confirm fun(self: neocomplete.menu): nil
    @end
 
-** confirm
+** Complete
+   This function completes with a given entry. That means it removes text used for filtering
+   (if necessary), expands snippet with the configured function, applies text edits and lsp
+   commands.
    #tangle
    @code lua
-   --- Selects the current entry and inserts it's text
+   --- Completes with the given entry
    ---@field complete fun(self: neocomplete.menu, entry: neocomplete.entry): nil
    @end
 
 * Fields
 ** Entries
+   This field is used to store all the entries of the completion menu.
    #tangle
    @code lua
    --- Entries of the menu
@@ -116,6 +145,7 @@ version: 1.1.1
    @end
 
 ** Namespace
+   The namespace is used to draw the extmarks and add the additional highlights.
    #tangle
    @code lua
    --- Namespace used for the menu
@@ -123,22 +153,16 @@ version: 1.1.1
    @end
 
 ** Config
+   In this field the user config is stored for easier access.
    #tangle
    @code lua
    --- Neocomplete config to be used in the menu
    ---@field config neocomplete.config
    @end
 
-** Input
-   Currently just used to test highlighting match characters
-   #tangle
-   @code lua
-   --- Input of the user which is fuzzy matched
-   ---@field input string
-   @end
-
 ** Buffer
-   Buffer used for the menu
+   This is the buffer used for the menu. It's just created once when initially creating a new
+   instance.
    #tangle
    @code lua
    --- Buffer of the menu
@@ -146,6 +170,8 @@ version: 1.1.1
    @end
 
 ** Window
+   Window number of the window used to display the menu. This is always newly created when the menu
+   gets opened and is only set if the menu is open.
    #tangle
    @code lua
    --- Window of menu
@@ -153,7 +179,8 @@ version: 1.1.1
    @end
 
 ** Index
-   used to get and track the currently selected item
+   The index is used to get and track the currently selected item. It gets modified by the functions
+   to select next and previous entry.
    #tangle
    @code lua
    --- Index of selected item
