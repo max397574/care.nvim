@@ -3,11 +3,12 @@ return {
     coverage = false,
     lpath = "lua/?.lua;lua/?/init.lua",
     lua = "~/.luarocks/bin/nlua",
+    verbose = true,
   },
   default = {
-    verbose = true
+    verbose = true,
   },
   tests = {
-    verbose = true
+    verbose = true,
   },
 }
