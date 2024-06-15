@@ -8,3 +8,9 @@ install_libraries:
 	git clone https://github.com/LuaCATS/busted ./.libraries/busted
 	git clone https://github.com/LuaCATS/luassert ./.libraries/luassert
 	git clone https://github.com/LuaCATS/luv ./.libraries/luv
+
+gen_luarc:
+	bash scripts/write_luarc.sh
+
+
+dev_setup: install_libraries gen_luarc

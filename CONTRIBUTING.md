@@ -35,6 +35,11 @@ make install_libraries
 
 Then use
 ```bash
-bash scripts/write_luarc.sh
+make gen_luarc
 ```
 from the root directory of this repo to generate a `.luarc.json` file to configure luals to use the type annotations.
+
+These two steps can be executed together with
+```bash
+make dev_setup
+```
