@@ -32,3 +32,9 @@ You can get third party libraries for type annotations by doing
 ```bash
 make install_libraries
 ```
+
+Then use
+```bash
+bash scripts/write_luarc.sh
+```
+from the root directory of this repo to generate a `.luarc.json` file to configure luals to use the type annotations.

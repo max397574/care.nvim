@@ -1,5 +1,0 @@
-describe('TODO: Add actual tests', function()
-  it('Test can access vim namespace', function()
-    assert.are.same(vim.trim('  a '), 'a')
-  end)
-end)
