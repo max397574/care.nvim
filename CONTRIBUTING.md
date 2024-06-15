@@ -9,9 +9,7 @@ if you have [`luarocks`](https://luarocks.org/) or `busted` installed[^1].
 You can then run:
 
 ```bash
-luarocks test --local
-# or
-busted
+make test
 ```
 
 Or if you want to run a single test file:
