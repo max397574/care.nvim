@@ -231,6 +231,7 @@ function Menu:complete(entry)
     local line = vim.api.nvim_get_current_line()
     local line_to_cursor = line:sub(1, cursor_col)
     -- Can add $ to keyword pattern because we just match on line to cursor
+    -- TODO: don't use config keyword pattern here, could be source specific
     local word_boundary = vim.fn.match(line_to_cursor, self.config.keyword_pattern .. "$")
 
     local prefix = line:sub(word_boundary + 1, cursor_col)
