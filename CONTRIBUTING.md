@@ -26,3 +26,9 @@ If you see a `module 'busted.runner'` not found error you need to update your `L
 eval $(luarocks path --no-bin)
 busted --lua nlua spec/mytest_spec.lua
 ```
+
+## Type annotations
+You can get third party libraries for type annotations by doing
+```bash
+make install_libraries
+```
