@@ -1,0 +1,10 @@
+local utils = require("neocomplete.utils")
+
+describe("Longest line", function()
+    it("works with empty table", function()
+        assert.is.same(0, utils.longest({}))
+    end)
+    it("return correct value", function()
+        assert.is.same(3, utils.longest({ "a", "abc", "ab" }))
+    end)
+end)
