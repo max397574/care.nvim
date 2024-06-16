@@ -156,16 +156,41 @@ function Menu:close()
     Menu.winnr = nil
 end
 
+function Menu:set_scroll(direction)
+    --- Scrolls to a certain line in the window
+    --- This line will be at the top of the window
+    ---@param line integer
+    local function scroll_to_line(line)
+        vim.api.nvim_win_call(self.winnr, function()
+            vim.cmd("normal! " .. line .. "zt")
+        end)
+    end
+    local top_visible = vim.fn.line("w0", self.winnr)
+    local bottom_visible = vim.fn.line("w$", self.winnr)
+    local visible_amount = bottom_visible - top_visible + 1
+    local selected_line = self.index
+    print(visible_amount)
+    if selected_line == 0 then
+        scroll_to_line(1)
+        return
+    elseif selected_line >= top_visible and selected_line <= bottom_visible then
+        return
+    elseif direction == 1 and selected_line > bottom_visible then
+        scroll_to_line(selected_line - visible_amount + 1)
+    elseif direction == -1 and selected_line < top_visible then
+        scroll_to_line(selected_line)
+    elseif direction == -1 and selected_line > bottom_visible then
+        -- wrap around
+        scroll_to_line(selected_line - visible_amount + 1)
+    end
+end
+
 function Menu:select_next(count)
     self.index = self.index + count
     if self.index > #self.entries then
         self.index = self.index - #self.entries - 1
     end
-    if self.index > (vim.fn.line("w$", self.winnr) - vim.fn.line("w0", self.winnr)) then
-        vim.api.nvim_win_call(self.winnr, function()
-            vim.cmd("normal! " .. self.index - (vim.fn.line("w$", self.winnr) - vim.fn.line("w0", self.winnr)) .. "zt")
-        end)
-    end
+    self:set_scroll(1)
     self:draw()
 end
 
@@ -174,11 +199,7 @@ function Menu:select_prev(count)
     if self.index < 0 then
         self.index = #self.entries + self.index + 1
     end
-    if self.index < (vim.fn.line("w0", self.winnr)) then
-        vim.api.nvim_win_call(self.winnr, function()
-            vim.cmd("normal! " .. self.index .. "zt")
-        end)
-    end
+    self:set_scroll(-1)
     self:draw()
 end
 

@@ -6,6 +6,8 @@
 ---@field draw fun(self: neocomplete.menu): nil
 --- Opens window for the menu
 ---@field open_win fun(self: neocomplete.menu, offset: integer): nil
+--- Sets the scroll of the window
+---@field set_scroll fun(self: neocomplete.menu, direction: integer): nil
 --- Returns true if completion window is visible
 ---@field is_open fun(self: neocomplete.menu): boolean
 --- Select next entry in menu

@@ -9,7 +9,7 @@ categories: [
     types
 ]
 created: 2024-05-29T11:30:25+0100
-updated: 2024-06-08T23:03:45+0100
+updated: 2024-06-16T12:58:10+0100
 tangle: {
     languages: {
         lua: ../lua/neocomplete/types/menu.lua
@@ -61,6 +61,16 @@ version: 1.1.1
    @code lua
    --- Opens window for the menu
    ---@field open_win fun(self: neocomplete.menu, offset: integer): nil
+   @end
+
+** Set scroll
+   This is a function used to set the scrollingn of the window. The direction parameter is used to
+   determine if the index was increased or decreased. It should be `1` if the index increased and
+   `-1` if it decreased.
+   #tangle
+   @code lua
+   --- Sets the scroll of the window
+   ---@field set_scroll fun(self: neocomplete.menu, direction: integer): nil
    @end
 
 ** Is open
