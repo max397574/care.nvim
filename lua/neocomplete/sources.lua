@@ -32,8 +32,7 @@ function neocomplete_sources.complete(context, source, callback)
                 triggerKind = 2,
                 triggerCharacter = last_char,
             }
-        elseif source.incomplete then
-        else
+        elseif not source.incomplete then
             -- TODO: cleanup
             local line = vim.api.nvim_get_current_line()
             local line_to_cursor = line:sub(1, context.cursor.col)
