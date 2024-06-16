@@ -234,7 +234,12 @@ function Menu:complete(entry)
     -- TODO: don't use config keyword pattern here, could be source specific
     local word_boundary = vim.fn.match(line_to_cursor, self.config.keyword_pattern .. "$")
 
-    local prefix = line:sub(word_boundary + 1, cursor_col)
+    local prefix
+    if word_boundary == -1 then
+        prefix = ""
+    else
+        prefix = line:sub(word_boundary + 1, cursor_col)
+    end
 
     -- TODO: entry.insertTextMode
     local is_snippet = entry.insertTextFormat == 2
