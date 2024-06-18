@@ -2,6 +2,8 @@
 ---@class neocomplete.source
 --- Whether the source will provide completions in the current context or not
 ---@field is_available? fun(): boolean
+--- Resolve a completion item
+---@field resolve_item? fun(self: neocomplete.source, item: neocomplete.completionItem, callback: fun(item: neorg.completionItem)): nil
 --- Characters which should trigger new completions of the source
 ---@field get_trigger_characters? fun(): string[]
 --- Keyword pattern for this source

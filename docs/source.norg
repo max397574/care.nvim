@@ -9,7 +9,7 @@ categories: [
     types
 ]
 created: 2023-11-15T17:42:46+0100
-updated: 2024-06-09T11:50:40+0100
+updated: 2024-06-18T18:08:13+0100
 tangle: {
     languages: {
         lua: ../lua/neocomplete/types/source.lua
@@ -46,6 +46,17 @@ version: 1.1.1
    @code lua
    --- Whether the source will provide completions in the current context or not
    ---@field is_available? fun(): boolean
+   @end
+
+** Resolve
+   This is a function used to get additional details for completion items. This is especially
+   important for the lsp source which needs to send the `completionItem/resolve` request.
+   Resolving completion items is used for performance reasons so e.g. the documentation for an item
+   doesn't always have to be sent.
+   #tangle
+   @code lua
+   --- Resolve a completion item
+   ---@field resolve_item? fun(self: neocomplete.source, item: neocomplete.completionItem, callback: fun(item: neorg.completionItem)): nil
    @end
 
 ** `get_trigger_characters()`
