@@ -26,7 +26,7 @@ function core:complete(reason)
                 require("neocomplete.sources").sources[i].entries = items
                 remaining = remaining - 1
                 offset = math.max(offset, source:get_offset(self.context))
-                if items and not vim.tbl_isempty(items) then
+                if not vim.tbl_isempty(items or {}) then
                     vim.list_extend(entries, items)
                     vim.schedule(function()
                         if remaining == 0 then

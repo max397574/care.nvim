@@ -30,7 +30,7 @@ function lsp_utils.get_kind_name(kind_number)
         "Operator",
         "TypeParameter",
     }
-    return lsp_kinds[kind_number] and lsp_kinds[kind_number] or ""
+    return lsp_kinds[kind_number] or ""
 end
 
 return lsp_utils
