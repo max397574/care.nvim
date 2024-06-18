@@ -13,6 +13,7 @@ end
 function source.get_keyword_pattern(self)
     local keyword_pattern = require("neocomplete.config").options.keyword_pattern
     if self.source.keyword_pattern then
+        ---@type string
         keyword_pattern = self.source.keyword_pattern
     end
     if self.source.get_keyword_pattern then
