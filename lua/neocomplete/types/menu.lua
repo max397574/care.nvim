@@ -23,7 +23,7 @@
 --- Selects the current entry and inserts it's text
 ---@field confirm fun(self: neocomplete.menu): nil
 --- Completes with the given entry
----@field complete fun(self: neocomplete.menu, completion_item: lsp.CompletionItem): nil
+---@field complete fun(self: neocomplete.menu, entry: neocomplete.entry): nil
 --- Entries of the menu
 ---@field entries neocomplete.entry[]
 --- Namespace used for the menu

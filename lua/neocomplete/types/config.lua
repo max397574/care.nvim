@@ -25,7 +25,7 @@
 --- Position of the menu
 ---@field position "auto"|"bottom"|"top"
 --- How an entry should be formatted
----@field format_entry fun(neocomplete.entry): { [1]: string, [2]: string }[][]
+---@field format_entry fun(entry: neocomplete.entry): { [1]: string, [2]: string }[][]
 --- How the sections in the menu should be aligned
 ---@field alignment ("left"|"center"|"right")[]
 --- Configuration of the completion menu of neocomplete.nvim

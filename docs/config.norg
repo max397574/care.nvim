@@ -16,7 +16,7 @@ tangle: {
     delimiter: none
 }
 created: 2023-11-17T16:29:17+0100
-updated: 2024-06-09T11:35:45+0100
+updated: 2024-06-18T19:20:08+0100
 version: 1.1.1
 @end
 
@@ -159,7 +159,7 @@ version: 1.1.1
    #tangle
    @code lua
    --- How an entry should be formatted
-   ---@field format_entry fun(neocomplete.entry): { [1]: string, [2]: string }[][]
+   ---@field format_entry fun(entry: neocomplete.entry): { [1]: string, [2]: string }[][]
    --- How the sections in the menu should be aligned
    ---@field alignment ("left"|"center"|"right")[]
    @end

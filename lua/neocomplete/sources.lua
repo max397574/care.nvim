@@ -1,4 +1,5 @@
 local neocomplete_sources = {}
+local Entry = require("neocomplete.entry")
 
 ---@type neocomplete.internal_source[]
 neocomplete_sources.sources = {}
@@ -66,9 +67,7 @@ function neocomplete_sources.complete(context, source, callback)
         function(items, is_incomplete)
             items = vim.iter(items or {})
                 :map(function(item)
-                    return {
-                        completion_item = item,
-                    }
+                    return Entry.new(item, source)
                 end)
                 :totable()
 

@@ -4,8 +4,6 @@ local context = {}
 
 ---@type lsp.CompletionContext
 
----@param previous neocomplete.context?
----@return neocomplete.context
 function context.new(previous)
     ---@type neocomplete.context
     local self = setmetatable({}, { __index = context })

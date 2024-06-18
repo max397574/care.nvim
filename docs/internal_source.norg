@@ -9,7 +9,7 @@ categories: [
     types
 ]
 created: 2024-05-31T12:48:14+0100
-updated: 2024-06-09T14:53:09+0100
+updated: 2024-06-18T19:34:31+0100
 tangle: {
     languages: {
         lua: ../lua/neocomplete/types/internal_source.lua
@@ -62,6 +62,15 @@ version: 1.1.1
    @code lua
    --- Whether the source is incomplete
    ---@field incomplete boolean
+   @end
+
+** Get keyword pattern
+   This function is used to get the keyword pattern for the source. It uses the string field, the
+   method to get it and as fallback the one from the config.
+   #tangle
+   @code lua
+   --- Get the keyword pattern
+   ---@field get_keyword_pattern fun(self: neocomplete.internal_source): string
    @end
 
 ** Get offset

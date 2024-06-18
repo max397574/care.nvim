@@ -14,6 +14,7 @@ config.defaults = {
             format_entry = function(entry)
                 local completion_item = entry.completion_item
                 local type_icons = config.options.ui.type_icons
+                -- TODO: remove since now can only be number, or also allow custom string kinds?
                 local entry_kind = type(completion_item.kind) == "string" and completion_item.kind
                     or require("neocomplete.utils.lsp").get_kind_name(completion_item.kind)
                 return {

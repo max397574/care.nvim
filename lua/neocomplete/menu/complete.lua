@@ -11,9 +11,10 @@ local function normalize_entry(entry)
 end
 
 ---@param self neocomplete.menu
----@param completion_item lsp.CompletionItem
-return function(self, completion_item)
-    vim.print(completion_item)
+---@param entry neocomplete.entry
+return function(self, entry)
+    vim.print(entry)
+    local completion_item = entry.completion_item
     completion_item = normalize_entry(completion_item)
     local current_buf = vim.api.nvim_get_current_buf()
     local cursor_row, cursor_col = unpack(vim.api.nvim_win_get_cursor(0)) --- @type integer, integer
@@ -21,9 +22,8 @@ return function(self, completion_item)
     cursor_row = cursor_row - 1
     local line = vim.api.nvim_get_current_line()
     local line_to_cursor = line:sub(1, cursor_col)
-    -- Can add $ to keyword pattern because we just match on line to cursor
-    -- TODO: don't use config keyword pattern here, could be source specific
-    local word_boundary = vim.fn.match(line_to_cursor, self.config.keyword_pattern .. "$")
+    -- Have to add $ to keyword pattern because we just match on line to cursor
+    local word_boundary = vim.fn.match(line_to_cursor, entry.source:get_keyword_pattern() .. "$")
 
     local prefix
     if word_boundary == -1 then
