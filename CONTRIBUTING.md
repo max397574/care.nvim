@@ -27,6 +27,13 @@ eval $(luarocks path --no-bin)
 busted --lua nlua spec/mytest_spec.lua
 ```
 
+## Formatting
+For formatting stylua is used.
+If you have stylua installed you can use
+```bash
+make format
+```
+
 ## Type annotations
 You can get third party libraries for type annotations by doing
 ```bash

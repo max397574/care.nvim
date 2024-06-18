@@ -14,3 +14,6 @@ gen_luarc:
 
 
 dev_setup: install_libraries gen_luarc
+
+format:
+	stylua lua/ spec/
