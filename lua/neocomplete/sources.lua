@@ -18,8 +18,7 @@ end
 ---@param source neocomplete.internal_source
 ---@param callback fun(items: neocomplete.entry[], is_incomplete?: boolean)
 function neocomplete_sources.complete(context, source, callback)
-    local cursor = vim.api.nvim_win_get_cursor(0)
-    local last_char = vim.api.nvim_get_current_line():sub(cursor[2], cursor[2])
+    local last_char = context.line_before_cursor:sub(-1)
     ---@type lsp.CompletionContext
     local completion_context
     if context.reason == 1 then
@@ -34,8 +33,6 @@ function neocomplete_sources.complete(context, source, callback)
             }
         elseif not source.incomplete then
             -- TODO: cleanup
-            local line = vim.api.nvim_get_current_line()
-            local line_to_cursor = line:sub(1, context.cursor.col)
             local keyword_pattern = require("neocomplete.config").options.keyword_pattern
             if source.source.keyword_pattern then
                 keyword_pattern = source.source.keyword_pattern
@@ -44,12 +41,12 @@ function neocomplete_sources.complete(context, source, callback)
                 keyword_pattern = source.source:get_keyword_pattern()
             end
             -- Can add $ to keyword pattern because we just match on line to cursor
-            local word_boundary = vim.fn.match(line_to_cursor, keyword_pattern .. "$")
+            local word_boundary = vim.fn.match(context.line_before_cursor, keyword_pattern .. "$")
             if word_boundary == -1 then
                 return 0
             end
 
-            local prefix = line:sub(word_boundary + 1, context.cursor.col)
+            local prefix = context.line:sub(word_boundary + 1, context.cursor.col)
 
             callback(require("neocomplete.sorter").sort(source.entries, prefix))
             return

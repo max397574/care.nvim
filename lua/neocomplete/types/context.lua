@@ -12,6 +12,10 @@
 ---@field bufnr integer
 --- Reason for triggering completion
 ---@field reason neocomplete.completionReason?
+--- Current line
+---@field line string
+--- Line before cursor
+---@field line_before_cursor string
 --- A cursor position
 ---@class neocomplete.context.cursor
 ---@field row integer

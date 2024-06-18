@@ -15,8 +15,8 @@ function source.get_offset(self, context)
         return 0
     end
     -- TODO: allow sources configuring their keyword pattern
-    local line = vim.api.nvim_get_current_line()
-    local line_to_cursor = line:sub(1, context.cursor.col)
+    local line = context.line
+    local line_to_cursor = context.line_before_cursor
     local keyword_pattern = require("neocomplete.config").options.keyword_pattern
     if self.source.keyword_pattern then
         keyword_pattern = self.source.keyword_pattern

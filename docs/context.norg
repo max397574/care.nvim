@@ -9,7 +9,7 @@ categories: [
     types
 ]
 created: 2023-11-15T17:42:46+0100
-updated: 2024-06-09T14:47:28+0100
+updated: 2024-06-18T18:18:38+0100
 tangle: {
     languages: {
         lua: ../lua/neocomplete/types/context.lua
@@ -81,6 +81,22 @@ version: 1.1.1
    @code lua
    --- Reason for triggering completion
    ---@field reason neocomplete.completionReason?
+   @end
+
+** Current line
+   The current line.
+   #tangle
+   @code lua
+   --- Current line
+   ---@field line string
+   @end
+
+** Line before cursor
+   Part of the current line which is before the cursor.
+   #tangle
+   @code lua
+   --- Line before cursor
+   ---@field line_before_cursor string
    @end
 
 * Misc
