@@ -9,7 +9,7 @@ categories: [
     types
 ]
 created: 2024-05-29T11:30:25+0100
-updated: 2024-06-16T12:58:10+0100
+updated: 2024-06-18T18:28:16+0100
 tangle: {
     languages: {
         lua: ../lua/neocomplete/types/menu.lua
@@ -142,7 +142,7 @@ version: 1.1.1
    #tangle
    @code lua
    --- Completes with the given entry
-   ---@field complete fun(self: neocomplete.menu, entry: neocomplete.entry): nil
+   ---@field complete fun(self: neocomplete.menu, completion_item: lsp.CompletionItem): nil
    @end
 
 * Fields

@@ -146,7 +146,7 @@ function Menu:confirm()
     if not entry then
         return
     end
-    self:complete(entry)
+    self:complete(entry.completion_item)
     self:close()
 end
 

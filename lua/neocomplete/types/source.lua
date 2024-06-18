@@ -3,7 +3,7 @@
 --- Whether the source will provide completions in the current context or not
 ---@field is_available? fun(): boolean
 --- Resolve a completion item
----@field resolve_item? fun(self: neocomplete.source, item: neocomplete.completionItem, callback: fun(item: neorg.completionItem)): nil
+---@field resolve_item? fun(self: neocomplete.source, item: lsp.CompletionItem, callback: fun(item: lsp.CompletionItem)): nil
 --- Characters which should trigger new completions of the source
 ---@field get_trigger_characters? fun(): string[]
 --- Keyword pattern for this source
@@ -11,4 +11,4 @@
 --- Get keyword pattern for this source
 ---@field get_keyword_pattern? fun(self: neocomplete.source): string
 --- Returns completion in the provided context
----@field complete fun(completion_context: neocomplete.completion_context, callback: fun(items: neocomplete.entry[], is_incomplete?: boolean)): nil
+---@field complete fun(completion_context: neocomplete.completion_context, callback: fun(items: lsp.CompletionItem[], is_incomplete?: boolean)): nil

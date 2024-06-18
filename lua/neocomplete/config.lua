@@ -12,11 +12,12 @@ config.defaults = {
             border = "rounded",
             position = "auto",
             format_entry = function(entry)
+                local completion_item = entry.completion_item
                 local type_icons = config.options.ui.type_icons
-                local entry_kind = type(entry.kind) == "string" and entry.kind
-                    or require("neocomplete.utils.lsp").get_kind_name(entry.kind)
+                local entry_kind = type(completion_item.kind) == "string" and completion_item.kind
+                    or require("neocomplete.utils.lsp").get_kind_name(completion_item.kind)
                 return {
-                    { { entry.label .. " ", "@neocomplete.entry" } },
+                    { { completion_item.label .. " ", "@neocomplete.entry" } },
                     { { type_icons[entry_kind] or "", ("@neocomplete.type.%s"):format(entry_kind) } },
                 }
             end,

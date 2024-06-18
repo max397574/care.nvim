@@ -1,5 +1,6 @@
 --- An entry for the neocomplete completion menu
----@class neocomplete.entry: lsp.CompletionItem
+---@class neocomplete.entry
+---@field completion_item lsp.CompletionItem
 --- Matches in filter text
 ---@field matches integer[]
 --- Score from filtering

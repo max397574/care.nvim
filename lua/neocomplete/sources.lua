@@ -61,7 +61,20 @@ function neocomplete_sources.complete(context, source, callback)
             triggerKind = 3,
         }
     end
-    source.source.complete({ completion_context = completion_context, context = context }, callback)
+    source.source.complete(
+        { completion_context = completion_context, context = context },
+        function(items, is_incomplete)
+            items = vim.iter(items or {})
+                :map(function(item)
+                    return {
+                        completion_item = item,
+                    }
+                end)
+                :totable()
+
+            callback(items, is_incomplete)
+        end
+    )
 end
 
 return neocomplete_sources

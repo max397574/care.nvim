@@ -11,7 +11,7 @@ function sorter.sort(entries, prefix)
     local function get_filter_text(entry)
         -- TODO: makes more sense like this because label is what user sees?
         -- return entry.filterText or entry.label
-        return entry.label
+        return entry.completion_item.label
     end
 
     local filter_texts = {}
