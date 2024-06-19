@@ -13,6 +13,7 @@ function Menu.new()
     self.buf = vim.api.nvim_create_buf(false, true)
     self.winnr = nil
     self.index = 0
+    ---@diagnostic disable-next-line: missing-fields
     self.scrollbar = {}
     self.scrollbar.win = nil
     self.scrollbar.buf = vim.api.nvim_create_buf(false, true)
