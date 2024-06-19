@@ -16,7 +16,7 @@ tangle: {
     delimiter: none
 }
 created: 2023-11-17T16:29:17+0100
-updated: 2024-06-18T19:20:08+0100
+updated: 2024-06-22T17:04:13+0100
 version: 1.1.1
 @end
 
@@ -114,6 +114,7 @@ version: 1.1.1
 
    It includes some basic window properties like the border and the maximum height of the window. It
    also has a field to define the character used for the scrollbar.
+   Set `scrollbar` to `nil` value to disable the scrollbar.
    #tangle
    @code lua
    --- Maximum height of the menu
@@ -121,7 +122,7 @@ version: 1.1.1
    --- The border of the completion menu
    ---@field border string|string[]|string[][]
    --- Character used for the scrollbar
-   ---@field scrollbar string
+   ---@field scrollbar string?
    @end
 
 ** Position

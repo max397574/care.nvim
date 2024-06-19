@@ -95,6 +95,10 @@ return function(self)
         end
     end
 
+    if not self.scrollbar.win then
+        return
+    end
+
     local top_visible = vim.fn.line("w0", self.winnr)
     local bottom_visible = vim.fn.line("w$", self.winnr)
     local visible_entries = bottom_visible - top_visible + 1

@@ -62,16 +62,18 @@ function Menu:open_win(offset)
     })
     vim.wo[self.winnr][self.buf].scrolloff = 0
 
-    self.scrollbar.win = vim.api.nvim_open_win(self.scrollbar.buf, false, {
-        height = height,
-        relative = "cursor",
-        col = -offset + width,
-        row = position == "below" and 2 or -(height + 2) + 1,
-        width = 1,
-        style = "minimal",
-        border = "none",
-        zindex = 2000,
-    })
+    if self.config.ui.menu.scrollbar then
+        self.scrollbar.win = vim.api.nvim_open_win(self.scrollbar.buf, false, {
+            height = height,
+            relative = "cursor",
+            col = -offset + width,
+            row = position == "below" and 2 or -(height + 2) + 1,
+            width = 1,
+            style = "minimal",
+            border = "none",
+            zindex = 2000,
+        })
+    end
 end
 
 function Menu:close()
