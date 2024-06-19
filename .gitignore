@@ -1,3 +1,5 @@
 todo.norg
 .libraries/
 .luarc.json
+.direnv
+result

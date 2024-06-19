@@ -50,3 +50,18 @@ These two steps can be executed together with
 ```bash
 make dev_setup
 ```
+
+## Nix dev environment
+
+For nix users, all of these tools are made available in a dev shell.
+
+Run
+```bash
+nix develop
+```
+
+You can test-drive a minimal Neovim package with only neocomplete.nvim and its dependencies
+installed by running
+```bash
+nix run .#nvim
+```
