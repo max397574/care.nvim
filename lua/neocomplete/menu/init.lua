@@ -13,6 +13,9 @@ function Menu.new()
     self.buf = vim.api.nvim_create_buf(false, true)
     self.winnr = nil
     self.index = 0
+    self.scrollbar = {}
+    self.scrollbar.win = nil
+    self.scrollbar.buf = vim.api.nvim_create_buf(false, true)
     return self
 end
 
@@ -54,13 +57,26 @@ function Menu:open_win(offset)
         border = self.config.ui.menu.border,
         row = position == "below" and 1 or -(height + 2),
         col = -offset,
+        zindex = 1000,
     })
     vim.wo[self.winnr][self.buf].scrolloff = 0
+
+    self.scrollbar.win = vim.api.nvim_open_win(self.scrollbar.buf, false, {
+        height = height,
+        relative = "cursor",
+        col = -offset + width,
+        row = position == "below" and 2 or -(height + 2) + 1,
+        width = 1,
+        style = "minimal",
+        border = "none",
+        zindex = 2000,
+    })
 end
 
 function Menu:close()
     -- TODO: reset more things?
     pcall(vim.api.nvim_win_close, self.winnr, true)
+    pcall(vim.api.nvim_win_close, self.scrollbar.win, true)
     Menu.winnr = nil
 end
 

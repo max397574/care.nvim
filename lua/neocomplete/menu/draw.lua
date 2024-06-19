@@ -40,6 +40,7 @@ return function(self)
     local aligned_table = format_utils.get_align_tables(self.entries)
     local column = 0
     vim.api.nvim_buf_clear_namespace(self.buf, self.ns, 0, -1)
+    vim.api.nvim_buf_clear_namespace(self.scrollbar.buf, self.ns, 0, -1)
     local spaces = {}
     for _ = 1, #self.entries do
         table.insert(spaces, (" "):rep(width))
@@ -92,5 +93,19 @@ return function(self)
         for _, idx in ipairs(entry.matches or {}) do
             vim.api.nvim_buf_add_highlight(self.buf, self.ns, "@neocomplete.match", line - 1, idx - 1, idx)
         end
+    end
+
+    local top_visible = vim.fn.line("w0", self.winnr)
+    local bottom_visible = vim.fn.line("w$", self.winnr)
+    local visible_entries = bottom_visible - top_visible + 1
+    local scrollbar_height =
+        math.max(math.min(math.floor(visible_entries * (visible_entries / #self.entries) + 0.5), visible_entries), 1)
+    vim.api.nvim_buf_set_lines(self.scrollbar.buf, 0, -1, false, vim.split(string.rep(" ", visible_entries + 1), ""))
+    local scrollbar_offset = math.max(math.floor(visible_entries * (top_visible / #self.entries)), 1)
+    for i = scrollbar_offset, scrollbar_offset + scrollbar_height do
+        vim.api.nvim_buf_set_extmark(self.scrollbar.buf, self.ns, i - 1, 0, {
+            virt_text = { { self.config.ui.menu.scrollbar, "PmenuSbar" } },
+            virt_text_pos = "overlay",
+        })
     end
 end

@@ -22,6 +22,8 @@
 ---@field max_height integer
 --- The border of the completion menu
 ---@field border string|string[]|string[][]
+--- Character used for the scrollbar
+---@field scrollbar string
 --- Position of the menu
 ---@field position "auto"|"bottom"|"top"
 --- How an entry should be formatted
@@ -34,5 +36,7 @@
 ---@field max_height integer
 --- The border of the documentation view
 ---@field border string|string[]|string[][]
+--- Character used for the scrollbar
+---@field scrollbar string
 --- The icons used for the different completion item types
 ---@alias neocomplete.config.ui.type_icons table<string, string>

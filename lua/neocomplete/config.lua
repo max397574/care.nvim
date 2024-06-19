@@ -22,11 +22,13 @@ config.defaults = {
                     { { type_icons[entry_kind] or "", ("@neocomplete.type.%s"):format(entry_kind) } },
                 }
             end,
+            scrollbar = "█",
             alignment = {},
         },
         docs_view = {
             max_height = 7,
             border = "rounded",
+            scrollbar = "█",
         },
         type_icons = {
             Class = "  ",

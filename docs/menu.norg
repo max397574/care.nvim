@@ -9,7 +9,7 @@ categories: [
     types
 ]
 created: 2024-05-29T11:30:25+0100
-updated: 2024-06-18T19:31:41+0100
+updated: 2024-06-19T21:37:01+0100
 tangle: {
     languages: {
         lua: ../lua/neocomplete/types/menu.lua
@@ -195,4 +195,16 @@ version: 1.1.1
    @code lua
    --- Index of selected item
    ---@field index integer
+   @end
+
+** Scrollbar
+   This field is used to store some data for drawing the scrollbar.
+   #tangle
+   @code lua
+   --- Data for the scrollbar
+   ---@field scrollbar neocomplete.scrollbar_data
+
+   ---@class neocomplete.scrollbar_data
+   ---@field buf integer
+   ---@field win integer
    @end

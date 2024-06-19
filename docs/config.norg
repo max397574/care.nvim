@@ -112,13 +112,16 @@ version: 1.1.1
    ---@class neocomplete.config.ui.menu
    @end
 
-   It includes some basic window properties like the border and the maximum height of the window.
+   It includes some basic window properties like the border and the maximum height of the window. It
+   also has a field to define the character used for the scrollbar.
    #tangle
    @code lua
    --- Maximum height of the menu
    ---@field max_height integer
    --- The border of the completion menu
    ---@field border string|string[]|string[][]
+   --- Character used for the scrollbar
+   ---@field scrollbar string
    @end
 
 ** Position
@@ -171,13 +174,16 @@ version: 1.1.1
    --- Configuration of the completion menu of neocomplete.nvim
    ---@class neocomplete.config.ui.docs
    @end
-   It consists of window properties like the border and the maximum height of the window.
+   It consists of some basic window properties like the border and the maximum height of the window.
+   It also has a field to define the character used for the scrollbar.
    #tangle
    @code lua
    --- Maximum height of the documentation view
    ---@field max_height integer
    --- The border of the documentation view
    ---@field border string|string[]|string[][]
+   --- Character used for the scrollbar
+   ---@field scrollbar string
    @end
 
 ** Type Icons

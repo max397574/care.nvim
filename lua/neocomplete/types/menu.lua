@@ -36,3 +36,9 @@
 ---@field winnr integer?
 --- Index of selected item
 ---@field index integer
+--- Data for the scrollbar
+---@field scrollbar neocomplete.scrollbar_data
+
+---@class neocomplete.scrollbar_data
+---@field buf integer
+---@field win integer
