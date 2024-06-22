@@ -11,4 +11,18 @@ function Entry.new(completion_item, source)
     return self
 end
 
+function Entry:get_insert_text()
+    local completion_item = self.completion_item
+    local text
+    if completion_item.textEdit then
+        text = completion_item.textEdit.newText
+    elseif completion_item.insertText then
+        text = completion_item.insertText
+    else
+        text = completion_item.label
+    end
+    ---@type string
+    return text
+end
+
 return Entry

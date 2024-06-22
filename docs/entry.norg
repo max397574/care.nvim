@@ -39,6 +39,15 @@ version: 1.1.1
    ---@field new fun(completion_item: lsp.CompletionItem, source: neocomplete.internal_source): neocomplete.entry
    @end
 
+* Get insert text
+  This function is used to get the text that will be inserted for the entry. This is important for
+  the ghost text.
+   #tangle
+   @code lua
+   --- Get insert text
+   ---@field get_insert_text fun(self: neocomplete.entry): string
+   @end
+
 * Fields
 ** Source
    This is the source from which the entry came. This is important for using the right keyword
