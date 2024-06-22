@@ -102,6 +102,9 @@ return function(self)
     local top_visible = vim.fn.line("w0", self.winnr)
     local bottom_visible = vim.fn.line("w$", self.winnr)
     local visible_entries = bottom_visible - top_visible + 1
+    if visible_entries >= #self.entries then
+        return
+    end
     local scrollbar_height =
         math.max(math.min(math.floor(visible_entries * (visible_entries / #self.entries) + 0.5), visible_entries), 1)
     vim.api.nvim_buf_set_lines(self.scrollbar.buf, 0, -1, false, vim.split(string.rep(" ", visible_entries + 1), ""))
