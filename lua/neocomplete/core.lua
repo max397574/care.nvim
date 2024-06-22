@@ -7,6 +7,7 @@ function core.new()
     local self = setmetatable({}, { __index = core })
     self.context = require("neocomplete.context").new()
     self.menu = require("neocomplete.menu").new()
+    self.blocked = false
     return self
 end
 
@@ -51,7 +52,17 @@ function core.setup(self)
     })
 end
 
+function core:block()
+    self.blocked = true
+    return vim.schedule_wrap(function()
+        self.blocked = false
+    end)
+end
+
 function core.on_change(self)
+    if self.blocked then
+        return
+    end
     self.context = require("neocomplete.context").new(self.context)
     if not self.context:changed() then
         return

@@ -55,6 +55,17 @@ version: 1.1.1
    ---@field snippet_expansion fun(string): nil
    @end
 
+** Selection behavior
+   With the selection behavior the user can determine what happens when selecting an entry. This can
+   either be `select` or `insert`. Selecting will just select the entry and do nothing else. Insert
+   will actually insert the text of the entry (this is not necessarily the whole text).
+
+   #tangle
+   @code lua
+   --- Behavior when selecting entry
+   ---@field selection_behavior "select"|"insert"
+   @end
+
 ** Keyword pattern
    Pattern used to determine keywords, used to determine what to use for filtering and what to
    remove if insert text is used.
@@ -104,6 +115,15 @@ version: 1.1.1
   ---@field type_icons neocomplete.config.ui.type_icons
   @end
 
+*** Ghost text
+    with this option the user can determine if ghost text should be displayed. Ghost text is just
+    virtual text which shows a preview of the entry.
+    #tangle
+    @code lua
+    --- Whether to show ghost text
+    ---@field ghost_text boolean
+    @end
+
 ** Menu
    This configuration should allow you to completely adapt the completion menu to your likings.
    #tangle
@@ -144,12 +164,12 @@ version: 1.1.1
    You could do that like this:
    @code lua
    format_entry = function(entry)
-       return {
-           -- The first section with the two chunks for the label and the icon
-           { { entry.label .. " ", "MyRedHlGroup" }, { entry.kind, "HighlightKind" .. entry.kind } }
-           -- The second section for the source
-           { { entry.source, "MyBlueHlGroup" } }
-       }
+   return {
+   -- The first section with the two chunks for the label and the icon
+   { { entry.label .. " ", "MyRedHlGroup" }, { entry.kind, "HighlightKind" .. entry.kind } }
+   -- The second section for the source
+   { { entry.source, "MyBlueHlGroup" } }
+   }
    end,
    alignment = { "left", "right" }
    @end

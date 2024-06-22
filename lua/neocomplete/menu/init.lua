@@ -80,6 +80,7 @@ function Menu:close()
     -- TODO: reset more things?
     pcall(vim.api.nvim_win_close, self.winnr, true)
     pcall(vim.api.nvim_win_close, self.scrollbar.win, true)
+    require("neocomplete.ghost_text").hide()
     Menu.winnr = nil
 end
 
@@ -96,7 +97,6 @@ function Menu:set_scroll(direction)
     local bottom_visible = vim.fn.line("w$", self.winnr)
     local visible_amount = bottom_visible - top_visible + 1
     local selected_line = self.index
-    print(visible_amount)
     if selected_line == 0 then
         scroll_to_line(1)
         return
@@ -119,6 +119,26 @@ function Menu:select_next(count)
     end
     self:set_scroll(1)
     self:draw()
+    local line = vim.api.nvim_get_current_line()
+    local cursor = vim.api.nvim_win_get_cursor(0)
+    local cursor_col = cursor[2]
+    local line_to_cursor = line:sub(1, cursor_col)
+    local entry = self:get_active_entry()
+    if not entry then
+        return
+    end
+    local word_boundary = vim.fn.match(line_to_cursor, entry.source:get_keyword_pattern() .. "$")
+
+    local prefix
+    if word_boundary == -1 then
+        prefix = ""
+    else
+        prefix = line:sub(word_boundary + 1, cursor_col)
+    end
+
+    if entry and self.config.ui.ghost_text then
+        require("neocomplete.ghost_text").show(entry, #prefix)
+    end
 end
 
 function Menu:select_prev(count)

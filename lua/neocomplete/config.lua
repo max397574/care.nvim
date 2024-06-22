@@ -57,10 +57,12 @@ config.defaults = {
             Value = " 󰎠 ",
             Variable = "  ",
         },
+        ghost_text = true,
     },
     snippet_expansion = function(snippet_body)
         vim.snippet.expand(snippet_body)
     end,
+    selection_behavior = "select",
     keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
     enabled = function()
         local enabled = true

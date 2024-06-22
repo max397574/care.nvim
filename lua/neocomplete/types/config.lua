@@ -4,6 +4,8 @@
 ---@field ui neocomplete.config.ui
 --- Function used to expand snippets
 ---@field snippet_expansion fun(string): nil
+--- Behavior when selecting entry
+---@field selection_behavior "select"|"insert"
 --- Pattern used to determine keywords
 ---@field keyword_pattern string
 --- Configuration for the ui of neocomplete
@@ -16,6 +18,8 @@
 ---@field docs_view neocomplete.config.ui.docs
 --- The icons for the different compltion item kinds
 ---@field type_icons neocomplete.config.ui.type_icons
+--- Whether to show ghost text
+---@field ghost_text boolean
 --- Configuration of the completion menu of neocomplete.nvim
 ---@class neocomplete.config.ui.menu
 --- Maximum height of the menu
@@ -23,7 +27,7 @@
 --- The border of the completion menu
 ---@field border string|string[]|string[][]
 --- Character used for the scrollbar
----@field scrollbar string
+---@field scrollbar string?
 --- Position of the menu
 ---@field position "auto"|"bottom"|"top"
 --- How an entry should be formatted
