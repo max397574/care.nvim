@@ -13,7 +13,7 @@ end
 ---@param self neocomplete.menu
 ---@param entry neocomplete.entry
 return function(self, entry)
-    vim.print(entry)
+    vim.print(entry.completion_item)
     local completion_item = entry.completion_item
     completion_item = normalize_entry(completion_item)
     local current_buf = vim.api.nvim_get_current_buf()
