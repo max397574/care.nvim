@@ -115,4 +115,24 @@ return function(self)
             virt_text_pos = "overlay",
         })
     end
+    local line = vim.api.nvim_get_current_line()
+    local cursor = vim.api.nvim_win_get_cursor(0)
+    local cursor_col = cursor[2]
+    local line_to_cursor = line:sub(1, cursor_col)
+    local entry = self:get_active_entry()
+    if not entry then
+        return
+    end
+    local word_boundary = vim.fn.match(line_to_cursor, entry.source:get_keyword_pattern() .. "$")
+
+    local prefix
+    if word_boundary == -1 then
+        prefix = ""
+    else
+        prefix = line:sub(word_boundary + 1, cursor_col)
+    end
+
+    if entry and self.config.ui.ghost_text then
+        require("neocomplete.ghost_text").show(entry, #prefix)
+    end
 end
