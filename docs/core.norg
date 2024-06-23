@@ -9,7 +9,7 @@ categories: [
     types
 ]
 created: 2023-11-15T17:42:46+0100
-updated: 2024-06-09T10:21:16+0100
+updated: 2024-06-23T15:31:35+0100
 tangle: {
     languages: {
         lua: ../lua/neocomplete/types/core.lua
@@ -56,6 +56,18 @@ version: 1.1.1
    ---@field on_change fun(neocomplete.core): nil
    @end
 
+** Block
+   The `block` method can be used to temporarily disable neocomplete. It returns a function which is
+   used to unblock it again.
+   This is used for the `insert` selection behavior where you don't want to get new completions when
+   changing the text.
+   #tangle
+   @code lua
+   --- Block neocomplete temporarily
+   --- Call return value to unblock
+   ---@field block fun(neocomplete.core): fun(): nil
+   @end
+
 ** Setup
    The setup function is used to setup neocomplete so it will actually provide autocompletion when
    typing by setting up an autocommand.
@@ -81,4 +93,13 @@ version: 1.1.1
    @code lua
    --- Menu instance of the core
    ---@field menu neocomplete.menu
+   @end
+
+** Blocked
+   This field is used by the {** Block} method. It just completely disables autocompletion when set
+   to true.
+   #tangle
+   @code lua
+   --- Block autocompletion
+   ---@field blocked boolean
    @end

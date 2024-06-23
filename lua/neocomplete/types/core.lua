@@ -1,14 +1,19 @@
---- The core of neocomplete where the main api functions are defined
+--- The core module of neocomplete
 ---@class neocomplete.core
 --- Create a new instance of the core
 ---@field new fun(): neocomplete.core
---- Context instance of the core
----@field context neocomplete.context
---- Menu instance of the core
----@field menu neocomplete.menu
 --- Complete
 ---@field complete fun(self: neocomplete.core, reason: neocomplete.completionReason?): nil
 --- The function that gets invoked when the text changes
 ---@field on_change fun(neocomplete.core): nil
+--- Block neocomplete temporarily
+--- Call return value to unblock
+---@field block fun(neocomplete.core): fun(): nil
 --- Setup core (for now autocommands)
 ---@field setup fun(self: neocomplete.core): nil
+--- Context instance of the core
+---@field context neocomplete.context
+--- Menu instance of the core
+---@field menu neocomplete.menu
+--- Block autocompletion
+---@field blocked boolean
