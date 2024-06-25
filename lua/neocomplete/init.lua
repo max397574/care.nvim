@@ -6,6 +6,7 @@ neocomplete.core = nil
 local function on_insert_enter()
     neocomplete.core = require("neocomplete.core").new()
     neocomplete.core:setup()
+    require("neocomplete.mappings").setup()
 end
 
 neocomplete.mappings = {
@@ -31,7 +32,6 @@ neocomplete.mappings = {
 
 --- Sets up neocomplete
 function neocomplete.setup()
-    require("neocomplete.mappings").setup()
     require("neocomplete.config").setup()
     require("neocomplete.highlights")
 
