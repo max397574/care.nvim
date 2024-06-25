@@ -6,7 +6,6 @@ neocomplete.core = nil
 local function on_insert_enter()
     neocomplete.core = require("neocomplete.core").new()
     neocomplete.core:setup()
-    require("neocomplete.mappings").setup()
 end
 
 neocomplete.mappings = {
@@ -23,15 +22,16 @@ neocomplete.mappings = {
         neocomplete.core.menu:close()
     end,
     select_prev = function(count)
-        neocomplete.core.menu:select_next(count)
+        neocomplete.core.menu:select_prev(count)
     end,
     select_next = function(count)
-        neocomplete.core.menu:select_prev(count)
+        neocomplete.core.menu:select_next(count)
     end,
 }
 
 --- Sets up neocomplete
 function neocomplete.setup()
+    require("neocomplete.mappings").setup()
     require("neocomplete.config").setup()
     require("neocomplete.highlights")
 

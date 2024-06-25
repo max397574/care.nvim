@@ -113,6 +113,7 @@ function Menu:set_scroll(direction)
 end
 
 function Menu:select_next(count)
+    count = count or 1
     self.index = self.index + count
     if self.index > #self.entries then
         self.index = self.index - #self.entries - 1
@@ -122,6 +123,7 @@ function Menu:select_next(count)
 end
 
 function Menu:select_prev(count)
+    count = count or 1
     self.index = self.index - count
     if self.index < 0 then
         self.index = #self.entries + self.index + 1
