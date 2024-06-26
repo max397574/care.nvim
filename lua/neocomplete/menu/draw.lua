@@ -115,6 +115,7 @@ return function(self)
             virt_text_pos = "overlay",
         })
     end
+
     local line = vim.api.nvim_get_current_line()
     local cursor = vim.api.nvim_win_get_cursor(0)
     local cursor_col = cursor[2]
