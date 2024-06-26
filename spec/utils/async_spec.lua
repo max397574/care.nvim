@@ -29,7 +29,7 @@ describe("Throttle", function()
             return count == 2
         end)
         local ms_passed = vim.uv.now() - start
-        assert.is.truthy(ms_passed > 100 and ms_passed < 200)
+        assert.is.truthy(ms_passed >= 100 and ms_passed < 200)
     end)
 
     it("doesn't queue up more than one call", function()
