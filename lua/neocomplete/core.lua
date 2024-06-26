@@ -31,8 +31,13 @@ function core:complete(reason)
                     vim.list_extend(entries, items)
                     vim.schedule(function()
                         if remaining == 0 then
+                            local filtered_entries = vim.iter(entries)
+                                :filter(function(entry)
+                                    return not entry.score or entry.score > 0
+                                end)
+                                :totable()
                             -- TODO: source priority and max entries
-                            self.menu:open(entries, offset)
+                            self.menu:open(filtered_entries, offset)
                         end
                     end)
                 end

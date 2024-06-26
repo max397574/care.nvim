@@ -29,18 +29,20 @@ function sorter.sort(entries, prefix)
         entries[res[1]].score = res[3]
         entries[res[1]].matches = res[2]
     end
-
-    local filtered_entries = vim.iter(entries)
-        :filter(function(entry)
-            return entry.score and entry.score > 0
+    entries = vim.iter(entries)
+        :map(function(entry)
+            if not entry.score then
+                entry.score = 0
+            end
+            return entry
         end)
         :totable()
 
-    table.sort(filtered_entries, function(a0, a1)
+    table.sort(entries, function(a0, a1)
         return a0.score > a1.score
     end)
 
-    return filtered_entries
+    return entries
 end
 
 return sorter
