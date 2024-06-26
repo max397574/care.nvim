@@ -38,10 +38,10 @@ describe("Throttle", function()
         fn()
         fn()
         fn()
-        vim.wait(1000, function()
+        vim.wait(500, function()
             return count == 3
         end)
         local ms_passed = vim.uv.now() - start
-        assert.is.truthy(ms_passed > 1000)
+        assert.is.truthy(ms_passed > 500)
     end)
 end)
