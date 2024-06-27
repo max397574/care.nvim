@@ -43,12 +43,12 @@ end
 
 ---Returns `amount` completion items which have a `label` defined
 ---@param amount integer
----@return lsp.CompletionItem[]
+---@return neocomplete.entry[]
 function entry_data.label_only(amount)
     ---@type lsp.CompletionItem[]
     local ret = {}
     for i = 1, amount do
-        table.insert(ret, { label = "test" .. i })
+        table.insert(ret, require("neocomplete.entry").new({ label = "test" .. i }, example_source()))
     end
     return ret
 end
@@ -60,7 +60,13 @@ function entry_data.minimal(amount)
     ---@type lsp.CompletionItem[]
     local ret = {}
     for i = 1, amount do
-        table.insert(ret, { label = "test" .. i, kind = (i % #kinds) + 1, source = example_source() })
+        table.insert(
+            ret,
+            require("neocomplete.entry").new(
+                { label = "test" .. i, kind = (i % #kinds) + 1, source = example_source() },
+                example_source()
+            )
+        )
     end
     return ret
 end
