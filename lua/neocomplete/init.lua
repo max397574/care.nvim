@@ -18,6 +18,9 @@ neocomplete.mappings = {
     confirm = function()
         neocomplete.core.menu:confirm()
     end,
+    complete = function()
+        neocomplete.core:complete(2)
+    end,
     close = function()
         neocomplete.core.menu:close()
     end,
