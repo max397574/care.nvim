@@ -69,6 +69,9 @@ function core.on_change(self)
         return
     end
     self.context = require("neocomplete.context").new(self.context)
+    if not require("neocomplete.config").options.enabled() then
+        return
+    end
     if not self.context:changed() then
         return
     end
