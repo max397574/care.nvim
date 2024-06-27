@@ -8,7 +8,7 @@ local function on_insert_enter()
     neocomplete.core:setup()
 end
 
-neocomplete.mappings = {
+neocomplete.api = {
     get_fallback = function(key)
         return require("neocomplete.mappings").get_fallback(key)
     end,
