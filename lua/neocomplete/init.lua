@@ -30,6 +30,9 @@ neocomplete.api = {
     select_next = function(count)
         neocomplete.core.menu:select_next(count)
     end,
+    jump_to_entry = function(index)
+        neocomplete.core.menu.index = index
+    end,
 }
 
 --- Sets up neocomplete
