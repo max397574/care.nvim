@@ -60,7 +60,7 @@ function Menu:open_win(offset)
         col = -offset,
         zindex = 1000,
     })
-    vim.wo[self.winnr][self.buf].scrolloff = 0
+    vim.wo[self.winnr][0].scrolloff = 0
 
     if self.config.ui.menu.scrollbar then
         self.scrollbar.win = vim.api.nvim_open_win(self.scrollbar.buf, false, {
