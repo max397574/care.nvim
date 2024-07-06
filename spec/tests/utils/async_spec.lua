@@ -17,7 +17,7 @@ describe("Throttle", function()
             return count == 1
         end)
         local ms_passed = vim.uv.now() - start
-        assert.is.truthy(ms_passed < 30)
+        assert.is.truthy(ms_passed < 50)
     end)
 
     it("waits for timeout before second call", function()

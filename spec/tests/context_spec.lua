@@ -1,10 +1,14 @@
 local Context = require("neocomplete.context")
 
 describe("Context", function()
+    before_each(function()
+        vim.api.nvim_buf_set_lines(0, 0, -1, false, {})
+        vim.api.nvim_win_set_cursor(0, { 1, 0 })
+    end)
     describe("create new", function()
         it("in middle of line", function()
             vim.fn.setline(1, "local function test(param) end")
-            vim.cmd.normal({ "f)l", bang = true })
+            vim.cmd.normal({ "0f)l", bang = true })
             vim.cmd.startinsert()
 
             local context = Context:new()
