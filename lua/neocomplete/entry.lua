@@ -2,13 +2,35 @@
 ---@diagnostic disable-next-line: missing-fields
 local Entry = {}
 
-function Entry.new(completion_item, source)
+function Entry.new(completion_item, source, context)
     ---@type neocomplete.entry
     local self = setmetatable({}, { __index = Entry })
     self.completion_item = completion_item
     self.source = source
+    self.context = context
     self.matches = {}
     return self
+end
+local function is_white(str)
+    return string.match(str, "^%s*$") ~= nil
+end
+
+function Entry:get_offset()
+    local offset, _ = vim.regex(self.source:get_keyword_pattern() .. "\\m$"):match_str(self.context.line_before_cursor)
+    offset = offset or #self.context.line_before_cursor
+    if self.completion_item.textEdit then
+        local range = self.completion_item.textEdit.insert or self.completion_item.textEdit.range
+        if range then
+            local c = range.start.character
+            for idx = c, self.context.cursor.col do
+                if not is_white(string.byte(self.context.line, idx)) then
+                    offset = idx
+                    break
+                end
+            end
+        end
+    end
+    return offset
 end
 
 function Entry:get_insert_text()
