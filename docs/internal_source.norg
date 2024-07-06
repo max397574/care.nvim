@@ -79,6 +79,6 @@ version: 1.1.1
    and to determine the characters used for filtering and sorting.
    #tangle
    @code lua
-   --- The entries recieved by last completion
+   --- The offset at which completions from source were loaded
    ---@field get_offset fun(self: neocomplete.internal_source, context: neocomplete.context): integer
    @end
