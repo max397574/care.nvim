@@ -13,67 +13,106 @@ end
 ---@param self neocomplete.menu
 ---@param entry neocomplete.entry
 return function(self, entry)
-    vim.print(entry.completion_item)
+    if _G.neocomplete_debug then
+        vim.print(entry.completion_item)
+        vim.print(entry.context)
+    end
+
+    local cur_ctx = require("neocomplete.context").new()
+    local unblock = require("neocomplete").core:block()
+
     local completion_item = entry.completion_item
     completion_item = normalize_entry(completion_item)
-    local current_buf = vim.api.nvim_get_current_buf()
-    local cursor_row, cursor_col = unpack(vim.api.nvim_win_get_cursor(0)) --- @type integer, integer
-    -- get cursor uses 1 based lines, rest of api 0 based
-    cursor_row = cursor_row - 1
-    local line = vim.api.nvim_get_current_line()
-    local line_to_cursor = line:sub(1, cursor_col)
-    -- Have to add $ to keyword pattern because we just match on line to cursor
-    local word_boundary = vim.fn.match(line_to_cursor, entry.source:get_keyword_pattern() .. "$")
 
-    local prefix
-    if word_boundary == -1 then
-        prefix = ""
-    else
-        prefix = line:sub(word_boundary + 1, cursor_col)
-    end
+    vim.api.nvim_buf_set_text(
+        cur_ctx.bufnr,
+        cur_ctx.cursor.row - 1,
+        entry:get_offset(),
+        cur_ctx.cursor.row - 1,
+        cur_ctx.cursor.col,
+        { entry:get_insert_word() }
+    )
+    vim.api.nvim_win_set_cursor(0, { cur_ctx.cursor.row, entry:get_offset() + #entry:get_insert_word() })
+
+    cur_ctx = require("neocomplete.context").new()
+
+    vim.api.nvim_buf_set_text(
+        cur_ctx.bufnr,
+        cur_ctx.cursor.row - 1,
+        entry:get_offset(),
+        cur_ctx.cursor.row - 1,
+        cur_ctx.cursor.col,
+        {
+            string.sub(entry.context.line_before_cursor, entry:get_offset() + 1),
+        }
+    )
+    vim.api.nvim_win_set_cursor(0, { entry.context.cursor.row, entry.context.cursor.col })
+
+    cur_ctx = require("neocomplete.context").new()
 
     -- TODO: entry.insertTextMode
     local is_snippet = completion_item.insertTextFormat == 2
+    local snippet_text
 
-    if completion_item.textEdit and not is_snippet then
-        -- An edit which is applied to a document when selecting this completion.
-        -- When an edit is provided the value of `insertText` is ignored.
-
-        if completion_item.textEdit.range then
-            vim.lsp.util.apply_text_edits({ completion_item.textEdit }, current_buf, "utf-8")
-        else
-            -- TODO: config option to determine whether to pick insert or replace
-            local textEdit = { range = completion_item.textEdit.insert, newText = completion_item.textEdit.newText }
-            vim.lsp.util.apply_text_edits({ textEdit }, current_buf, "utf-8")
-        end
-    elseif completion_item.textEdit and is_snippet then
-        local textEdit
-        if completion_item.textEdit.range then
-            textEdit = { range = completion_item.textEdit.range, newText = "" }
-        else
-            -- TODO: config option to determine whether to pick insert or replace
-            textEdit = { range = completion_item.textEdit.insert, newText = "" }
-        end
-        vim.lsp.util.apply_text_edits({ textEdit }, current_buf, "utf-8")
-        vim.api.nvim_win_set_cursor(0, { textEdit.range.start.line + 1, textEdit.range.start.character })
-        self.config.snippet_expansion(completion_item.textEdit.newText)
+    if not completion_item.textEdit then
+        ---@diagnostic disable-next-line: missing-fields
+        completion_item.textEdit = {
+            newText = completion_item.insertText,
+        }
     else
-        -- TODO: confirm this is correct
-        -- remove prefix which was used for sorting, text edit should remove it
-        ---@see lsp.CompletionItem.insertText
-        local start_char = cursor_col - #prefix
-        vim.api.nvim_buf_set_text(0, cursor_row, start_char, cursor_row, start_char + #prefix, { "" })
-        if is_snippet then
-            self.config.snippet_expansion(completion_item.insertText)
-        else
-            -- TODO: check if should be `start_char - 1`
-            vim.api.nvim_buf_set_text(0, cursor_row, start_char, cursor_row, start_char, { completion_item.insertText })
+        if not completion_item.textEdit.range then
+            -- TODO: config option to determine whether to pick insert or replace
+            ---@type lsp.TextEdit
+            completion_item.textEdit =
+                { range = completion_item.textEdit.insert, newText = completion_item.textEdit.newText }
         end
+    end
+
+    -- TODO: check out cmp insert and replace range
+    completion_item.textEdit.range = {
+        start = {
+            character = entry:get_offset(),
+            line = entry.context.cursor.row - 1,
+        },
+        ["end"] = {
+            character = entry.context.cursor.col,
+            line = entry.context.cursor.row - 1,
+        },
+    }
+
+    local diff_before = math.max(0, entry.context.cursor.col - completion_item.textEdit.range.start.character)
+    local diff_after = math.max(0, completion_item.textEdit.range["end"].character - entry.context.cursor.col)
+
+    completion_item.textEdit.range.start.line = cur_ctx.cursor.row - 1
+    completion_item.textEdit.range.start.character = cur_ctx.cursor.col - diff_before
+    completion_item.textEdit.range["end"].line = cur_ctx.cursor.row - 1
+    completion_item.textEdit.range["end"].character = cur_ctx.cursor.col + diff_after
+
+    if is_snippet then
+        snippet_text = completion_item.textEdit.newText or completion_item.insertText
+        completion_item.textEdit.newText = ""
+    end
+
+    vim.lsp.util.apply_text_edits({ completion_item.textEdit }, cur_ctx.bufnr, "utf-16")
+
+    if is_snippet then
+        local start
+        -- TODO: if no longer needed? -> will always have range, choice should be made earlier one
+        if completion_item.textEdit.range then
+            start = completion_item.textEdit.range.start
+        else
+            -- TODO: config option to determine whether to pick insert or replace
+            start = completion_item.textEdit.insert.start
+        end
+        vim.api.nvim_win_set_cursor(0, { start.line + 1, start.character })
+        self.config.snippet_expansion(snippet_text)
     end
 
     if completion_item.additionalTextEdits and #completion_item.additionalTextEdits > 0 then
-        vim.lsp.util.apply_text_edits(completion_item.additionalTextEdits, current_buf, "utf-8")
+        vim.lsp.util.apply_text_edits(completion_item.additionalTextEdits, cur_ctx.bufnr, "utf-16")
     end
+
+    unblock()
 
     if completion_item.command then
         ---@diagnostic disable-next-line: param-type-mismatch

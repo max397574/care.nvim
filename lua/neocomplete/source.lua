@@ -26,8 +26,6 @@ function source.get_offset(self, context)
     if not context then
         return 0
     end
-    -- TODO: allow sources configuring their keyword pattern
-    local line = context.line
     local line_to_cursor = context.line_before_cursor
     local keyword_pattern = self:get_keyword_pattern()
     -- Can add $ to keyword pattern because we just match on line to cursor
@@ -36,8 +34,7 @@ function source.get_offset(self, context)
         return 0
     end
 
-    local prefix = line:sub(word_boundary + 1, context.cursor.col)
-    return #prefix
+    return context.cursor.col - word_boundary
 end
 
 return source

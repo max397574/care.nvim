@@ -67,7 +67,7 @@ function neocomplete_sources.complete(context, source, callback)
         function(items, is_incomplete)
             items = vim.iter(items or {})
                 :map(function(item)
-                    return Entry.new(item, source)
+                    return Entry.new(item, source, context)
                 end)
                 :totable()
 

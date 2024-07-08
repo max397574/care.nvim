@@ -1,5 +1,7 @@
 local neocomplete = {}
 
+_G.neocomplete_debug = false
+
 ---@type neocomplete.core
 neocomplete.core = nil
 

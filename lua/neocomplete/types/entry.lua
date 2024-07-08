@@ -2,14 +2,18 @@
 ---@class neocomplete.entry
 ---@field completion_item lsp.CompletionItem
 --- Creates a new entry
----@field new fun(completion_item: lsp.CompletionItem, source: neocomplete.internal_source): neocomplete.entry
+---@field new fun(completion_item: lsp.CompletionItem, source: neocomplete.internal_source, context: neocomplete.context): neocomplete.entry
 --- Get insert text
 ---@field get_insert_text fun(self: neocomplete.entry): string
 --- Get insert word
 ---@field get_insert_word fun(self: neocomplete.entry): string
 --- Source from which the entry came
 ---@field source neocomplete.internal_source
+--- Context in which entry was completed
+---@field context neocomplete.context
 --- Matches in filter text
 ---@field matches integer[]
 --- Score from filtering
 ---@field score number
+--- Get offset of entry
+---@field get_offset fun(self: neocomplete.entry): integer

@@ -10,5 +10,5 @@
 ---@field incomplete boolean
 --- Get the keyword pattern
 ---@field get_keyword_pattern fun(self: neocomplete.internal_source): string
---- The entries recieved by last completion
+--- The offset at which completions from source were loaded
 ---@field get_offset fun(self: neocomplete.internal_source, context: neocomplete.context): integer

@@ -9,7 +9,7 @@ categories: [
     types
 ]
 created: 2023-11-15T17:42:46+0100
-updated: 2024-06-23T14:32:14+0100
+updated: 2024-07-07T21:15:43+0100
 tangle: {
     languages: {
         lua: ../lua/neocomplete/types/entry.lua
@@ -36,7 +36,7 @@ version: 1.1.1
    #tangle
    @code lua
    --- Creates a new entry
-   ---@field new fun(completion_item: lsp.CompletionItem, source: neocomplete.internal_source): neocomplete.entry
+   ---@field new fun(completion_item: lsp.CompletionItem, source: neocomplete.internal_source, context: neocomplete.context): neocomplete.entry
    @end
 
 ** Get insert text
@@ -69,6 +69,15 @@ version: 1.1.1
    ---@field source neocomplete.internal_source
    @end
 
+** Context
+   This is the context in which the entry was completed. This is important to now what context text-
+   edits of the entry target.
+   #tangle
+   @code lua
+   --- Context in which entry was completed
+   ---@field context neocomplete.context
+   @end
+
 ** Matches
    Position of matches which were found during filtering. This is just used to highlight them in the
    completion menu with `@neocomplete.match`.
@@ -85,4 +94,12 @@ version: 1.1.1
    @code lua
    --- Score from filtering
    ---@field score number
+   @end
+
+** Get Offset
+   Essentially where entry insertion should happen (column)
+   #tangle
+   @code lua
+   --- Get offset of entry
+   ---@field get_offset fun(self: neocomplete.entry): integer
    @end

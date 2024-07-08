@@ -16,7 +16,7 @@ function ghost_text.show(entry, offset)
             virt_text = { { text_after_filter, "@neocomplete.ghost_text" } },
             virt_text_pos = "inline",
         })
-    elseif select_behavior == "select" then
+    elseif select_behavior == "insert" then
         vim.o.ul = vim.o.ul
         -- TODO: allow going back to original (filter) text
         local word = entry:get_insert_word()
