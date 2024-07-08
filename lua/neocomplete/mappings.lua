@@ -1,13 +1,5 @@
 local mappings = {}
 
-function mappings.get_fallback(key)
-    local lhs = ("<Plug>(NeocompleteFallback.%s)"):format(key)
-    vim.keymap.set("i", lhs, key, { noremap = false })
-    return function()
-        vim.api.nvim_feedkeys(vim.keycode(lhs), "im", false)
-    end
-end
-
 local function get_mapping(rhs)
     for _, map in pairs(vim.api.nvim_get_keymap("i")) do
         ---@diagnostic disable-next-line: undefined-field
@@ -23,7 +15,7 @@ local function map(plug, callback)
         if require("neocomplete").api.is_open() then
             callback()
         else
-            mappings.get_fallback(get_mapping(plug))()
+            vim.api.nvim_feedkeys(vim.keycode(get_mapping(plug)), "n", false)
         end
     end)
 end

@@ -51,8 +51,6 @@ local function do_complete()
     complete(completion_item, entry_context)
 end
 
-
-
 local start_time = os.clock()
 for _ = 1, 1000 do
     do_complete()
