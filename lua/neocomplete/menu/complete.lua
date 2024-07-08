@@ -13,8 +13,10 @@ end
 ---@param self neocomplete.menu
 ---@param entry neocomplete.entry
 return function(self, entry)
-    vim.print(entry.completion_item)
-    vim.print(entry.context)
+    if _G.neocomplete_debug then
+        vim.print(entry.completion_item)
+        vim.print(entry.context)
+    end
 
     local cur_ctx = require("neocomplete.context").new()
     local unblock = require("neocomplete").core:block()
