@@ -9,7 +9,7 @@ categories: [
     types
 ]
 created: 2023-11-15T17:42:46+0100
-updated: 2024-06-23T15:31:35+0100
+updated: 2024-07-10T21:06:51+0100
 tangle: {
     languages: {
         lua: ../lua/neocomplete/types/core.lua
@@ -102,4 +102,13 @@ version: 1.1.1
    @code lua
    --- Block autocompletion
    ---@field blocked boolean
+   @end
+
+** Last opened at
+   This variable is used to determine where a new completion window was opened for the last time.
+   This is used to determine when to reopen the completion window.
+   #tangle
+   @code lua
+   --- Column where a new menu was opened the last time
+   ---@field last_opened_at integer
    @end

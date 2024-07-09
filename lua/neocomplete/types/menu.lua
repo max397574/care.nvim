@@ -4,10 +4,6 @@
 ---@field new fun(): neocomplete.menu
 --- Draws the menu
 ---@field draw fun(self: neocomplete.menu): nil
---- Opens window for the menu
----@field open_win fun(self: neocomplete.menu, offset: integer): nil
---- Sets the scroll of the window
----@field set_scroll fun(self: neocomplete.menu, direction: integer): nil
 --- Returns true if completion window is visible
 ---@field is_open fun(self: neocomplete.menu): boolean
 --- Select next entry in menu
@@ -24,6 +20,10 @@
 ---@field confirm fun(self: neocomplete.menu): nil
 --- Completes with the given entry
 ---@field complete fun(self: neocomplete.menu, entry: neocomplete.entry): nil
+--- Readjust size of completino window
+---@field readjust_win fun(self: neocomplete.menu, offset: integer): nil
+--- Wrapper for utilities for the window of the menu
+---@field window neocomplete.menu_window
 --- Entries of the menu
 ---@field entries neocomplete.entry[]
 --- Namespace used for the menu
@@ -36,9 +36,5 @@
 ---@field winnr integer?
 --- Index of selected item
 ---@field index integer
---- Data for the scrollbar
----@field scrollbar neocomplete.scrollbar_data
-
----@class neocomplete.scrollbar_data
----@field buf integer
----@field win integer
+--- Buffer for the scrollbar
+---@field scrollbar_buf integer

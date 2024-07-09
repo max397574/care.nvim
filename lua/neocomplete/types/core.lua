@@ -17,3 +17,5 @@
 ---@field menu neocomplete.menu
 --- Block autocompletion
 ---@field blocked boolean
+--- Column where a new menu was opened the last time
+---@field last_opened_at integer
