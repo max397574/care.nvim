@@ -144,6 +144,7 @@ function Menu:open(entries, offset)
     if not self.winnr then
         self:open_win(offset)
         self:draw()
+        self:set_scroll(-1)
     end
 end
 
