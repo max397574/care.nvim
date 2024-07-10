@@ -8,6 +8,7 @@ function core.new()
     self.context = require("neocomplete.context").new()
     self.menu = require("neocomplete.menu").new()
     self.blocked = false
+    self.last_opened_at = -1
     return self
 end
 
@@ -37,7 +38,14 @@ function core:complete(reason)
                                 end)
                                 :totable()
                             -- TODO: source priority and max entries
-                            self.menu:open(filtered_entries, offset)
+                            local opened_at = self.context.cursor.col - offset
+                            if opened_at ~= self.last_opened_at then
+                                self.menu:open(filtered_entries, offset)
+                            else
+                                self.menu.entries = filtered_entries
+                                self.menu:readjust_win(offset)
+                            end
+                            self.last_opened_at = opened_at
                         end
                     end)
                 end
