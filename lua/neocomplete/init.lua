@@ -38,9 +38,9 @@ neocomplete.api = {
 }
 
 --- Sets up neocomplete
-function neocomplete.setup()
+function neocomplete.setup(options)
     require("neocomplete.mappings").setup()
-    require("neocomplete.config").setup()
+    require("neocomplete.config").setup(options)
     require("neocomplete.highlights")
 
     local augroup = vim.api.nvim_create_augroup("neocomplete", {})
