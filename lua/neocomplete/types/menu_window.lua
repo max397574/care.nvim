@@ -25,3 +25,11 @@
 ---@field set_scroll fun(self: neocomplete.menu_window, index: integer, direction: integer): nil
 --- Opens a new main window
 ---@field open_win fun(self: neocomplete.menu_window, entries: neocomplete.entry[], offset: integer): nil
+--- Change scroll of window
+---@field scroll table
+--- Where the window was last opened
+---@field opened_at {row: integer, col: integer}
+--- Instance of documentation view
+---@field docs_view neocomplete.docs_view
+--- Opens a new docs view
+---@field open_docs_view fun(self: neocomplete.menu_window, entry: neocomplete.entry, config: neocomplete.config.ui.docs): nil

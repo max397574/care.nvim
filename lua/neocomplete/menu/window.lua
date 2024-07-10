@@ -10,7 +10,9 @@ function Menu_window.new(buf, scrollbar_buf)
     self.config = require("neocomplete.config").options
     self.buf = buf
     self.position = nil
+    self.opened_at = {}
     self.scrollbar = {}
+    self.docs_view = nil
     self.scrollbar.win = nil
     self.max_height = nil
     self.scrollbar.buf = scrollbar_buf
@@ -50,6 +52,10 @@ function Menu_window:open_win(entries, offset)
     end
     self.max_height = height
     self.position = position
+    self.opened_at = {
+        row = cursor[1] - 1,
+        col = cursor[2] - offset,
+    }
     self.winnr = vim.api.nvim_open_win(self.buf, false, {
         relative = "cursor",
         height = height,
@@ -63,6 +69,26 @@ function Menu_window:open_win(entries, offset)
     })
     vim.wo[self.winnr][0].scrolloff = 0
     self:open_scrollbar_win(width, height, offset)
+end
+
+function Menu_window:open_docs_view(entry, config)
+    pcall(function()
+        vim.api.nvim_win_close(self.docs_view.winnr, true)
+    end)
+    self.docs_view = require("neocomplete.menu.docs_view").new(
+        entry,
+        self.opened_at.col + vim.api.nvim_win_get_width(self.winnr) - (vim.api.nvim_win_get_cursor(0)[2] - 1) + 1,
+        self.position,
+        config
+    )
+    vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "InsertCharPre", "InsertLeave" }, {
+        callback = function()
+            pcall(function()
+                vim.api.nvim_win_close(self.docs_view.winnr, true)
+            end)
+            self.docs_view = nil
+        end,
+    })
 end
 
 function Menu_window:readjust(entries, offset)

@@ -16,7 +16,7 @@ tangle: {
     delimiter: none
 }
 created: 2023-11-17T16:29:17+0100
-updated: 2024-06-22T17:04:13+0100
+updated: 2024-07-13T10:21:09+0100
 version: 1.1.1
 @end
 
@@ -201,6 +201,8 @@ version: 1.1.1
    @code lua
    --- Maximum height of the documentation view
    ---@field max_height integer
+   --- Maximum width of the documentation view
+   ---@field max_width integer
    --- The border of the documentation view
    ---@field border string|string[]|string[][]
    --- Character used for the scrollbar

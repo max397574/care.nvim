@@ -38,6 +38,8 @@
 ---@class neocomplete.config.ui.docs
 --- Maximum height of the documentation view
 ---@field max_height integer
+--- Maximum width of the documentation view
+---@field max_width integer
 --- The border of the documentation view
 ---@field border string|string[]|string[][]
 --- Character used for the scrollbar

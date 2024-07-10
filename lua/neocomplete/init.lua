@@ -35,6 +35,12 @@ neocomplete.api = {
     jump_to_entry = function(index)
         neocomplete.core.menu.index = index
     end,
+    doc_is_open = function()
+        return neocomplete.core and neocomplete.core.menu and neocomplete.core.menu:docs_visible()
+    end,
+    scroll_docs = function(delta)
+        neocomplete.core.menu:scroll_docs(delta)
+    end,
 }
 
 --- Sets up neocomplete

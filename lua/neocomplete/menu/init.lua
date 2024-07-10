@@ -28,6 +28,31 @@ function Menu.close(self)
     require("neocomplete.ghost_text").hide()
 end
 
+local function draw_docs(menu, entry, config)
+    if not entry then
+        return
+    end
+    if entry.source.source.resolve_item then
+        entry.source.source:resolve_item(entry.completion_item, function(resolved_item)
+            entry.completion_item = resolved_item
+            menu.window:open_docs_view(entry, config)
+        end)
+    else
+        menu.window:open_docs_view(entry, config)
+    end
+end
+
+function Menu:docs_visible()
+    return self.window and self.window.docs_view ~= nil
+end
+
+function Menu:scroll_docs(delta)
+    if not self:docs_visible() then
+        return
+    end
+    self.window.docs_view:scroll(delta)
+end
+
 function Menu:select_next(count)
     count = count or 1
     self.index = self.index + count
@@ -35,6 +60,7 @@ function Menu:select_next(count)
         self.index = self.index - #self.entries - 1
     end
     self.window:set_scroll(self.index, 1)
+    draw_docs(self, self:get_active_entry(), self.config.ui.docs_view)
     self:draw()
 end
 
@@ -45,6 +71,7 @@ function Menu:select_prev(count)
         self.index = #self.entries + self.index + 1
     end
     self.window:set_scroll(self.index, -1)
+    draw_docs(self, self:get_active_entry(), self.config.ui.docs_view)
     self:draw()
 end
 
