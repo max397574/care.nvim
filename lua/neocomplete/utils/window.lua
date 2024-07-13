@@ -1,25 +1,25 @@
----@type neocomplete.menu_window
+---@type neocomplete.window
 ---@diagnostic disable-next-line: missing-fields
-local Menu_window = {}
-local format_utils = require("neocomplete.utils.format")
+local Window = {}
 
-function Menu_window.new(buf, scrollbar_buf)
-    ---@type neocomplete.menu_window
-    local self = setmetatable({}, { __index = Menu_window })
+function Window.new()
+    ---@type neocomplete.window
+    local self = setmetatable({}, { __index = Window })
     self.winnr = nil
     self.config = require("neocomplete.config").options
-    self.buf = buf
+    self.ns = vim.api.nvim_create_namespace("neocomplete_window")
+    self.buf = vim.api.nvim_create_buf(false, true)
     self.position = nil
     self.opened_at = {}
     self.scrollbar = {}
-    self.docs_view = nil
     self.scrollbar.win = nil
     self.max_height = nil
-    self.scrollbar.buf = scrollbar_buf
+    self.current_scroll = 1
+    self.scrollbar.buf = vim.api.nvim_create_buf(false, true)
     return self
 end
 
-function Menu_window:open_win(entries, offset)
+function Window:open_cursor_relative(width, wanted_height, offset)
     if self:is_open() then
         self:close()
     end
@@ -27,11 +27,10 @@ function Menu_window:open_win(entries, offset)
     local screenpos = vim.fn.screenpos(0, cursor[1], cursor[2] + 1)
     local space_below = vim.o.lines - screenpos.row - 3 - vim.o.cmdheight
 
-    local width, _ = format_utils.get_width(entries)
     local space_above = vim.fn.line(".") - vim.fn.line("w0") - 1
     -- local space_below = vim.fn.line("w$") - vim.fn.line(".")
     local available_space = math.max(space_above, space_below)
-    local wanted_space = math.min(#entries, self.config.ui.menu.max_height)
+    local wanted_space = math.min(wanted_height, self.config.ui.menu.max_height)
     local position = "below"
     local config_position = self.config.ui.menu.position
     local height
@@ -71,88 +70,49 @@ function Menu_window:open_win(entries, offset)
     self:open_scrollbar_win(width, height, offset)
 end
 
-function Menu_window:open_docs_view(entry, config)
-    pcall(function()
-        vim.api.nvim_win_close(self.docs_view.winnr, true)
-    end)
-    self.docs_view = require("neocomplete.menu.docs_view").new(
-        entry,
-        self.opened_at.col + vim.api.nvim_win_get_width(self.winnr) - (vim.api.nvim_win_get_cursor(0)[2] - 1) + 1,
-        self.position,
-        config
-    )
-    vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "InsertCharPre", "InsertLeave" }, {
-        callback = function()
-            pcall(function()
-                vim.api.nvim_win_close(self.docs_view.winnr, true)
-            end)
-            self.docs_view = nil
-        end,
-    })
-end
-
-function Menu_window:readjust(entries, offset)
-    if not entries or #entries < 1 then
+function Window:readjust(content_len, width, offset)
+    if not content_len then
         self:close()
         return
     end
     if not self.winnr or not vim.api.nvim_win_is_valid(self.winnr) then
         self:close()
-        self:open_win(entries, offset)
-        self:set_scroll(0, -1)
         return
     end
-    local width, _ = format_utils.get_width(entries)
     local current_height = vim.api.nvim_win_get_height(self.winnr)
     local current_width = vim.api.nvim_win_get_width(self.winnr)
     if width ~= current_width then
         vim.api.nvim_win_set_width(self.winnr, width)
     end
-    if #entries ~= current_height then
-        vim.api.nvim_win_set_height(self.winnr, math.min(self.max_height, #entries))
+    if content_len ~= current_height then
+        vim.api.nvim_win_set_height(self.winnr, math.min(self.max_height, content_len))
     end
-    -- if self.position == "below" then
-    -- elseif self.position == "above" then
-    -- end
     self:set_scroll(0, -1)
-    self:open_scrollbar_win(width, math.min(current_height, #entries), offset)
+    self:open_scrollbar_win(width, math.min(current_height, content_len), offset)
 end
 
-function Menu_window:open_scrollbar_win(width, height, offset)
-    if self.scrollbar.win then
-        pcall(vim.api.nvim_win_close, self.scrollbar.win, true)
-        self.scrollbar.win = nil
-    end
-    if self.config.ui.menu.scrollbar then
-        self.scrollbar.win = vim.api.nvim_open_win(self.scrollbar.buf, false, {
-            height = height,
-            relative = "cursor",
-            col = -offset + width,
-            row = self.position == "below" and 2 or -(height + 2) + 1,
-            width = 1,
-            style = "minimal",
-            border = "none",
-            zindex = 2000,
-        })
-    end
+function Window:scroll(delta)
+    self.current_scroll = self.current_scroll + delta
+    local top_visible = vim.fn.line("w0", self.winnr)
+    local bottom_visible = vim.fn.line("w$", self.winnr)
+    local visible_amount = bottom_visible - top_visible + 1
+    self.current_scroll = math.max(self.current_scroll, 1)
+    self.current_scroll =
+        math.min(self.current_scroll, #vim.api.nvim_buf_get_lines(self.buf, 0, -1, false) - visible_amount + 1)
+    vim.api.nvim_win_call(self.winnr, function()
+        vim.cmd("normal! " .. self.current_scroll .. "zt")
+    end)
+    self:draw_scrollbar()
 end
 
-function Menu_window:close()
-    pcall(vim.api.nvim_win_close, self.winnr, true)
-    self.winnr = nil
-    pcall(vim.api.nvim_win_close, self.scrollbar.win, true)
-    self.scrollbar.win = nil
-    self.max_height = nil
-    self.position = nil
-end
-
-function Menu_window:set_scroll(index, direction)
+function Window:set_scroll(index, direction)
     --- Scrolls to a certain line in the window
     --- This line will be at the top of the window
     ---@param line integer
     local function scroll_to_line(line)
         vim.api.nvim_win_call(self.winnr, function()
             vim.cmd("normal! " .. line .. "zt")
+            self.current_scroll = line
         end)
     end
     local top_visible = vim.fn.line("w0", self.winnr)
@@ -174,12 +134,65 @@ function Menu_window:set_scroll(index, direction)
     end
 end
 
-function Menu_window:is_open()
+function Window:close()
+    pcall(vim.api.nvim_win_close, self.winnr, true)
+    self.winnr = nil
+    pcall(vim.api.nvim_win_close, self.scrollbar.win, true)
+    self.scrollbar.win = nil
+    self.max_height = nil
+    self.position = nil
+end
+
+function Window:open_scrollbar_win(width, height, offset)
+    if self.scrollbar.win then
+        pcall(vim.api.nvim_win_close, self.scrollbar.win, true)
+        self.scrollbar.win = nil
+    end
+    if self.config.ui.menu.scrollbar then
+        self.scrollbar.win = vim.api.nvim_open_win(self.scrollbar.buf, false, {
+            height = height,
+            relative = "cursor",
+            col = -offset + width,
+            row = self.position == "below" and 2 or -(height + 2) + 1,
+            width = 1,
+            style = "minimal",
+            border = "none",
+            zindex = 2000,
+        })
+    end
+end
+
+function Window:draw_scrollbar()
+    if not self:scrollbar_is_open() then
+        return
+    end
+    vim.api.nvim_buf_clear_namespace(self.scrollbar.buf, self.ns, 0, -1)
+
+    local total_lines = #vim.api.nvim_buf_get_lines(self.buf, 0, -1, false)
+    local top_visible = vim.fn.line("w0", self.winnr)
+    local bottom_visible = vim.fn.line("w$", self.winnr)
+    local visible_lines = bottom_visible - top_visible + 1
+    if visible_lines >= total_lines then
+        return
+    end
+    local scrollbar_height =
+        math.max(math.min(math.floor(visible_lines * (visible_lines / total_lines) + 0.5), visible_lines), 1)
+    vim.api.nvim_buf_set_lines(self.scrollbar.buf, 0, -1, false, vim.split(string.rep(" ", visible_lines + 1), ""))
+    local scrollbar_offset = math.max(math.floor(visible_lines * (top_visible / total_lines)), 1)
+    for i = scrollbar_offset, scrollbar_offset + scrollbar_height do
+        vim.api.nvim_buf_set_extmark(self.scrollbar.buf, self.ns, i - 1, 0, {
+            virt_text = { { self.config.ui.menu.scrollbar, "PmenuSbar" } },
+            virt_text_pos = "overlay",
+        })
+    end
+end
+
+function Window:is_open()
     return self.winnr ~= nil
 end
 
-function Menu_window:scrollbar_is_open()
+function Window:scrollbar_is_open()
     return self.scrollbar.win ~= nil
 end
 
-return Menu_window
+return Window

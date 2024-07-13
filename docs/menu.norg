@@ -9,7 +9,7 @@ categories: [
     types
 ]
 created: 2024-05-29T11:30:25+0100
-updated: 2024-07-10T19:00:55+0100
+updated: 2024-07-13T21:57:35+0100
 tangle: {
     languages: {
         lua: ../lua/neocomplete/types/menu.lua
@@ -135,12 +135,20 @@ version: 1.1.1
    @end
 
 * Fields
-** Window
+** Menu Window
    #tangle
    @code lua
    --- Wrapper for utilities for the window of the menu
-   ---@field window neocomplete.menu_window
+   ---@field menu_window neocomplete.window
    @end
+
+** Docs Window
+   #tangle
+   @code lua
+   --- Wrapper for utilities for the window of the docs
+   ---@field docs_window neocomplete.window
+   @end
+
 ** Entries
    This field is used to store all the entries of the completion menu.
    #tangle
