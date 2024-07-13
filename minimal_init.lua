@@ -43,6 +43,22 @@ local plugins = {
             vim.keymap.set("i", "<tab>", "<Plug>(NeocompleteSelectNext)")
             vim.keymap.set("i", "<s-tab>", "<Plug>(NeocompleteSelectPrev)")
 
+            vim.keymap.set("i", "<c-f>", function()
+                if require("neocomplete").api.doc_is_open() then
+                    require("neocomplete").api.scroll_docs(4)
+                else
+                    vim.api.nvim_feedkeys(vim.keycode("<c-f>"), "n", false)
+                end
+            end)
+
+            vim.keymap.set("i", "<c-d>", function()
+                if require("neocomplete").api.doc_is_open() then
+                    require("neocomplete").api.scroll_docs(-4)
+                else
+                    vim.api.nvim_feedkeys(vim.keycode("<c-f>"), "n", false)
+                end
+            end)
+
             vim.api.nvim_create_autocmd("InsertLeave", {
                 callback = function()
                     require("neocomplete").core.menu:close()
