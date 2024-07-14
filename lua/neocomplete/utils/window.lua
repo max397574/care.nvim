@@ -139,6 +139,8 @@ function Window:close()
     self.winnr = nil
     pcall(vim.api.nvim_win_close, self.scrollbar.win, true)
     self.scrollbar.win = nil
+    self.current_scroll = 1
+    self.opened_at = {}
     self.max_height = nil
     self.position = nil
 end
