@@ -76,8 +76,7 @@ function Window:open_cursor_relative(width, wanted_height, offset, config)
 end
 
 function Window:readjust(content_len, width, offset)
-    local border = vim.api.nvim_win_get_config(self.winnr).border
-    local has_border = border and border ~= "none"
+    local win_data = self:get_data()
 
     if not content_len then
         self:close()
@@ -87,28 +86,29 @@ function Window:readjust(content_len, width, offset)
         self:close()
         return
     end
-    local current_height = vim.api.nvim_win_get_height(self.winnr)
-    local current_width = vim.api.nvim_win_get_width(self.winnr)
-    if width ~= current_width then
+    if width ~= win_data.width_without_border then
         vim.api.nvim_win_set_width(self.winnr, width)
     end
-    if content_len ~= current_height then
-        vim.api.nvim_win_set_height(self.winnr, math.min(self.max_height - (has_border and 2 or 0), content_len))
+    if content_len ~= win_data.height_without_border then
+        vim.api.nvim_win_set_height(
+            self.winnr,
+            math.min(self.max_height - (win_data.has_border and 2 or 0), content_len)
+        )
     end
     self:set_scroll(0, -1)
-    self:open_scrollbar_win(width, math.min(current_height, content_len), offset)
+    self:open_scrollbar_win(width, math.min(win_data.height_without_border, content_len), offset)
 end
 
 function Window:scroll(delta)
     self.current_scroll = self.current_scroll + delta
-    local top_visible = vim.fn.line("w0", self.winnr)
-    local bottom_visible = vim.fn.line("w$", self.winnr)
-    local visible_amount = bottom_visible - top_visible + 1
+    local win_data = self:get_data()
     self.current_scroll = math.max(self.current_scroll, 1)
     self.current_scroll =
-        math.min(self.current_scroll, #vim.api.nvim_buf_get_lines(self.buf, 0, -1, false) - visible_amount + 1)
+        math.min(self.current_scroll, #vim.api.nvim_buf_get_lines(self.buf, 0, -1, false) - win_data.visible_lines + 1)
     vim.api.nvim_win_call(self.winnr, function()
-        vim.cmd("normal! " .. self.current_scroll .. "zt")
+        vim.api.nvim_win_call(self.winnr, function()
+            vim.fn.winrestview({ topline = self.current_scroll, lnum = self.current_scroll })
+        end)
     end)
     self:draw_scrollbar()
 end
@@ -119,27 +119,40 @@ function Window:set_scroll(index, direction)
     ---@param line integer
     local function scroll_to_line(line)
         vim.api.nvim_win_call(self.winnr, function()
-            vim.cmd("normal! " .. line .. "zt")
-            self.current_scroll = line
+            vim.fn.winrestview({ topline = line, lnum = line })
         end)
+        self.current_scroll = line
     end
-    local top_visible = vim.fn.line("w0", self.winnr)
-    local bottom_visible = vim.fn.line("w$", self.winnr)
-    local visible_amount = bottom_visible - top_visible + 1
+    local win_data = self:get_data()
     local selected_line = index
     if selected_line == 0 then
         scroll_to_line(1)
         return
-    elseif selected_line >= top_visible and selected_line <= bottom_visible then
+    elseif selected_line >= win_data.first_visible_line and selected_line <= win_data.last_visible_line then
         return
-    elseif direction == 1 and selected_line > bottom_visible then
-        scroll_to_line(selected_line - visible_amount + 1)
-    elseif direction == -1 and selected_line < top_visible then
+    elseif direction == 1 and selected_line > win_data.last_visible_line then
+        scroll_to_line(selected_line - win_data.visible_lines + 1)
+    elseif direction == -1 and selected_line < win_data.first_visible_line then
         scroll_to_line(selected_line)
-    elseif direction == -1 and selected_line > bottom_visible then
+    elseif direction == -1 and selected_line > win_data.last_visible_line then
         -- wrap around
-        scroll_to_line(selected_line - visible_amount + 1)
+        scroll_to_line(selected_line - win_data.visible_lines + 1)
     end
+end
+
+function Window:get_data()
+    local data = {}
+    data.first_visible_line = vim.fn.line("w0", self.winnr)
+    data.last_visible_line = vim.fn.line("w$", self.winnr)
+    data.visible_lines = data.last_visible_line - data.first_visible_line + 1
+    data.height_without_border = vim.api.nvim_win_get_height(self.winnr)
+    data.width_without_border = vim.api.nvim_win_get_width(self.winnr)
+    data.border = vim.api.nvim_win_get_config(self.winnr)
+    data.has_border = data.border and data.border ~= "none"
+    data.width_with_border = data.width_without_border + (data.has_border and 2 or 0)
+    data.height_with_border = data.height_without_border + (data.has_border and 2 or 0)
+    data.total_lines = #vim.api.nvim_buf_get_lines(self.buf, 0, -1, false)
+    return data
 end
 
 function Window:close()
@@ -178,17 +191,27 @@ function Window:draw_scrollbar()
     end
     vim.api.nvim_buf_clear_namespace(self.scrollbar.buf, self.ns, 0, -1)
 
-    local total_lines = #vim.api.nvim_buf_get_lines(self.buf, 0, -1, false)
-    local top_visible = vim.fn.line("w0", self.winnr)
-    local bottom_visible = vim.fn.line("w$", self.winnr)
-    local visible_lines = bottom_visible - top_visible + 1
-    if visible_lines >= total_lines then
+    local win_data = self:get_data()
+
+    if win_data.visible_lines >= win_data.total_lines then
         return
     end
-    local scrollbar_height =
-        math.max(math.min(math.floor(visible_lines * (visible_lines / total_lines) + 0.5), visible_lines), 1)
-    vim.api.nvim_buf_set_lines(self.scrollbar.buf, 0, -1, false, vim.split(string.rep(" ", visible_lines + 1), ""))
-    local scrollbar_offset = math.max(math.floor(visible_lines * (top_visible / total_lines)), 1)
+    local scrollbar_height = math.max(
+        math.min(
+            math.floor(win_data.visible_lines * (win_data.visible_lines / win_data.total_lines) + 0.5),
+            win_data.visible_lines
+        ),
+        1
+    )
+    vim.api.nvim_buf_set_lines(
+        self.scrollbar.buf,
+        0,
+        -1,
+        false,
+        vim.split(string.rep(" ", win_data.visible_lines + 1), "")
+    )
+    local scrollbar_offset =
+        math.max(math.floor(win_data.visible_lines * (win_data.first_visible_line / win_data.total_lines)), 1)
     for i = scrollbar_offset, scrollbar_offset + scrollbar_height do
         vim.api.nvim_buf_set_extmark(self.scrollbar.buf, self.ns, i - 1, 0, {
             virt_text = { { self.config.ui.menu.scrollbar, "PmenuSbar" } },

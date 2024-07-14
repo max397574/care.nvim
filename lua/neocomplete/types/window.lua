@@ -35,3 +35,16 @@
 ---@field ns integer
 --- Current scroll of the window
 ---@field current_scroll integer
+---@field get_data fun(self: neocomplete.window): neocomplete.window.data
+
+---@class neocomplete.window.data
+---@field first_visible_line integer
+---@field last_visible_line integer
+---@field visible_lines integer
+---@field height_without_border integer
+---@field width_without_border integer
+---@field border any
+---@field has_border boolean
+---@field width_with_border integer
+---@field height_with_border integer
+---@field total_lines integer
