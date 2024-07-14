@@ -9,7 +9,7 @@ categories: [
     types
 ]
 created: 2024-05-29T11:30:25+0100
-updated: 2024-07-13T21:57:35+0100
+updated: 2024-07-14T08:43:31+0100
 tangle: {
     languages: {
         lua: ../lua/neocomplete/types/menu.lua
@@ -132,6 +132,22 @@ version: 1.1.1
    @code lua
    --- Readjust size of completino window
    ---@field readjust_win fun(self: neocomplete.menu, offset: integer): nil
+   @end
+
+** Docs Visible
+   Checks whether docs are visible or not
+   #tangle
+   @code lua
+   --- Checks if docs are open
+   ---@field docs_visible fun(self: neocomplete.menu): boolean
+   @end
+
+** Scroll docs
+   Scroll up or down in the docs window by `delta` lines.
+   #tangle
+   @code lua
+   --- Scroll in the docs window
+   ---@field scroll_docs fun(self: neocomplete.menu, delta: integer): nil
    @end
 
 * Fields
