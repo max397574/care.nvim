@@ -165,6 +165,14 @@ version: 1.1.1
    ---@field docs_window neocomplete.window
    @end
 
+** Ghost text
+   The ghost text instance used to draw the ghost text.
+   #tangle
+   @code lua
+   --- Instance of ghost text to draw the ghost text
+   ---@field ghost_text neocomplete.ghost_text
+   @end
+
 ** Entries
    This field is used to store all the entries of the completion menu.
    #tangle

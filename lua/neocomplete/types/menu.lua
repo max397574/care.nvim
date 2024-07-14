@@ -30,6 +30,8 @@
 ---@field menu_window neocomplete.window
 --- Wrapper for utilities for the window of the docs
 ---@field docs_window neocomplete.window
+--- Instance of ghost text to draw the ghost text
+---@field ghost_text neocomplete.ghost_text
 --- Entries of the menu
 ---@field entries neocomplete.entry[]
 --- Namespace used for the menu

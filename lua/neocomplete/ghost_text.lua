@@ -1,6 +1,19 @@
+---@class neocomplete.ghost_text
+---@field entry neocomplete.entry?
+---@field ns integer
+---@field win integer?
+---@field extmark_id integer?
+---@field new fun(): neocomplete.ghost_text
+---@field config neocomplete.config.ui.ghost_text
+---@field hide fun(self: neocomplete.ghost_text): nil
+---@field show fun(self: neocomplete.ghost_text, entry: neocomplete.entry?, window: integer): nil
+
+---@type neocomplete.ghost_text
+---@diagnostic disable-next-line: missing-fields
 local Ghost_text = {}
 
 function Ghost_text.new()
+    ---@type neocomplete.ghost_text
     local self = setmetatable({}, { __index = Ghost_text })
     self.ns = vim.api.nvim_create_namespace("neocomplete.ghost_text")
     ---@type neocomplete.entry?
@@ -46,6 +59,10 @@ function Ghost_text.new()
 end
 
 function Ghost_text:show(entry, window)
+    if not entry then
+        self.entry = nil
+        return
+    end
     local changed = self.entry ~= entry
     self.entry = entry
     self.win = window

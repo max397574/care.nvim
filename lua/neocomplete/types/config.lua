@@ -19,7 +19,11 @@
 --- The icons for the different compltion item kinds
 ---@field type_icons neocomplete.config.ui.type_icons
 --- Configuration of ghost text
----@field ghost_text { enabled: boolean, position: "inline"|"overlay" }
+---@field ghost_text neocomplete.config.ui.ghost_text
+
+---@class neocomplete.config.ui.ghost_text
+---@field enabled boolean
+---@field position "inline"|"overlay"
 --- Configuration of the completion menu of neocomplete.nvim
 ---@class neocomplete.config.ui.menu
 --- Maximum height of the menu

@@ -16,7 +16,7 @@ tangle: {
     delimiter: none
 }
 created: 2023-11-17T16:29:17+0100
-updated: 2024-07-13T10:21:09+0100
+updated: 2024-07-14T09:46:26+0100
 version: 1.1.1
 @end
 
@@ -115,13 +115,17 @@ version: 1.1.1
   ---@field type_icons neocomplete.config.ui.type_icons
   @end
 
-*** Ghost text
+** Ghost text
     with this option the user can determine if ghost text should be displayed. Ghost text is just
     virtual text which shows a preview of the entry.
     #tangle
     @code lua
     --- Configuration of ghost text
-    ---@field ghost_text { enabled: boolean, position: "inline"|"overlay" }
+    ---@field ghost_text neocomplete.config.ui.ghost_text
+
+    ---@class neocomplete.config.ui.ghost_text
+    ---@field enabled boolean
+    ---@field position "inline"|"overlay"
     @end
 
 ** Menu
