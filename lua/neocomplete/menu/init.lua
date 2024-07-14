@@ -184,6 +184,7 @@ function Menu:confirm()
         return
     end
     require("neocomplete.menu.confirm")(entry)
+    self.ghost_text:hide()
     self.menu_window:close()
     self.docs_window:close()
 end
