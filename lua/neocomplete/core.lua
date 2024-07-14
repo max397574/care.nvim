@@ -39,11 +39,11 @@ function core:complete(reason)
                                 :totable()
                             -- TODO: source priority and max entries
                             local opened_at = self.context.cursor.col - offset
-                            if opened_at ~= self.last_opened_at then
-                                self.menu:open(filtered_entries, offset)
-                            else
+                            if opened_at == self.last_opened_at and self.menu:is_open() then
                                 self.menu.entries = filtered_entries
                                 self.menu:readjust_win(offset)
+                            else
+                                self.menu:open(filtered_entries, offset)
                             end
                             self.last_opened_at = opened_at
                         end

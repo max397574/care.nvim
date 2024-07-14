@@ -31,10 +31,7 @@ function Window:open_cursor_relative(width, wanted_height, offset)
     local cursor = vim.api.nvim_win_get_cursor(0)
     local screenpos = vim.fn.screenpos(0, cursor[1], cursor[2] + 1)
     local space_below = vim.o.lines - screenpos.row - vim.o.cmdheight - 1
-
     local space_above = vim.fn.line(".") - vim.fn.line("w0")
-    -- local space_below = vim.fn.line("w$") - vim.fn.line(".")
-    local available_space = math.max(space_above, space_below)
 
     local needed_space = math.min(needed_height, self.config.ui.menu.max_height)
     local position = "below"
@@ -47,7 +44,7 @@ function Window:open_cursor_relative(width, wanted_height, offset)
                 position = space_above > space_below and "above" or "below"
             end
         end
-        height = math.min(wanted_height, available_space - (has_border and 2 or 0))
+        height = math.min(wanted_height, (position == "below" and space_below or space_above) - (has_border and 2 or 0))
     elseif config_position == "bottom" then
         position = "below"
         height = math.min(wanted_height, space_below - (has_border and 2 or 0))
@@ -77,6 +74,9 @@ function Window:open_cursor_relative(width, wanted_height, offset)
 end
 
 function Window:readjust(content_len, width, offset)
+    local border = vim.api.nvim_win_get_config(self.winnr).border
+    local has_border = border and border ~= "none"
+
     if not content_len then
         self:close()
         return
@@ -91,7 +91,7 @@ function Window:readjust(content_len, width, offset)
         vim.api.nvim_win_set_width(self.winnr, width)
     end
     if content_len ~= current_height then
-        vim.api.nvim_win_set_height(self.winnr, math.min(self.max_height, content_len))
+        vim.api.nvim_win_set_height(self.winnr, math.min(self.max_height - (has_border and 2 or 0), content_len))
     end
     self:set_scroll(0, -1)
     self:open_scrollbar_win(width, math.min(current_height, content_len), offset)
@@ -196,7 +196,7 @@ function Window:draw_scrollbar()
 end
 
 function Window:is_open()
-    return self.winnr ~= nil
+    return self.winnr ~= nil and vim.api.nvim_win_is_valid(self.winnr)
 end
 
 function Window:scrollbar_is_open()
