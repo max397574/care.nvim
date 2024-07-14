@@ -63,7 +63,10 @@ config.defaults = {
             Value = "󰎠",
             Variable = "󰫧",
         },
-        ghost_text = true,
+        ghost_text = {
+            enabled = true,
+            position = "overlay",
+        },
     },
     snippet_expansion = function(snippet_body)
         vim.snippet.expand(snippet_body)

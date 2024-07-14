@@ -13,6 +13,7 @@ function Menu.new()
     self.index = 0
     self.menu_window = require("neocomplete.utils.window").new()
     self.docs_window = require("neocomplete.utils.window").new()
+    self.ghost_text = require("neocomplete.ghost_text").new()
     return self
 end
 
@@ -33,7 +34,7 @@ end
 function Menu.close(self)
     self.menu_window:close()
     self.docs_window:close()
-    require("neocomplete.ghost_text").hide()
+    self.ghost_text:hide()
 end
 
 ---@param menu neocomplete.menu
@@ -126,6 +127,7 @@ function Menu:select_next(count)
     draw_docs(self, self:get_active_entry(), self.config.ui.docs_view)
     self:draw()
     self.menu_window:draw_scrollbar()
+    self.ghost_text:show(self:get_active_entry(), vim.api.nvim_get_current_win())
 end
 
 function Menu:select_prev(count)
@@ -138,6 +140,7 @@ function Menu:select_prev(count)
     draw_docs(self, self:get_active_entry(), self.config.ui.docs_view)
     self:draw()
     self.menu_window:draw_scrollbar()
+    self.ghost_text:show(self:get_active_entry(), vim.api.nvim_get_current_win())
 end
 
 function Menu:open(entries, offset)
@@ -154,6 +157,7 @@ function Menu:open(entries, offset)
     self:draw()
     self.menu_window:draw_scrollbar()
     self.menu_window:set_scroll(self.index, -1)
+    self.ghost_text:show(self:get_active_entry(), vim.api.nvim_get_current_win())
 end
 
 function Menu:get_active_entry()

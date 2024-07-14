@@ -120,8 +120,8 @@ version: 1.1.1
     virtual text which shows a preview of the entry.
     #tangle
     @code lua
-    --- Whether to show ghost text
-    ---@field ghost_text boolean
+    --- Configuration of ghost text
+    ---@field ghost_text { enabled: boolean, position: "inline"|"overlay" }
     @end
 
 ** Menu

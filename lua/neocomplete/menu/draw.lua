@@ -112,6 +112,6 @@ return function(self)
     end
 
     if entry and self.config.ui.ghost_text then
-        require("neocomplete.ghost_text").show(entry, #prefix)
+        -- require("neocomplete.ghost_text").show(entry, #prefix)
     end
 end

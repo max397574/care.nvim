@@ -1,41 +1,66 @@
-local ghost_text = {}
+local Ghost_text = {}
 
-local ns = vim.api.nvim_create_namespace("neocomplete.ghost_text")
+function Ghost_text.new()
+    local self = setmetatable({}, { __index = Ghost_text })
+    self.ns = vim.api.nvim_create_namespace("neocomplete.ghost_text")
+    ---@type neocomplete.entry?
+    self.entry = nil
+    ---@type integer?
+    self.win = nil
+    ---@type integer?
+    self.extmark_id = nil
+    self.config = require("neocomplete.config").options.ui.ghost_text
+    vim.api.nvim_set_decoration_provider(self.ns, {
+        on_win = function(_, win)
+            return win == self.win
+        end,
+        on_line = function()
+            if self.extmark_id then
+                vim.api.nvim_buf_del_extmark(vim.api.nvim_get_current_buf(), self.ns, self.extmark_id)
+                self.extmark_id = nil
+            end
+            if (not self.config.enabled) or not self.entry then
+                return
+            end
+            local word = self.entry:get_insert_word()
+            local offset = self.entry:get_offset()
+            local cursor = vim.api.nvim_win_get_cursor(self.win)
+            local text_after_filter = word:sub(cursor[2] - offset + 1)
+            if self.config.position == "inline" then
+                self.extmark_id =
+                    vim.api.nvim_buf_set_extmark(vim.api.nvim_get_current_buf(), self.ns, cursor[1] - 1, cursor[2], {
+                        virt_text = { { text_after_filter, "@neocomplete.ghost_text" } },
+                        virt_text_pos = "inline",
+                    })
+            elseif self.config.position == "overlay" then
+                self.extmark_id =
+                    vim.api.nvim_buf_set_extmark(vim.api.nvim_get_current_buf(), self.ns, cursor[1] - 1, cursor[2], {
+                        virt_text = { { text_after_filter, "@neocomplete.ghost_text" } },
+                        virt_text_pos = "overlay",
+                        ephemeral = true,
+                    })
+            end
+        end,
+    })
+    return self
+end
 
----@param entry neocomplete.entry
----@param offset integer
-function ghost_text.show(entry, offset)
-    -- TODO: allow multiline text
-    vim.api.nvim_buf_clear_namespace(vim.api.nvim_get_current_buf(), ns, 0, -1)
-    local cursor = vim.api.nvim_win_get_cursor(0)
-    local select_behavior = require("neocomplete.config").options.selection_behavior
-    if select_behavior == "select" then
-        local text = entry:get_insert_text()
-        local text_after_filter = text:sub(offset + 1)
-        vim.api.nvim_buf_set_extmark(vim.api.nvim_get_current_buf(), ns, cursor[1] - 1, cursor[2], {
-            virt_text = { { text_after_filter, "@neocomplete.ghost_text" } },
-            virt_text_pos = "inline",
-        })
-    elseif select_behavior == "insert" then
-        vim.o.ul = vim.o.ul
-        -- TODO: allow going back to original (filter) text
-        local word = entry:get_insert_word()
-        local unblock = require("neocomplete").core:block()
-        -- vim.api.nvim_buf_set_text(0, cursor[1] - 1, cursor[2] - offset, cursor[1] - 1, cursor[2], { word })
-        -- vim.api.nvim_win_set_cursor(0, { cursor[1], cursor[2] - offset + #word })
-        vim.api.nvim_feedkeys(vim.keycode(string.rep("<BS>", offset) .. word), "i", false)
-        unblock()
-        local text = entry:get_insert_text()
-        local text_after_word = text:sub(#word + 1)
-        vim.api.nvim_buf_set_extmark(vim.api.nvim_get_current_buf(), ns, cursor[1] - 1, cursor[2], {
-            virt_text = { { text_after_word, "@neocomplete.ghost_text" } },
-            virt_text_pos = "inline",
-        })
+function Ghost_text:show(entry, window)
+    local changed = self.entry ~= entry
+    self.entry = entry
+    self.win = window
+    if changed then
+        vim.cmd.redraw({ bang = true })
     end
 end
 
-function ghost_text.hide()
-    vim.api.nvim_buf_clear_namespace(vim.api.nvim_get_current_buf(), ns, 0, -1)
+function Ghost_text:hide()
+    self.entry = nil
+    self.win = nil
+    if self.extmark_id then
+        vim.api.nvim_buf_del_extmark(vim.api.nvim_get_current_buf(), self.ns, self.extmark_id)
+        self.extmark_id = nil
+    end
 end
 
-return ghost_text
+return Ghost_text
