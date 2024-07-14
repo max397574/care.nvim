@@ -30,18 +30,6 @@ return function(self, entry)
         entry:get_offset(),
         cur_ctx.cursor.row - 1,
         cur_ctx.cursor.col,
-        { entry:get_insert_word() }
-    )
-    vim.api.nvim_win_set_cursor(0, { cur_ctx.cursor.row, entry:get_offset() + #entry:get_insert_word() })
-
-    cur_ctx = require("neocomplete.context").new()
-
-    vim.api.nvim_buf_set_text(
-        cur_ctx.bufnr,
-        cur_ctx.cursor.row - 1,
-        entry:get_offset(),
-        cur_ctx.cursor.row - 1,
-        cur_ctx.cursor.col,
         {
             string.sub(entry.context.line_before_cursor, entry:get_offset() + 1),
         }
