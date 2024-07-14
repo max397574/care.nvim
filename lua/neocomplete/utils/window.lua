@@ -55,7 +55,7 @@ function Window:open_cursor_relative(width, wanted_height, offset)
         position = "above"
         height = math.min(wanted_height, space_above - (has_border and 2 or 0))
     end
-    self.max_height = height
+    self.max_height = position == "below" and space_below or space_above
     self.position = position
     self.opened_at = {
         row = cursor[1] - 1,
