@@ -22,8 +22,14 @@
 ---@field complete fun(self: neocomplete.menu, entry: neocomplete.entry): nil
 --- Readjust size of completino window
 ---@field readjust_win fun(self: neocomplete.menu, offset: integer): nil
+--- Checks if docs are open
+---@field docs_visible fun(self: neocomplete.menu): boolean
+--- Scroll in the docs window
+---@field scroll_docs fun(self: neocomplete.menu, delta: integer): nil
 --- Wrapper for utilities for the window of the menu
----@field window neocomplete.menu_window
+---@field menu_window neocomplete.window
+--- Wrapper for utilities for the window of the docs
+---@field docs_window neocomplete.window
 --- Entries of the menu
 ---@field entries neocomplete.entry[]
 --- Namespace used for the menu

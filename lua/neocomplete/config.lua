@@ -31,7 +31,8 @@ config.defaults = {
             alignment = {},
         },
         docs_view = {
-            max_height = 7,
+            max_height = 8,
+            max_width = 80,
             border = "rounded",
             scrollbar = "█",
         },

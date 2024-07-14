@@ -9,7 +9,7 @@ categories: [
     types
 ]
 created: 2024-05-29T11:30:25+0100
-updated: 2024-07-10T19:00:55+0100
+updated: 2024-07-14T08:43:31+0100
 tangle: {
     languages: {
         lua: ../lua/neocomplete/types/menu.lua
@@ -134,13 +134,37 @@ version: 1.1.1
    ---@field readjust_win fun(self: neocomplete.menu, offset: integer): nil
    @end
 
+** Docs Visible
+   Checks whether docs are visible or not
+   #tangle
+   @code lua
+   --- Checks if docs are open
+   ---@field docs_visible fun(self: neocomplete.menu): boolean
+   @end
+
+** Scroll docs
+   Scroll up or down in the docs window by `delta` lines.
+   #tangle
+   @code lua
+   --- Scroll in the docs window
+   ---@field scroll_docs fun(self: neocomplete.menu, delta: integer): nil
+   @end
+
 * Fields
-** Window
+** Menu Window
    #tangle
    @code lua
    --- Wrapper for utilities for the window of the menu
-   ---@field window neocomplete.menu_window
+   ---@field menu_window neocomplete.window
    @end
+
+** Docs Window
+   #tangle
+   @code lua
+   --- Wrapper for utilities for the window of the docs
+   ---@field docs_window neocomplete.window
+   @end
+
 ** Entries
    This field is used to store all the entries of the completion menu.
    #tangle
