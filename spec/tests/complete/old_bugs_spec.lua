@@ -8,8 +8,7 @@ local function complete(completion_item, context)
             return [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]]
         end,
     }, context)
-    local menu = require("neocomplete.menu").new()
-    menu:complete(entry)
+    require("neocomplete.menu.confirm")(entry)
 end
 
 describe("Old Bugs:", function()

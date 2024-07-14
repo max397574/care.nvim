@@ -10,9 +10,9 @@ local function normalize_entry(entry)
     return entry
 end
 
----@param self neocomplete.menu
 ---@param entry neocomplete.entry
-return function(self, entry)
+return function(entry)
+    local config = require("neocomplete.config").options
     if _G.neocomplete_debug then
         vim.print(entry.completion_item)
         vim.print(entry.context)
@@ -93,7 +93,7 @@ return function(self, entry)
             start = completion_item.textEdit.insert.start
         end
         vim.api.nvim_win_set_cursor(0, { start.line + 1, start.character })
-        self.config.snippet_expansion(snippet_text)
+        config.snippet_expansion(snippet_text)
     end
 
     if completion_item.additionalTextEdits and #completion_item.additionalTextEdits > 0 then

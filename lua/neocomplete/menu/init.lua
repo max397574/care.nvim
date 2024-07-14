@@ -171,8 +171,6 @@ function Menu:get_active_entry()
     return self.entries[self.index]
 end
 
-Menu.complete = require("neocomplete.menu.complete")
-
 function Menu:confirm()
     -- Set undo point
     vim.o.ul = vim.o.ul
@@ -180,7 +178,7 @@ function Menu:confirm()
     if not entry then
         return
     end
-    self:complete(entry)
+    require("neocomplete.menu.confirm")(entry)
     self.menu_window:close()
     self.docs_window:close()
 end
