@@ -8,7 +8,7 @@ categories: [
     docs
 ]
 created: 2023-11-15T17:42:49+0100
-updated: 2023-11-15T17:42:49+0100
+updated: 2024-07-16T19:15:01+0100
 version: 1.1.1
 @end
 
@@ -34,6 +34,10 @@ version: 1.1.1
     -- Try to get nicely concealed like in core or noice.nvim
     -- Allow to send to e.g. quickfix or copy
 
+* Terms
+** Offset
+   Offset always describes the distance between e.g. the start of an entry from the beginning of the
+   line.
 
 * Architecture
   TODO: fancy ascii diagramms

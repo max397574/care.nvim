@@ -58,7 +58,7 @@ function Window:open_cursor_relative(width, wanted_height, offset, config)
     self.position = position
     self.opened_at = {
         row = cursor[1] - 1,
-        col = cursor[2] - offset,
+        col = offset,
     }
     self.winnr = vim.api.nvim_open_win(self.buf, false, {
         relative = "cursor",
@@ -68,7 +68,7 @@ function Window:open_cursor_relative(width, wanted_height, offset, config)
         style = "minimal",
         border = border,
         row = position == "below" and 1 or 0,
-        col = -offset,
+        col = offset - cursor[2],
         zindex = 1000,
     })
     vim.wo[self.winnr][0].scrolloff = 0
@@ -171,11 +171,12 @@ function Window:open_scrollbar_win(width, height, offset)
         pcall(vim.api.nvim_win_close, self.scrollbar.win, true)
         self.scrollbar.win = nil
     end
+    local cursor = vim.api.nvim_win_get_cursor(0)
     if self.config.ui.menu.scrollbar then
         self.scrollbar.win = vim.api.nvim_open_win(self.scrollbar.buf, false, {
             height = height,
             relative = "cursor",
-            col = -offset + width,
+            col = offset + width - cursor[2],
             row = self.position == "below" and 2 or -(height + 2) + 1,
             width = 1,
             style = "minimal",

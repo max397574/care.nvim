@@ -1,5 +1,7 @@
 --- A completion source for neocomplete.nvim
 ---@class neocomplete.source
+--- Name of the source
+---@field name string
 --- Whether the source will provide completions in the current context or not
 ---@field is_available? fun(): boolean
 --- Resolve a completion item

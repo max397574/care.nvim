@@ -35,6 +35,10 @@ function Menu.close(self)
     self.menu_window:close()
     self.docs_window:close()
     self.ghost_text:hide()
+    local sources = require("neocomplete.sources").get_sources()
+    for i, _ in ipairs(sources) do
+        require("neocomplete.sources").sources[i].entries = nil
+    end
 end
 
 ---@param menu neocomplete.menu
@@ -43,7 +47,7 @@ local function draw_docs(menu, entry, config)
         return
     end
 
-    local function open_docs_window(doc_entry, x_offset)
+    local function open_docs_window(doc_entry, offset)
         if not doc_entry.completion_item.documentation then
             return
         end
@@ -58,7 +62,7 @@ local function draw_docs(menu, entry, config)
         end
 
         local TODO = 100000
-        local width = math.min(vim.o.columns - x_offset, config.max_width)
+        local width = math.min(vim.o.columns - offset, config.max_width)
         local height = math.min(TODO, config.max_height)
 
         local do_stylize = format == "markdown" and vim.g.syntax_on ~= nil
@@ -81,7 +85,7 @@ local function draw_docs(menu, entry, config)
         menu.docs_window:open_cursor_relative(
             width,
             math.min(height, menu.menu_window.max_height),
-            -x_offset,
+            offset + 1,
             menu.config.ui.docs_view
         )
         menu.docs_window:draw_scrollbar()
@@ -94,10 +98,7 @@ local function draw_docs(menu, entry, config)
             entry.completion_item = resolved_item
             open_docs_window(
                 entry,
-                menu.menu_window.opened_at.col
-                    + vim.api.nvim_win_get_width(menu.menu_window.winnr)
-                    - (vim.api.nvim_win_get_cursor(0)[2] - 1)
-                    + 1
+                menu.menu_window.opened_at.col + vim.api.nvim_win_get_width(menu.menu_window.winnr) + 1
             )
         end)
     else

@@ -24,17 +24,26 @@ end
 
 function source.get_offset(self, context)
     if not context then
-        return 0
+        return context.cursor.col
     end
-    local line_to_cursor = context.line_before_cursor
-    local keyword_pattern = self:get_keyword_pattern()
-    -- Can add $ to keyword pattern because we just match on line to cursor
-    local word_boundary = vim.fn.match(line_to_cursor, keyword_pattern .. "$")
-    if word_boundary == -1 then
-        return 0
+    local source_offset, _ = vim.regex(self:get_keyword_pattern() .. "\\m$"):match_str(context.line_before_cursor)
+
+    if source_offset then
+        return source_offset
     end
 
-    return context.cursor.col - word_boundary
+    return context.cursor.col
+
+    -- -- Can add $ to keyword pattern because we just match on line to cursor
+    -- local word_boundary = vim.fn.match(line_to_cursor, keyword_pattern .. "$")
+    -- print(keyword_pattern)
+    -- print("match", word_boundary)
+    -- print("regex", vim.regex(keyword_pattern .. "\\m$"):match_str(line_to_cursor))
+    -- if word_boundary == -1 then
+    --     return 0
+    -- end
+    --
+    -- return context.cursor.col - word_boundary
 end
 
 return source

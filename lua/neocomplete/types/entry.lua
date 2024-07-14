@@ -15,5 +15,5 @@
 ---@field matches integer[]
 --- Score from filtering
 ---@field score number
---- Get offset of entry
+--- Get offset of entry from beginning of line
 ---@field get_offset fun(self: neocomplete.entry): integer

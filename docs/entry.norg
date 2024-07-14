@@ -9,7 +9,7 @@ categories: [
     types
 ]
 created: 2023-11-15T17:42:46+0100
-updated: 2024-07-07T21:15:43+0100
+updated: 2024-07-15T19:07:45+0100
 tangle: {
     languages: {
         lua: ../lua/neocomplete/types/entry.lua
@@ -100,6 +100,6 @@ version: 1.1.1
    Essentially where entry insertion should happen (column)
    #tangle
    @code lua
-   --- Get offset of entry
+   --- Get offset of entry from beginning of line
    ---@field get_offset fun(self: neocomplete.entry): integer
    @end

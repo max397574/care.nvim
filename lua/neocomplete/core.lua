@@ -18,7 +18,7 @@ function core:complete(reason)
     local entries = {}
     local remaining = #sources
     self.context.reason = reason
-    local offset = 0
+    local offset = self.context.cursor.col
     for i, source in ipairs(sources) do
         if source.source.is_available() then
             require("neocomplete.sources").complete(self.context, source, function(items, is_incomplete)
@@ -27,8 +27,12 @@ function core:complete(reason)
                 require("neocomplete.sources").sources[i].incomplete = is_incomplete or false
                 require("neocomplete.sources").sources[i].entries = items
                 remaining = remaining - 1
-                offset = math.max(offset, source:get_offset(self.context))
                 if not vim.tbl_isempty(items or {}) then
+                    local source_offset = source:get_offset(self.context)
+                    if source_offset then
+                        offset = math.min(offset, source_offset)
+                    end
+
                     vim.list_extend(entries, items)
                     vim.schedule(function()
                         if remaining == 0 then
@@ -38,7 +42,7 @@ function core:complete(reason)
                                 end)
                                 :totable()
                             -- TODO: source priority and max entries
-                            local opened_at = self.context.cursor.col - offset
+                            local opened_at = offset
                             if opened_at == self.last_opened_at and self.menu:is_open() then
                                 self.menu.entries = filtered_entries
                                 self.menu:readjust_win(offset)
