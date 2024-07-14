@@ -23,31 +23,37 @@ function Window:open_cursor_relative(width, wanted_height, offset)
     if self:is_open() then
         self:close()
     end
+
+    local border = self.config.ui.menu.border
+    local has_border = border and border ~= "none"
+    local needed_height = wanted_height + (has_border and 2 or 0)
+
     local cursor = vim.api.nvim_win_get_cursor(0)
     local screenpos = vim.fn.screenpos(0, cursor[1], cursor[2] + 1)
-    local space_below = vim.o.lines - screenpos.row - 3 - vim.o.cmdheight
+    local space_below = vim.o.lines - screenpos.row - vim.o.cmdheight - 1
 
-    local space_above = vim.fn.line(".") - vim.fn.line("w0") - 1
+    local space_above = vim.fn.line(".") - vim.fn.line("w0")
     -- local space_below = vim.fn.line("w$") - vim.fn.line(".")
     local available_space = math.max(space_above, space_below)
-    local wanted_space = math.min(wanted_height, self.config.ui.menu.max_height)
+
+    local needed_space = math.min(needed_height, self.config.ui.menu.max_height)
     local position = "below"
     local config_position = self.config.ui.menu.position
     local height
     if config_position == "auto" then
-        if space_below < wanted_space then
+        if space_below < needed_space then
             position = "above"
-            if space_above < wanted_space then
+            if space_above < needed_space then
                 position = space_above > space_below and "above" or "below"
             end
         end
-        height = math.min(wanted_space, available_space)
+        height = math.min(wanted_height, available_space - (has_border and 2 or 0))
     elseif config_position == "bottom" then
         position = "below"
-        height = math.min(wanted_space, space_below)
+        height = math.min(wanted_height, space_below - (has_border and 2 or 0))
     elseif config_position == "top" then
         position = "above"
-        height = math.min(wanted_space, space_above)
+        height = math.min(wanted_height, space_above - (has_border and 2 or 0))
     end
     self.max_height = height
     self.position = position
@@ -61,7 +67,7 @@ function Window:open_cursor_relative(width, wanted_height, offset)
         width = width,
         anchor = position == "below" and "NW" or "SW",
         style = "minimal",
-        border = self.config.ui.menu.border,
+        border = border,
         row = position == "below" and 1 or 0,
         col = -offset,
         zindex = 1000,
