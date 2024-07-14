@@ -93,7 +93,6 @@ function Window:readjust(content_len, width, offset)
         vim.api.nvim_win_set_width(self.winnr, width)
     end
     if content_len ~= current_height then
-        print(self.max_height)
         vim.api.nvim_win_set_height(self.winnr, math.min(self.max_height - (has_border and 2 or 0), content_len))
     end
     self:set_scroll(0, -1)
