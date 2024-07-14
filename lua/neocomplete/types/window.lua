@@ -24,7 +24,7 @@
 --- Sets the scroll of the window
 ---@field set_scroll fun(self: neocomplete.window, index: integer, direction: integer): nil
 --- Opens a new main window
----@field open_cursor_relative fun(self: neocomplete.window, width: integer, wanted_height: integer, offset: integer): nil
+---@field open_cursor_relative fun(self: neocomplete.window, width: integer, wanted_height: integer, offset: integer, config: neocomplete.config.ui.docs|neocomplete.config.ui.menu): nil
 --- Draw the scrollbar for the window if needed
 ---@field draw_scrollbar fun(self: neocomplete.window): nil
 --- Change scroll of window

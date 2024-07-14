@@ -78,7 +78,12 @@ local function draw_docs(menu, entry, config)
             vim.api.nvim_buf_set_lines(menu.docs_window.buf, 0, -1, true, contents)
         end
 
-        menu.docs_window:open_cursor_relative(width, math.min(height, menu.menu_window.max_height), -x_offset)
+        menu.docs_window:open_cursor_relative(
+            width,
+            math.min(height, menu.menu_window.max_height),
+            -x_offset,
+            menu.config.ui.docs_view
+        )
         menu.docs_window:draw_scrollbar()
 
         vim.api.nvim_set_option_value("scrolloff", 0, { win = menu.docs_window.winnr })
@@ -153,7 +158,7 @@ function Menu:open(entries, offset)
     end
     self.index = 0
     local width, _ = format_utils.get_width(self.entries)
-    self.menu_window:open_cursor_relative(width, #self.entries, offset)
+    self.menu_window:open_cursor_relative(width, #self.entries, offset, self.config.ui.menu)
     self:draw()
     self.menu_window:draw_scrollbar()
     self.menu_window:set_scroll(self.index, -1)

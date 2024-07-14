@@ -19,12 +19,12 @@ function Window.new()
     return self
 end
 
-function Window:open_cursor_relative(width, wanted_height, offset)
+function Window:open_cursor_relative(width, wanted_height, offset, config)
     if self:is_open() then
         self:close()
     end
 
-    local border = self.config.ui.menu.border
+    local border = config.border
     local has_border = border and border ~= "none"
     local needed_height = wanted_height + (has_border and 2 or 0)
 
@@ -52,7 +52,9 @@ function Window:open_cursor_relative(width, wanted_height, offset)
         position = "above"
         height = math.min(wanted_height, space_above - (has_border and 2 or 0))
     end
+    height = math.min(height, config.max_height - (has_border and 2 or 0))
     self.max_height = position == "below" and space_below or space_above
+    self.max_height = math.min(self.max_height, config.max_height)
     self.position = position
     self.opened_at = {
         row = cursor[1] - 1,
@@ -91,6 +93,7 @@ function Window:readjust(content_len, width, offset)
         vim.api.nvim_win_set_width(self.winnr, width)
     end
     if content_len ~= current_height then
+        print(self.max_height)
         vim.api.nvim_win_set_height(self.winnr, math.min(self.max_height - (has_border and 2 or 0), content_len))
     end
     self:set_scroll(0, -1)
