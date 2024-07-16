@@ -84,14 +84,7 @@ return function(entry)
     vim.lsp.util.apply_text_edits({ completion_item.textEdit }, cur_ctx.bufnr, "utf-16")
 
     if is_snippet then
-        local start
-        -- TODO: if no longer needed? -> will always have range, choice should be made earlier one
-        if completion_item.textEdit.range then
-            start = completion_item.textEdit.range.start
-        else
-            -- TODO: config option to determine whether to pick insert or replace
-            start = completion_item.textEdit.insert.start
-        end
+        local start = completion_item.textEdit.range.start
         vim.api.nvim_win_set_cursor(0, { start.line + 1, start.character })
         config.snippet_expansion(snippet_text)
     end
