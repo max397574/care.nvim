@@ -76,17 +76,33 @@ return function(entry)
     completion_item.textEdit.range["end"].line = cur_ctx.cursor.row - 1
     completion_item.textEdit.range["end"].character = cur_ctx.cursor.col + diff_after
 
+    local new_text = ""
     if is_snippet then
         snippet_text = completion_item.textEdit.newText or completion_item.insertText
-        completion_item.textEdit.newText = ""
+    else
+        -- TODO: revert when https://github.com/neovim/neovim/issues/29811 if fixed
+        new_text = completion_item.textEdit.newText or completion_item.insertText
     end
+    completion_item.textEdit.newText = ""
 
     vim.lsp.util.apply_text_edits({ completion_item.textEdit }, cur_ctx.bufnr, "utf-16")
 
+    local start = completion_item.textEdit.range.start
+    vim.api.nvim_win_set_cursor(0, { start.line + 1, start.character })
     if is_snippet then
-        local start = completion_item.textEdit.range.start
-        vim.api.nvim_win_set_cursor(0, { start.line + 1, start.character })
         config.snippet_expansion(snippet_text)
+    else
+        -- TODO: revert when https://github.com/neovim/neovim/issues/29811 if fixed
+        cur_ctx = require("neocomplete.context").new()
+        vim.api.nvim_buf_set_text(
+            cur_ctx.bufnr,
+            cur_ctx.cursor.row - 1,
+            cur_ctx.cursor.col,
+            cur_ctx.cursor.row - 1,
+            cur_ctx.cursor.col,
+            { new_text }
+        )
+        vim.api.nvim_win_set_cursor(0, { start.line + 1, start.character + #new_text })
     end
 
     if completion_item.additionalTextEdits and #completion_item.additionalTextEdits > 0 then
