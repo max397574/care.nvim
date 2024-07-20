@@ -16,22 +16,26 @@ body:
     attributes:
       label: "Neovim Version"
       description: "`nvim --version`:"
+    validations:
       required: true
   - type: textarea
     attributes:
       label: "neocomplete.nvim setup"
       description: |
         - Copy your entire `require("neocomplete").setup` function
+    validations:
       required: true
   - type: textarea
     attributes:
       label: "Actual behavior"
       description: "A description of actual behavior. May optionally include images or videos."
+    validations:
       required: true
   - type: textarea
     attributes:
       label: "Expected behavior"
       description: "A description of the behavior you expected."
+    validations:
       required: true
   - type: textarea
     attributes:
@@ -42,7 +46,6 @@ body:
         neocomplete: require("neocomplete.health").check()
         ========================================================================
         ## neocomplete.nvim
-      required: true
   - type: textarea
     attributes:
       label: "Steps to reproduce"
@@ -50,6 +53,7 @@ body:
       placeholder: |
         1. `nvim -nu minimal.lua`
         2. ...
+    validations:
       required: true
   - type: textarea
     attributes:
@@ -58,6 +62,9 @@ body:
   - type: textarea
     attributes:
       label: "Minimal config"
-      description: "Minimal config with which the issue is reproducible. Use example `minimal_init.lua` at source of this repo. Save this as `minimal_init.lua. Add plugins and configs which are necessary at indicated location."
+      description: "Minimal config with which the issue is reproducible. Save this as `minimal_init.lua. Add plugins and configs which are necessary at indicated location."
       render: Lua
+      placeholder: |
+        -- See minimal_init.lua in repository root
+    validations:
       required: true
