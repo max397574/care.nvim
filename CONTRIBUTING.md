@@ -35,20 +35,26 @@ make format
 ```
 
 ## Type annotations
-You can get third party libraries for type annotations by doing
-```bash
-make install_libraries
-```
-
-Then use
-```bash
-make gen_luarc
-```
-from the root directory of this repo to generate a `.luarc.json` file to configure luals to use the type annotations.
-
-These two steps can be executed together with
-```bash
-make dev_setup
+For type annotations it is recommended to use lazydev.nvim.
+It can be setup with the following options:
+```lua
+{
+    "folke/lazydev.nvim",
+    ft = "lua", -- only load on lua files
+    opts = {
+        library = {
+            -- See the configuration section for more details
+            -- Load luvit types when the `vim.uv` word is found
+            { path = "luvit-meta/library", words = { "vim%.uv" } },
+            { path = "luassert/library", words = { "vim%.uv" } },
+            { path = "busted/library", words = { "vim%.uv" } },
+            { path = "neocomplete.nvim/lua/neocomplete/types/" },
+        },
+    },
+},
+{ "Bilal2453/luvit-meta", lazy = true },
+{ "LuaCATS/busted", lazy = true },
+{ "LuaCATS/luassert", lazy = true },
 ```
 
 ## Nix dev environment
