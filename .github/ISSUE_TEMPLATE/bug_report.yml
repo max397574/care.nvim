@@ -1,5 +1,6 @@
 name: Bug Report
 description: Report a problem with neocomplete.nvim
+title: "bug: "
 labels: [bug]
 body:
   - type: checkboxes
@@ -15,26 +16,22 @@ body:
     attributes:
       label: "Neovim Version"
       description: "`nvim --version`:"
-    validations:
       required: true
   - type: textarea
     attributes:
       label: "neocomplete.nvim setup"
       description: |
         - Copy your entire `require("neocomplete").setup` function
-    validations:
       required: true
   - type: textarea
     attributes:
       label: "Actual behavior"
       description: "A description of actual behavior. May optionally include images or videos."
-    validations:
       required: true
   - type: textarea
     attributes:
       label: "Expected behavior"
       description: "A description of the behavior you expected."
-    validations:
       required: true
   - type: textarea
     attributes:
@@ -53,7 +50,6 @@ body:
       placeholder: |
         1. `nvim -nu minimal.lua`
         2. ...
-    validations:
       required: true
   - type: textarea
     attributes:
@@ -62,44 +58,6 @@ body:
   - type: textarea
     attributes:
       label: "Minimal config"
-      description: "Minimal config with which the issue is reproducible. Save this as `minimal_init.lua. Add plugins and configs which are necessary at indicated location."
+      description: "Minimal config with which the issue is reproducible. Use example `minimal_init.lua` at source of this repo. Save this as `minimal_init.lua. Add plugins and configs which are necessary at indicated location."
       render: Lua
-      value: |
-        local root = vim.fn.fnamemodify("./.repro", ":p")
-
-        -- set stdpaths to use .repro
-        for _, name in ipairs({ "config", "data", "state", "cache" }) do
-          vim.env[("XDG_%s_HOME"):format(name:upper())] = root .. "/" .. name
-        end
-
-        -- bootstrap lazy
-        local lazypath = root .. "/plugins/lazy.nvim"
-        if not vim.loop.fs_stat(lazypath) then
-          vim.fn.system({
-            "git",
-            "clone",
-            "--filter=blob:none",
-            "--single-branch",
-            "https://github.com/folke/lazy.nvim.git",
-            lazypath,
-          })
-        end
-        vim.opt.runtimepath:prepend(lazypath)
-
-        -- install plugins
-        local plugins = {
-          "folke/tokyonight.nvim",
-          {
-            "max397574/neocomplete.nvim",
-          },
-        }
-        require("lazy").setup(plugins, {
-          root = root .. "/plugins",
-        })
-
-        -- add anything else here
-        vim.opt.termguicolors = true
-        vim.cmd([[colorscheme tokyonight]])
-        require"neocomplete".setup()
-    validations:
       required: true
