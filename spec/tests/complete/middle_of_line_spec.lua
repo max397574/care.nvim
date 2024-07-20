@@ -82,6 +82,73 @@ describe("Complete in middle of line", function()
                 assert.is.equal(7, context.cursor.col)
             end)
         end)
+        describe("multiline simple entry", function()
+            it("with no filter", function()
+                vim.fn.setline(1, "vim. = test")
+                vim.cmd.normal({ "f.l", bang = true })
+                vim.cmd.startinsert()
+                ---@type lsp.CompletionItem
+                local completion_item = {
+                    label = "api\ntest",
+                }
+                local entry_context = Context.new()
+                complete(completion_item, entry_context)
+                local context = Context:new()
+                assert.is.equal("test = test", context.line)
+                assert.is.equal("test", context.line_before_cursor)
+                assert.is.equal(4, context.cursor.col)
+                assert.is.equal(2, context.cursor.row)
+            end)
+            it("with filter", function()
+                vim.fn.setline(1, "vim.ap = test")
+                vim.cmd.normal({ "fpl", bang = true })
+                vim.cmd.startinsert()
+
+                ---@type lsp.CompletionItem
+                local completion_item = {
+                    label = "api\ntest",
+                }
+                local entry_context = Context.new()
+                entry_context.cursor = {
+                    col = 4,
+                    row = 1,
+                }
+                entry_context.line_before_cursor = "vim."
+                complete(completion_item, entry_context)
+                local context = Context:new()
+                local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+                assert.is.equal("vim.api", lines[1])
+                assert.is.equal("test = test", context.line)
+                assert.is.equal("test", context.line_before_cursor)
+                assert.is.equal(4, context.cursor.col)
+                assert.is.equal(2, context.cursor.row)
+            end)
+            it("with filter and insertText", function()
+                vim.fn.setline(1, "vim.ap = test")
+                vim.cmd.normal({ "fpl", bang = true })
+                vim.cmd.startinsert()
+
+                ---@type lsp.CompletionItem
+                local completion_item = {
+                    label = "api",
+                    insertText = "API\ntest",
+                }
+                local entry_context = Context.new()
+                entry_context.cursor = {
+                    col = 4,
+                    row = 1,
+                }
+                entry_context.line_before_cursor = "vim."
+                complete(completion_item, entry_context)
+                local context = Context:new()
+                local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+                assert.is.equal("vim.API", lines[1])
+                assert.is.equal("test = test", context.line)
+                assert.is.equal("test", context.line_before_cursor)
+                assert.is.equal(4, context.cursor.col)
+                assert.is.equal(2, context.cursor.row)
+            end)
+        end)
         describe("snippet entry", function()
             it("with no filter", function()
                 vim.fn.setline(1, "vim. = test")
