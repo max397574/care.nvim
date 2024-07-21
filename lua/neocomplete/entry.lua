@@ -50,7 +50,7 @@ end
 function Entry:get_insert_word()
     local completion_item = self.completion_item
     local text
-    if completion_item.textEdit then
+    if completion_item.textEdit and completion_item.textEdit.newText then
         text = completion_item.textEdit.newText
     elseif completion_item.insertText then
         text = completion_item.insertText
