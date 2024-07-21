@@ -44,7 +44,8 @@ function neocomplete_sources.complete(context, source, callback)
             -- Can add $ to keyword pattern because we just match on line to cursor
             local word_boundary = vim.fn.match(context.line_before_cursor, keyword_pattern .. "$")
             if word_boundary == -1 then
-                return 0
+                callback(source.entries)
+                return
             end
 
             local prefix = context.line:sub(word_boundary + 1, context.cursor.col)
@@ -70,8 +71,23 @@ function neocomplete_sources.complete(context, source, callback)
                     return Entry.new(item, source, context)
                 end)
                 :totable()
+            local keyword_pattern = require("neocomplete.config").options.keyword_pattern
+            if source.source.keyword_pattern then
+                keyword_pattern = source.source.keyword_pattern
+            end
+            if source.source.get_keyword_pattern then
+                keyword_pattern = source.source:get_keyword_pattern()
+            end
+            -- Can add $ to keyword pattern because we just match on line to cursor
+            local word_boundary = vim.fn.match(context.line_before_cursor, keyword_pattern .. "$")
+            if word_boundary == -1 then
+                callback(items, is_incomplete)
+                return
+            end
 
-            callback(items, is_incomplete)
+            local prefix = context.line:sub(word_boundary + 1, context.cursor.col)
+
+            callback(require("neocomplete.sorter").sort(items, prefix), is_incomplete)
         end
     )
 end
