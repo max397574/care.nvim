@@ -1,8 +1,8 @@
 --[[
-@neocomplete: Fallback for everything
-@neocomplete.type: Fallback for the type highlights (only one defined)
-@neocomplete.selected: Selected entry
-@neocomplete.match: Matched part of entries
+@care: Fallback for everything
+@care.type: Fallback for the type highlights (only one defined)
+@care.selected: Selected entry
+@care.match: Matched part of entries
 --]]
 
 -- TODO: move into function?
@@ -40,14 +40,14 @@ local kinds = {
 }
 
 for name, group in pairs(kinds) do
-    hl(string.format("@neocomplete.type.%s", name), { link = group, default = true })
+    hl(string.format("@care.type.%s", name), { link = group, default = true })
 end
 
-hl("@neocomplete", { link = "Normal", default = true })
-hl("@neocomplete.type", { link = "Normal", default = true })
-hl("@neocomplete.selected", { link = "Visual", default = true })
-hl("@neocomplete.match", { link = "Special", default = true })
-hl("@neocomplete.menu", { link = "NormalFloat", default = true })
-hl("@neocomplete.scrollbar", { link = "PmenuSbar", default = true })
-hl("@neocomplete.entry", { italic = true, default = true })
-hl("@neocomplete.ghost_text", { link = "Comment", default = true })
+hl("@care", { link = "Normal", default = true })
+hl("@care.type", { link = "Normal", default = true })
+hl("@care.selected", { link = "Visual", default = true })
+hl("@care.match", { link = "Special", default = true })
+hl("@care.menu", { link = "NormalFloat", default = true })
+hl("@care.scrollbar", { link = "PmenuSbar", default = true })
+hl("@care.entry", { italic = true, default = true })
+hl("@care.ghost_text", { link = "Comment", default = true })

@@ -1,0 +1,48 @@
+--- The completion menu of care
+---@class care.menu
+--- Create a new instance of the menu
+---@field new fun(): care.menu
+--- Draws the menu
+---@field draw fun(self: care.menu): nil
+--- Returns true if completion window is visible
+---@field is_open fun(self: care.menu): boolean
+--- Select next entry in menu
+---@field select_next fun(self: care.menu, count: integer): nil
+--- Select previous entry in menu
+---@field select_prev fun(self: care.menu, count: integer): nil
+--- Opens the menu with specified entries
+---@field open fun(self: care.menu, entries: care.entry[], offset: integer): nil
+--- Closes the window of the menu
+---@field close fun(self: care.menu): nil
+--- Gets the currently selected entry
+---@field get_active_entry fun(self: care.menu): care.entry?
+--- Selects the current entry and inserts it's text
+---@field confirm fun(self: care.menu): nil
+--- Completes with the given entry
+---@field complete fun(self: care.menu, entry: care.entry): nil
+--- Readjust size of completino window
+---@field readjust_win fun(self: care.menu, offset: integer): nil
+--- Checks if docs are open
+---@field docs_visible fun(self: care.menu): boolean
+--- Scroll in the docs window
+---@field scroll_docs fun(self: care.menu, delta: integer): nil
+--- Wrapper for utilities for the window of the menu
+---@field menu_window care.window
+--- Wrapper for utilities for the window of the docs
+---@field docs_window care.window
+--- Instance of ghost text to draw the ghost text
+---@field ghost_text care.ghost_text
+--- Entries of the menu
+---@field entries care.entry[]
+--- Namespace used for the menu
+---@field ns integer
+--- Care config to be used in the menu
+---@field config care.config
+--- Buffer of the menu
+---@field buf integer
+--- Window of menu
+---@field winnr integer?
+--- Index of selected item
+---@field index integer
+--- Buffer for the scrollbar
+---@field scrollbar_buf integer

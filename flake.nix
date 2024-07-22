@@ -1,5 +1,5 @@
 {
-  description = "neocomplete.nvim package + dev environment";
+  description = "care.nvim package + dev environment";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -52,16 +52,16 @@
         };
 
         packages = rec {
-          default = neocomplete-nvim;
-          neocomplete-nvim = pkgs.vimUtils.buildVimPlugin {
-            pname = "neocomplete.nvim";
+          default = care-nvim;
+          care-nvim = pkgs.vimUtils.buildVimPlugin {
+            pname = "care.nvim";
             version = "dev";
             src = self;
           };
           nvim = let
             config = pkgs.neovimUtils.makeNeovimConfig {
               plugins = with pkgs; [
-                neocomplete-nvim
+                care-nvim
                 fzy
               ];
             };

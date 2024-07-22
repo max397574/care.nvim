@@ -1,4 +1,4 @@
-local utils = require("neocomplete.utils")
+local utils = require("care.utils")
 
 describe("Longest line", function()
     it("works with empty table", function()

@@ -1,23 +1,23 @@
----@type neocomplete.menu
+---@type care.menu
 ---@diagnostic disable-next-line: missing-fields
 local Menu = {}
 
-local format_utils = require("neocomplete.utils.format")
+local format_utils = require("care.utils.format")
 
 function Menu.new()
-    ---@type neocomplete.menu
+    ---@type care.menu
     local self = setmetatable({}, { __index = Menu })
     self.entries = nil
-    self.ns = vim.api.nvim_create_namespace("neocomplete")
-    self.config = require("neocomplete.config").options
+    self.ns = vim.api.nvim_create_namespace("care")
+    self.config = require("care.config").options
     self.index = 0
-    self.menu_window = require("neocomplete.utils.window").new()
-    self.docs_window = require("neocomplete.utils.window").new()
-    self.ghost_text = require("neocomplete.ghost_text").new()
+    self.menu_window = require("care.utils.window").new()
+    self.docs_window = require("care.utils.window").new()
+    self.ghost_text = require("care.ghost_text").new()
     return self
 end
 
-Menu.draw = require("neocomplete.menu.draw")
+Menu.draw = require("care.menu.draw")
 
 function Menu:readjust_win(offset)
     self.index = 0
@@ -35,13 +35,13 @@ function Menu.close(self)
     self.menu_window:close()
     self.docs_window:close()
     self.ghost_text:hide()
-    local sources = require("neocomplete.sources").get_sources()
+    local sources = require("care.sources").get_sources()
     for i, _ in ipairs(sources) do
-        require("neocomplete.sources").sources[i].entries = nil
+        require("care.sources").sources[i].entries = nil
     end
 end
 
----@param menu neocomplete.menu
+---@param menu care.menu
 local function draw_docs(menu, entry, config)
     if not entry then
         return
@@ -184,7 +184,7 @@ function Menu:confirm()
     if not entry then
         return
     end
-    require("neocomplete.menu.confirm")(entry)
+    require("care.menu.confirm")(entry)
     self.ghost_text:hide()
     self.menu_window:close()
     self.docs_window:close()

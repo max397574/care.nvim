@@ -1,24 +1,24 @@
-local neocomplete_sources = {}
-local Entry = require("neocomplete.entry")
+local care_sources = {}
+local Entry = require("care.entry")
 
----@type neocomplete.internal_source[]
-neocomplete_sources.sources = {}
+---@type care.internal_source[]
+care_sources.sources = {}
 
----@param completion_source neocomplete.source
-function neocomplete_sources.register_source(completion_source)
-    local source = require("neocomplete.source").new(completion_source)
-    table.insert(neocomplete_sources.sources, source)
+---@param completion_source care.source
+function care_sources.register_source(completion_source)
+    local source = require("care.source").new(completion_source)
+    table.insert(care_sources.sources, source)
 end
 
----@return neocomplete.internal_source[]
-function neocomplete_sources.get_sources()
-    return vim.deepcopy(neocomplete_sources.sources)
+---@return care.internal_source[]
+function care_sources.get_sources()
+    return vim.deepcopy(care_sources.sources)
 end
 
----@param context neocomplete.context
----@param source neocomplete.internal_source
----@param callback fun(items: neocomplete.entry[], is_incomplete?: boolean)
-function neocomplete_sources.complete(context, source, callback)
+---@param context care.context
+---@param source care.internal_source
+---@param callback fun(items: care.entry[], is_incomplete?: boolean)
+function care_sources.complete(context, source, callback)
     local last_char = context.line_before_cursor:sub(-1)
     ---@type lsp.CompletionContext
     local completion_context
@@ -34,7 +34,7 @@ function neocomplete_sources.complete(context, source, callback)
             }
         elseif not source.incomplete then
             -- TODO: cleanup
-            local keyword_pattern = require("neocomplete.config").options.keyword_pattern
+            local keyword_pattern = require("care.config").options.keyword_pattern
             if source.source.keyword_pattern then
                 keyword_pattern = source.source.keyword_pattern
             end
@@ -50,7 +50,7 @@ function neocomplete_sources.complete(context, source, callback)
 
             local prefix = context.line:sub(word_boundary + 1, context.cursor.col)
 
-            callback(require("neocomplete.sorter").sort(source.entries, prefix))
+            callback(require("care.sorter").sort(source.entries, prefix))
             return
         end
     else
@@ -71,7 +71,7 @@ function neocomplete_sources.complete(context, source, callback)
                     return Entry.new(item, source, context)
                 end)
                 :totable()
-            local keyword_pattern = require("neocomplete.config").options.keyword_pattern
+            local keyword_pattern = require("care.config").options.keyword_pattern
             if source.source.keyword_pattern then
                 keyword_pattern = source.source.keyword_pattern
             end
@@ -87,9 +87,9 @@ function neocomplete_sources.complete(context, source, callback)
 
             local prefix = context.line:sub(word_boundary + 1, context.cursor.col)
 
-            callback(require("neocomplete.sorter").sort(items, prefix), is_incomplete)
+            callback(require("care.sorter").sort(items, prefix), is_incomplete)
         end
     )
 end
 
-return neocomplete_sources
+return care_sources

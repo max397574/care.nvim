@@ -1,28 +1,28 @@
----@class neocomplete.ghost_text
----@field entry neocomplete.entry?
+---@class care.ghost_text
+---@field entry care.entry?
 ---@field ns integer
 ---@field win integer?
 ---@field extmark_id integer?
----@field new fun(): neocomplete.ghost_text
----@field config neocomplete.config.ui.ghost_text
----@field hide fun(self: neocomplete.ghost_text): nil
----@field show fun(self: neocomplete.ghost_text, entry: neocomplete.entry?, window: integer): nil
+---@field new fun(): care.ghost_text
+---@field config care.config.ui.ghost_text
+---@field hide fun(self: care.ghost_text): nil
+---@field show fun(self: care.ghost_text, entry: care.entry?, window: integer): nil
 
----@type neocomplete.ghost_text
+---@type care.ghost_text
 ---@diagnostic disable-next-line: missing-fields
 local Ghost_text = {}
 
 function Ghost_text.new()
-    ---@type neocomplete.ghost_text
+    ---@type care.ghost_text
     local self = setmetatable({}, { __index = Ghost_text })
-    self.ns = vim.api.nvim_create_namespace("neocomplete.ghost_text")
-    ---@type neocomplete.entry?
+    self.ns = vim.api.nvim_create_namespace("care.ghost_text")
+    ---@type care.entry?
     self.entry = nil
     ---@type integer?
     self.win = nil
     ---@type integer?
     self.extmark_id = nil
-    self.config = require("neocomplete.config").options.ui.ghost_text
+    self.config = require("care.config").options.ui.ghost_text
     vim.api.nvim_set_decoration_provider(self.ns, {
         on_win = function(_, win)
             return win == self.win
@@ -42,13 +42,13 @@ function Ghost_text.new()
             if self.config.position == "inline" then
                 self.extmark_id =
                     vim.api.nvim_buf_set_extmark(vim.api.nvim_get_current_buf(), self.ns, cursor[1] - 1, cursor[2], {
-                        virt_text = { { text_after_filter, "@neocomplete.ghost_text" } },
+                        virt_text = { { text_after_filter, "@care.ghost_text" } },
                         virt_text_pos = "inline",
                     })
             elseif self.config.position == "overlay" then
                 self.extmark_id =
                     vim.api.nvim_buf_set_extmark(vim.api.nvim_get_current_buf(), self.ns, cursor[1] - 1, cursor[2], {
-                        virt_text = { { text_after_filter, "@neocomplete.ghost_text" } },
+                        virt_text = { { text_after_filter, "@care.ghost_text" } },
                         virt_text_pos = "overlay",
                         ephemeral = true,
                     })

@@ -1,4 +1,4 @@
-local lsp_utils = require("neocomplete.utils.lsp")
+local lsp_utils = require("care.utils.lsp")
 
 describe("Lsp utils get kind", function()
     it("invalid", function()

@@ -12,7 +12,7 @@ end
 
 local function map(plug, callback)
     vim.keymap.set("i", plug, function()
-        if require("neocomplete").api.is_open() then
+        if require("care").api.is_open() then
             callback()
         else
             vim.api.nvim_feedkeys(vim.keycode(get_mapping(plug)), "n", false)
@@ -21,20 +21,20 @@ local function map(plug, callback)
 end
 
 function mappings.setup()
-    map("<Plug>(NeocompleteConfirm)", function()
-        require("neocomplete").api.confirm()
+    map("<Plug>(CareConfirm)", function()
+        require("care").api.confirm()
     end)
 
-    map("<Plug>(NeocompleteSelectNext)", function()
-        require("neocomplete").api.select_next(1)
+    map("<Plug>(CareSelectNext)", function()
+        require("care").api.select_next(1)
     end)
 
-    map("<Plug>(NeocompleteSelectPrev)", function()
-        require("neocomplete").api.select_prev(1)
+    map("<Plug>(CareSelectPrev)", function()
+        require("care").api.select_prev(1)
     end)
 
-    map("<Plug>(NeocompleteClose)", function()
-        require("neocomplete").api.close()
+    map("<Plug>(CareClose)", function()
+        require("care").api.close()
     end)
 end
 

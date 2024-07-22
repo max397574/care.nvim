@@ -48,7 +48,7 @@ It can be setup with the following options:
             { path = "luvit-meta/library", words = { "vim%.uv" } },
             { path = "luassert/library", words = { "vim%.uv" } },
             { path = "busted/library", words = { "vim%.uv" } },
-            { path = "neocomplete.nvim/lua/neocomplete/types/" },
+            { path = "care.nvim/lua/care/types/" },
         },
     },
 },
@@ -66,7 +66,7 @@ Run
 nix develop
 ```
 
-You can test-drive a minimal Neovim package with only neocomplete.nvim and its dependencies
+You can test-drive a minimal Neovim package with only care.nvim and its dependencies
 installed by running
 ```bash
 nix run .#nvim

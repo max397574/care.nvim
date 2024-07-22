@@ -1,6 +1,6 @@
 @document.meta
 title: Design
-description: Design of neocomplete.nvim
+description: Design of care.nvim
 authors: [
     max397574
 ]
@@ -8,16 +8,16 @@ categories: [
     docs
 ]
 created: 2023-11-15T17:42:49+0100
-updated: 2024-07-16T19:15:01+0100
+updated: 2024-07-22T18:34:25+0100
 version: 1.1.1
 @end
 
 * General
-  There is the {https://github.com/max397574/neocomplete.nvim}[neocomplete.nvim] plugin. This is
+  There is the {https://github.com/max397574/care.nvim}[care.nvim] plugin. This is
   the main module of the whole completion architecture. Then there are also sources, which is where
   the core gets it's completions from.
 
-** Neocomplete.nvim
+** Care.nvim
    This is the core of the autocompletion. From here the sources are used to get completions which
    are then displayed in the {*** Completion Menu}
 
@@ -168,7 +168,7 @@ version: 1.1.1
 
 ** Types
    We have files for types which are tangled from a norg file (this one?) using lua-ls annotations.
-   They are prefixed with `neocomplete.`.
+   They are prefixed with `care.`.
    As often as possible we should try to use the `lsp.*` types which are in neovim core.
 
    The types are documented in the `docs/` folder and are tangled to lua type files with {https://github.com/nvim-neorg/neorg}[neorg].

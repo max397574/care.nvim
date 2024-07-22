@@ -12,7 +12,7 @@ created: 2024-05-29T11:30:25+0100
 updated: 2024-06-08T18:52:40+0100
 tangle: {
     languages: {
-        lua: ../lua/neocomplete/types/misc.lua
+        lua: ../lua/care/types/misc.lua
     }
     scope: tagged
     delimiter: none
@@ -28,9 +28,9 @@ version: 1.1.1
   #tangle
   @code lua
   --- Context provided to completion sources
-  ---@class neocomplete.completion_context
+  ---@class care.completion_context
   ---@field completion_context lsp.CompletionContext
-  ---@field context neocomplete.context
+  ---@field context care.context
   @end
 
 * Reason
@@ -40,7 +40,7 @@ version: 1.1.1
   #tangle
   @code lua
   --- Reason for triggering completion
-  ---@alias neocomplete.completionReason
+  ---@alias care.completionReason
   ---| 1 # Auto
   ---| 2 # Manual
   @end

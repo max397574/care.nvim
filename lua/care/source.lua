@@ -1,9 +1,9 @@
----@type neocomplete.internal_source
+---@type care.internal_source
 ---@diagnostic disable-next-line: missing-fields
 local source = {}
 
 function source.new(completion_source)
-    ---@type neocomplete.internal_source
+    ---@type care.internal_source
     local self = setmetatable({}, { __index = source })
     self.source = completion_source
     self.entries = {}
@@ -11,7 +11,7 @@ function source.new(completion_source)
 end
 
 function source.get_keyword_pattern(self)
-    local keyword_pattern = require("neocomplete.config").options.keyword_pattern
+    local keyword_pattern = require("care.config").options.keyword_pattern
     if self.source.keyword_pattern then
         ---@type string
         keyword_pattern = self.source.keyword_pattern

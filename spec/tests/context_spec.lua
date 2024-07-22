@@ -1,4 +1,4 @@
-local Context = require("neocomplete.context")
+local Context = require("care.context")
 
 describe("Context", function()
     before_each(function()

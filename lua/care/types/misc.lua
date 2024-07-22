@@ -1,8 +1,8 @@
 --- Context provided to completion sources
----@class neocomplete.completion_context
+---@class care.completion_context
 ---@field completion_context lsp.CompletionContext
----@field context neocomplete.context
+---@field context care.context
 --- Reason for triggering completion
----@alias neocomplete.completionReason
+---@alias care.completionReason
 ---| 1 # Auto
 ---| 2 # Manual

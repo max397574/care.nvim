@@ -1,6 +1,6 @@
 @document.meta
 title: Core
-description: Type description of neocomplete.nvim source
+description: Type description of care.nvim source
 authors: [
     max397574
 ]
@@ -12,7 +12,7 @@ created: 2023-11-15T17:42:46+0100
 updated: 2024-07-10T21:06:51+0100
 tangle: {
     languages: {
-        lua: ../lua/neocomplete/types/core.lua
+        lua: ../lua/care/types/core.lua
     }
     scope: tagged
     delimiter: none
@@ -21,12 +21,12 @@ version: 1.1.1
 @end
 
 * General
-  This module is for the core of neocomplete. There all comes together with the menu being opened
+  This module is for the core of care. There all comes together with the menu being opened
   and the completion triggered.
   #tangle
   @code lua
-  --- The core module of neocomplete
-  ---@class neocomplete.core
+  --- The core module of care
+  ---@class care.core
   @end
 
 ** New
@@ -34,7 +34,7 @@ version: 1.1.1
    #tangle
    @code lua
    --- Create a new instance of the core
-   ---@field new fun(): neocomplete.core
+   ---@field new fun(): care.core
    @end
 
 * Methods
@@ -44,7 +44,7 @@ version: 1.1.1
    #tangle
    @code lua
    --- Complete
-   ---@field complete fun(self: neocomplete.core, reason: neocomplete.completionReason?): nil
+   ---@field complete fun(self: care.core, reason: care.completionReason?): nil
    @end
 
 ** On Change
@@ -53,28 +53,28 @@ version: 1.1.1
    #tangle
    @code lua
    --- The function that gets invoked when the text changes
-   ---@field on_change fun(neocomplete.core): nil
+   ---@field on_change fun(care.core): nil
    @end
 
 ** Block
-   The `block` method can be used to temporarily disable neocomplete. It returns a function which is
+   The `block` method can be used to temporarily disable care. It returns a function which is
    used to unblock it again.
    This is used for the `insert` selection behavior where you don't want to get new completions when
    changing the text.
    #tangle
    @code lua
-   --- Block neocomplete temporarily
+   --- Block care temporarily
    --- Call return value to unblock
-   ---@field block fun(neocomplete.core): fun(): nil
+   ---@field block fun(care.core): fun(): nil
    @end
 
 ** Setup
-   The setup function is used to setup neocomplete so it will actually provide autocompletion when
+   The setup function is used to setup care so it will actually provide autocompletion when
    typing by setting up an autocommand.
    #tangle
    @code lua
    --- Setup core (for now autocommands)
-   ---@field setup fun(self: neocomplete.core): nil
+   ---@field setup fun(self: care.core): nil
    @end
 
 * Fields
@@ -84,7 +84,7 @@ version: 1.1.1
    #tangle
    @code lua
    --- Context instance of the core
-   ---@field context neocomplete.context
+   ---@field context care.context
    @end
 
 ** Menu
@@ -92,7 +92,7 @@ version: 1.1.1
    #tangle
    @code lua
    --- Menu instance of the core
-   ---@field menu neocomplete.menu
+   ---@field menu care.menu
    @end
 
 ** Blocked

@@ -1,5 +1,5 @@
-local Context = require("neocomplete.context")
-local Entry = require("neocomplete.entry")
+local Context = require("care.context")
+local Entry = require("care.entry")
 
 local function complete(completion_item, context)
     ---@diagnostic disable-next-line: missing-fields
@@ -8,12 +8,12 @@ local function complete(completion_item, context)
             return [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]]
         end,
     }, context)
-    require("neocomplete.menu.confirm")(entry)
+    require("care.menu.confirm")(entry)
 end
 
 describe("Old Bugs:", function()
     before_each(function()
-        require("neocomplete").core = {
+        require("care").core = {
             block = function()
                 return function() end
             end,
@@ -28,10 +28,10 @@ describe("Old Bugs:", function()
         local completion_item = {
             insertTextFormat = 2,
             kind = 17,
-            label = "neocomplete.menu",
+            label = "care.menu",
             sortText = "0216",
             textEdit = {
-                newText = "neocomplete.menu",
+                newText = "care.menu",
                 range = {
                     ["end"] = {
                         character = 7,
@@ -49,8 +49,8 @@ describe("Old Bugs:", function()
         entry_context.line_before_cursor = 'require"'
         complete(completion_item, entry_context)
         local context = Context:new()
-        assert.is.equal('require"neocomplete.menu', context.line)
-        assert.is.equal('require"neocomplete.menu', context.line_before_cursor)
+        assert.is.equal('require"care.menu', context.line)
+        assert.is.equal('require"care.menu', context.line_before_cursor)
         assert.is.equal(24, context.cursor.col)
     end)
     it("luals require doesn't remove quote when triggering manually", function()
@@ -60,11 +60,11 @@ describe("Old Bugs:", function()
         local completion_item = {
             insertTextFormat = 2,
             kind = 17,
-            label = "neocomplete.menu",
+            label = "care.menu",
             sortText = "0039",
             documentation = "this",
             textEdit = {
-                newText = "neocomplete.menu",
+                newText = "care.menu",
                 range = {
                     ["end"] = {
                         character = 10,
@@ -80,21 +80,21 @@ describe("Old Bugs:", function()
         local entry_context = Context.new()
         complete(completion_item, entry_context)
         local context = Context:new()
-        assert.is.equal('require"neocomplete.menu', context.line)
-        assert.is.equal('require"neocomplete.menu', context.line_before_cursor)
+        assert.is.equal('require"care.menu', context.line)
+        assert.is.equal('require"care.menu', context.line_before_cursor)
         assert.is.equal(24, context.cursor.col)
     end)
     it("luals require module doesn't remove prefix correctly", function()
-        vim.fn.setline(1, 'require"neocomplete.me')
+        vim.fn.setline(1, 'require"care.me')
         vim.cmd.startinsert({ bang = true })
         ---@type lsp.CompletionItem
         local completion_item = {
             insertTextFormat = 2,
             kind = 17,
-            label = "neocomplete.menu",
+            label = "care.menu",
             sortText = "0038",
             textEdit = {
-                newText = "neocomplete.menu",
+                newText = "care.menu",
                 range = {
                     ["end"] = {
                         character = 19,
@@ -110,8 +110,8 @@ describe("Old Bugs:", function()
         local entry_context = Context.new()
         complete(completion_item, entry_context)
         local context = Context:new()
-        assert.is.equal('require"neocomplete.menu', context.line)
-        assert.is.equal('require"neocomplete.menu', context.line_before_cursor)
+        assert.is.equal('require"care.menu', context.line)
+        assert.is.equal('require"care.menu', context.line_before_cursor)
         assert.is.equal(24, context.cursor.col)
     end)
     it("cmp-path doesn't set cursor properly", function()
@@ -141,7 +141,7 @@ describe("Old Bugs:", function()
                 return "\\%([^/\\\\:\\*?<>'\"`\\|]\\)" .. "*"
             end,
         }, entry_context)
-        require("neocomplete.menu.confirm")(entry)
+        require("care.menu.confirm")(entry)
 
         local context = Context:new()
         assert.is.equal("    ./init.lua", context.line)

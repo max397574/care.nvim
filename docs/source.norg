@@ -1,6 +1,6 @@
 @document.meta
 title: Source
-description: Type description of neocomplete.nvim source
+description: Type description of care.nvim source
 authors: [
     max397574
 ]
@@ -12,7 +12,7 @@ created: 2023-11-15T17:42:46+0100
 updated: 2024-07-15T20:10:47+0100
 tangle: {
     languages: {
-        lua: ../lua/neocomplete/types/source.lua
+        lua: ../lua/care/types/source.lua
     }
     scope: tagged
     delimiter: none
@@ -21,12 +21,12 @@ version: 1.1.1
 @end
 
 * General
-  The sources are used to get get completions for neocomplete.nvim.
+  The sources are used to get get completions for care.nvim.
 
   #tangle
   @code lua
-  --- A completion source for neocomplete.nvim
-  ---@class neocomplete.source
+  --- A completion source for care.nvim
+  ---@class care.source
   @end
 
 * Fields
@@ -65,7 +65,7 @@ version: 1.1.1
    #tangle
    @code lua
    --- Resolve a completion item
-   ---@field resolve_item? fun(self: neocomplete.source, item: lsp.CompletionItem, callback: fun(item: lsp.CompletionItem)): nil
+   ---@field resolve_item? fun(self: care.source, item: lsp.CompletionItem, callback: fun(item: lsp.CompletionItem)): nil
    @end
 
 ** `get_trigger_characters()`
@@ -100,7 +100,7 @@ version: 1.1.1
    #tangle
    @code lua
    --- Get keyword pattern for this source
-   ---@field get_keyword_pattern? fun(self: neocomplete.source): string
+   ---@field get_keyword_pattern? fun(self: care.source): string
    @end
 
 
@@ -112,5 +112,5 @@ version: 1.1.1
    #tangle
    @code lua
    --- Returns completion in the provided context
-   ---@field complete fun(completion_context: neocomplete.completion_context, callback: fun(items: lsp.CompletionItem[], is_incomplete?: boolean)): nil
+   ---@field complete fun(completion_context: care.completion_context, callback: fun(items: lsp.CompletionItem[], is_incomplete?: boolean)): nil
    @end

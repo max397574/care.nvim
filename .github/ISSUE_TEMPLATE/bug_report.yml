@@ -1,5 +1,5 @@
 name: Bug Report
-description: Report a problem with neocomplete.nvim
+description: Report a problem with care.nvim
 title: "bug: "
 labels: [bug]
 body:
@@ -20,9 +20,9 @@ body:
       required: true
   - type: textarea
     attributes:
-      label: "neocomplete.nvim setup"
+      label: "care.nvim setup"
       description: |
-        - Copy your entire `require("neocomplete").setup` function
+        - Copy your entire `require("care").setup` function
     validations:
       required: true
   - type: textarea
@@ -40,12 +40,12 @@ body:
   - type: textarea
     attributes:
       label: "Healthcheck"
-      description: "Output of `:checkhealth neocomplete`"
+      description: "Output of `:checkhealth care`"
       render: markdown
       placeholder: |
-        neocomplete: require("neocomplete.health").check()
+        care: require("care.health").check()
         ========================================================================
-        ## neocomplete.nvim
+        ## care.nvim
   - type: textarea
     attributes:
       label: "Steps to reproduce"

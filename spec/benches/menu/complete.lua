@@ -1,6 +1,6 @@
 -- usage: `$ nvim --clean --headless -c "set runtimepath+=." -l spec/benches/menu/complete.lua`
-local Context = require("neocomplete.context")
-local Entry = require("neocomplete.entry")
+local Context = require("care.context")
+local Entry = require("care.entry")
 
 local function complete(completion_item, context)
     ---@diagnostic disable-next-line: missing-fields
@@ -9,12 +9,12 @@ local function complete(completion_item, context)
             return [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]]
         end,
     }, context)
-    local menu = require("neocomplete.menu").new()
+    local menu = require("care.menu").new()
     menu:complete(entry)
 end
 
 local function do_complete()
-    require("neocomplete").core = {
+    require("care").core = {
         block = function()
             return function() end
         end,

@@ -1,7 +1,7 @@
 local format_utils = {}
 
-local config = require("neocomplete.config").options
-local utils = require("neocomplete.utils")
+local config = require("care.config").options
+local utils = require("care.utils")
 
 --- Gets the width a window for displaying entries must have
 ---@return number, string[]

@@ -10,16 +10,16 @@ local function normalize_entry(entry)
     return entry
 end
 
----@param entry neocomplete.entry
+---@param entry care.entry
 return function(entry)
-    local config = require("neocomplete.config").options
-    if _G.neocomplete_debug then
+    local config = require("care.config").options
+    if _G.care_debug then
         vim.print(entry.completion_item)
         vim.print(entry.context)
     end
 
-    local cur_ctx = require("neocomplete.context").new()
-    local unblock = require("neocomplete").core:block()
+    local cur_ctx = require("care.context").new()
+    local unblock = require("care").core:block()
 
     local completion_item = entry.completion_item
     completion_item = normalize_entry(completion_item)
@@ -36,7 +36,7 @@ return function(entry)
     )
     vim.api.nvim_win_set_cursor(0, { entry.context.cursor.row, entry.context.cursor.col })
 
-    cur_ctx = require("neocomplete.context").new()
+    cur_ctx = require("care.context").new()
 
     -- TODO: entry.insertTextMode
     local is_snippet = completion_item.insertTextFormat == 2

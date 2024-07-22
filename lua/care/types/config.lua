@@ -1,31 +1,31 @@
---- Configuration for neocomplete.nvim
----@class neocomplete.config
---- Configuration for the ui of neocomplete
----@field ui neocomplete.config.ui
+--- Configuration for care.nvim
+---@class care.config
+--- Configuration for the ui of care
+---@field ui care.config.ui
 --- Function used to expand snippets
 ---@field snippet_expansion fun(string): nil
 --- Behavior when selecting entry
 ---@field selection_behavior "select"|"insert"
 --- Pattern used to determine keywords
 ---@field keyword_pattern string
---- Configuration for the ui of neocomplete
+--- Configuration for the ui of care
 ---@field enabled fun(): boolean
---- The main class for the ui configuration of neocomplete.nvim
----@class neocomplete.config.ui
---- Configuration of the completion menu of neocomplete.nvim
----@field menu neocomplete.config.ui.menu
---- Configuration of the documentation view of neocomplete.nvim
----@field docs_view neocomplete.config.ui.docs
+--- The main class for the ui configuration of care.nvim
+---@class care.config.ui
+--- Configuration of the completion menu of care.nvim
+---@field menu care.config.ui.menu
+--- Configuration of the documentation view of care.nvim
+---@field docs_view care.config.ui.docs
 --- The icons for the different compltion item kinds
----@field type_icons neocomplete.config.ui.type_icons
+---@field type_icons care.config.ui.type_icons
 --- Configuration of ghost text
----@field ghost_text neocomplete.config.ui.ghost_text
+---@field ghost_text care.config.ui.ghost_text
 
----@class neocomplete.config.ui.ghost_text
+---@class care.config.ui.ghost_text
 ---@field enabled boolean
 ---@field position "inline"|"overlay"
---- Configuration of the completion menu of neocomplete.nvim
----@class neocomplete.config.ui.menu
+--- Configuration of the completion menu of care.nvim
+---@class care.config.ui.menu
 --- Maximum height of the menu
 ---@field max_height integer
 --- The border of the completion menu
@@ -35,11 +35,11 @@
 --- Position of the menu
 ---@field position "auto"|"bottom"|"top"
 --- How an entry should be formatted
----@field format_entry fun(entry: neocomplete.entry): { [1]: string, [2]: string }[][]
+---@field format_entry fun(entry: care.entry): { [1]: string, [2]: string }[][]
 --- How the sections in the menu should be aligned
 ---@field alignment ("left"|"center"|"right")[]
---- Configuration of the completion menu of neocomplete.nvim
----@class neocomplete.config.ui.docs
+--- Configuration of the completion menu of care.nvim
+---@class care.config.ui.docs
 --- Maximum height of the documentation view
 ---@field max_height integer
 --- Maximum width of the documentation view
@@ -49,4 +49,4 @@
 --- Character used for the scrollbar
 ---@field scrollbar string
 --- The icons used for the different completion item types
----@alias neocomplete.config.ui.type_icons table<string, string>
+---@alias care.config.ui.type_icons table<string, string>

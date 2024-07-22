@@ -1,9 +1,9 @@
----@type neocomplete.entry
+---@type care.entry
 ---@diagnostic disable-next-line: missing-fields
 local Entry = {}
 
 function Entry.new(completion_item, source, context)
-    ---@type neocomplete.entry
+    ---@type care.entry
     local self = setmetatable({}, { __index = Entry })
     self.completion_item = completion_item
     self.source = source

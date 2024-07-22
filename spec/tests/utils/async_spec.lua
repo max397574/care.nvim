@@ -1,5 +1,5 @@
 ---@diagnostic disable: need-check-nil
-local async = require("neocomplete.utils.async")
+local async = require("care.utils.async")
 
 describe("Throttle", function()
     local count

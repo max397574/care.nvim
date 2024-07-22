@@ -1,22 +1,22 @@
 --- Context provided to completion sources
----@class neocomplete.context
+---@class care.context
 --- Context changed since previous
----@field changed fun(neocomplete.context): boolean
+---@field changed fun(care.context): boolean
 --- Create a new context
----@field new fun(previous: neocomplete.context?): neocomplete.context
+---@field new fun(previous: care.context?): care.context
 --- The previous context
----@field previous neocomplete.context?
+---@field previous care.context?
 --- The cursor position
----@field cursor neocomplete.context.cursor
+---@field cursor care.context.cursor
 --- The number of the buffer
 ---@field bufnr integer
 --- Reason for triggering completion
----@field reason neocomplete.completionReason?
+---@field reason care.completionReason?
 --- Current line
 ---@field line string
 --- Line before cursor
 ---@field line_before_cursor string
 --- A cursor position
----@class neocomplete.context.cursor
+---@class care.context.cursor
 ---@field row integer
 ---@field col integer

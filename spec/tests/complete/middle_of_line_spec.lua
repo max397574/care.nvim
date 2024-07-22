@@ -1,5 +1,5 @@
-local Context = require("neocomplete.context")
-local Entry = require("neocomplete.entry")
+local Context = require("care.context")
+local Entry = require("care.entry")
 
 local function complete(completion_item, context)
     ---@diagnostic disable-next-line: missing-fields
@@ -8,12 +8,12 @@ local function complete(completion_item, context)
             return [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]]
         end,
     }, context)
-    require("neocomplete.menu.confirm")(entry)
+    require("care.menu.confirm")(entry)
 end
 
 describe("Complete in middle of line", function()
     before_each(function()
-        require("neocomplete").core = {
+        require("care").core = {
             block = function()
                 return function() end
             end,

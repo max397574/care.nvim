@@ -30,10 +30,10 @@ local kinds = {
 
 ---Creates an example source for testing
 ---It won't have any entries set
----@return neocomplete.internal_source
+---@return care.internal_source
 local function example_source()
-    ---@type neocomplete.internal_source
-    local source = require("neocomplete.source").new({
+    ---@type care.internal_source
+    local source = require("care.source").new({
         complete = function()
             return {}
         end,
@@ -43,12 +43,12 @@ end
 
 ---Returns `amount` completion items which have a `label` defined
 ---@param amount integer
----@return neocomplete.entry[]
+---@return care.entry[]
 function entry_data.label_only(amount)
     ---@type lsp.CompletionItem[]
     local ret = {}
     for i = 1, amount do
-        table.insert(ret, require("neocomplete.entry").new({ label = "test" .. i }, example_source()))
+        table.insert(ret, require("care.entry").new({ label = "test" .. i }, example_source()))
     end
     return ret
 end
@@ -62,7 +62,7 @@ function entry_data.minimal(amount)
     for i = 1, amount do
         table.insert(
             ret,
-            require("neocomplete.entry").new(
+            require("care.entry").new(
                 { label = "test" .. i, kind = (i % #kinds) + 1, source = example_source() },
                 example_source()
             )

@@ -1,5 +1,5 @@
-local format_utils = require("neocomplete.utils.format")
-local utils = require("neocomplete.utils")
+local format_utils = require("care.utils.format")
+local utils = require("care.utils")
 
 local function get_texts(aligned_sec)
     local texts = {}
@@ -33,7 +33,7 @@ local function add_extmarks(aligned_sec, realign, buf, ns, column)
     end
 end
 
----@param self neocomplete.menu
+---@param self care.menu
 return function(self)
     local alignment = self.config.ui.menu.alignment
     local width, entry_texts = format_utils.get_width(self.entries)
@@ -49,7 +49,7 @@ return function(self)
         for i = 0, #self.entries do
             if i == self.index then
                 vim.api.nvim_buf_set_extmark(self.menu_window.buf, self.ns, i - 1, 0, {
-                    virt_text = { { string.rep(" ", width), "@neocomplete.selected" } },
+                    virt_text = { { string.rep(" ", width), "@care.selected" } },
                     virt_text_pos = "overlay",
                 })
             end
@@ -90,7 +90,7 @@ return function(self)
     end
     for line, entry in ipairs(self.entries) do
         for _, idx in ipairs(entry.matches or {}) do
-            vim.api.nvim_buf_add_highlight(self.menu_window.buf, self.ns, "@neocomplete.match", line - 1, idx - 1, idx)
+            vim.api.nvim_buf_add_highlight(self.menu_window.buf, self.ns, "@care.match", line - 1, idx - 1, idx)
         end
     end
 end

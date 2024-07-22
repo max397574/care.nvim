@@ -1,12 +1,12 @@
----@type neocomplete.core
+---@type care.core
 ---@diagnostic disable-next-line: missing-fields
 local core = {}
 
 function core.new()
-    ---@type neocomplete.core
+    ---@type care.core
     local self = setmetatable({}, { __index = core })
-    self.context = require("neocomplete.context").new()
-    self.menu = require("neocomplete.menu").new()
+    self.context = require("care.context").new()
+    self.menu = require("care.menu").new()
     self.blocked = false
     self.last_opened_at = -1
     return self
@@ -14,18 +14,18 @@ end
 
 function core:complete(reason)
     reason = reason or 2
-    local sources = require("neocomplete.sources").get_sources()
+    local sources = require("care.sources").get_sources()
     local entries = {}
     local remaining = #sources
     self.context.reason = reason
     local offset = self.context.cursor.col
     for i, source in ipairs(sources) do
         if source.source.is_available() then
-            require("neocomplete.sources").complete(self.context, source, function(items, is_incomplete)
+            require("care.sources").complete(self.context, source, function(items, is_incomplete)
                 source.incomplete = is_incomplete or false
                 source.entries = items
-                require("neocomplete.sources").sources[i].incomplete = is_incomplete or false
-                require("neocomplete.sources").sources[i].entries = items
+                require("care.sources").sources[i].incomplete = is_incomplete or false
+                require("care.sources").sources[i].entries = items
                 remaining = remaining - 1
                 if not vim.tbl_isempty(items or {}) then
                     local source_offset = source:get_offset(self.context)
@@ -65,7 +65,7 @@ function core.setup(self)
         callback = function()
             self:on_change()
         end,
-        group = "neocomplete",
+        group = "care",
     })
 end
 
@@ -80,8 +80,8 @@ function core.on_change(self)
     if self.blocked then
         return
     end
-    self.context = require("neocomplete.context").new(self.context)
-    if not require("neocomplete.config").options.enabled() then
+    self.context = require("care.context").new(self.context)
+    if not require("care.config").options.enabled() then
         return
     end
     if not self.context:changed() then

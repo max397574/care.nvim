@@ -1,11 +1,11 @@
----@type neocomplete.context
+---@type care.context
 ---@diagnostic disable-next-line: missing-fields
 local context = {}
 
 ---@type lsp.CompletionContext
 
 function context.new(previous)
-    ---@type neocomplete.context
+    ---@type care.context
     local self = setmetatable({}, { __index = context })
     previous = previous or {}
     -- reset so table doesn't get too big

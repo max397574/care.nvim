@@ -1,0 +1,14 @@
+--- Internal class for care to store source metadata
+---@class care.internal_source
+--- The external completion source
+---@field source care.source
+--- The entries recieved by last completion
+---@field entries care.entry[]
+--- The entries recieved by last completion
+---@field new fun(completion_source: care.source): care.internal_source
+--- Whether the source is incomplete
+---@field incomplete boolean
+--- Get the keyword pattern
+---@field get_keyword_pattern fun(self: care.internal_source): string
+--- The offset at which completions from source were loaded
+---@field get_offset fun(self: care.internal_source, context: care.context): integer

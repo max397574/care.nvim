@@ -14,4 +14,4 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           release-type: simple
-          package-name: neocomplete.nvim
+          package-name: care.nvim

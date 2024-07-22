@@ -1,10 +1,10 @@
 local config = {}
 
----@type neocomplete.config
+---@type care.config
 ---@diagnostic disable-next-line: missing-fields
 config.options = {}
 
----@type neocomplete.config
+---@type care.config
 config.defaults = {
     ui = {
         menu = {
@@ -16,13 +16,13 @@ config.defaults = {
                 local type_icons = config.options.ui.type_icons
                 -- TODO: remove since now can only be number, or also allow custom string kinds?
                 local entry_kind = type(completion_item.kind) == "string" and completion_item.kind
-                    or require("neocomplete.utils.lsp").get_kind_name(completion_item.kind)
+                    or require("care.utils.lsp").get_kind_name(completion_item.kind)
                 return {
-                    { { completion_item.label .. " ", "@neocomplete.entry" } },
+                    { { completion_item.label .. " ", "@care.entry" } },
                     {
                         {
                             " " .. (type_icons[entry_kind] or type_icons.Text) .. " ",
-                            ("@neocomplete.type.%s"):format(entry_kind),
+                            ("@care.type.%s"):format(entry_kind),
                         },
                     },
                 }

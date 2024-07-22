@@ -1,8 +1,8 @@
-# neocomplete.nvim
+# care.nvim
 
 initialized automatically
 
-use require"neocomplete.config".setup({...}) to configure
+use require"care.config".setup({...}) to configure
 
 credits
 mariasolos work in core and core in general

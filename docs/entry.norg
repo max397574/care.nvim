@@ -1,6 +1,6 @@
 @document.meta
 title: Entry
-description: Type description of neocomplete.nvim entry
+description: Type description of care.nvim entry
 authors: [
     max397574
 ]
@@ -12,7 +12,7 @@ created: 2023-11-15T17:42:46+0100
 updated: 2024-07-15T19:07:45+0100
 tangle: {
     languages: {
-        lua: ../lua/neocomplete/types/entry.lua
+        lua: ../lua/care/types/entry.lua
     }
     scope: tagged
     delimiter: none
@@ -25,8 +25,8 @@ version: 1.1.1
   completion item for which the lsp type is used.
   #tangle
   @code lua
-  --- An entry for the neocomplete completion menu
-  ---@class neocomplete.entry
+  --- An entry for the care completion menu
+  ---@class care.entry
   ---@field completion_item lsp.CompletionItem
   @end
 
@@ -36,7 +36,7 @@ version: 1.1.1
    #tangle
    @code lua
    --- Creates a new entry
-   ---@field new fun(completion_item: lsp.CompletionItem, source: neocomplete.internal_source, context: neocomplete.context): neocomplete.entry
+   ---@field new fun(completion_item: lsp.CompletionItem, source: care.internal_source, context: care.context): care.entry
    @end
 
 ** Get insert text
@@ -45,7 +45,7 @@ version: 1.1.1
    #tangle
    @code lua
    --- Get insert text
-   ---@field get_insert_text fun(self: neocomplete.entry): string
+   ---@field get_insert_text fun(self: care.entry): string
    @end
 
 ** Get insert word
@@ -56,7 +56,7 @@ version: 1.1.1
    #tangle
    @code lua
    --- Get insert word
-   ---@field get_insert_word fun(self: neocomplete.entry): string
+   ---@field get_insert_word fun(self: care.entry): string
    @end
 
 * Fields
@@ -66,7 +66,7 @@ version: 1.1.1
    #tangle
    @code lua
    --- Source from which the entry came
-   ---@field source neocomplete.internal_source
+   ---@field source care.internal_source
    @end
 
 ** Context
@@ -75,12 +75,12 @@ version: 1.1.1
    #tangle
    @code lua
    --- Context in which entry was completed
-   ---@field context neocomplete.context
+   ---@field context care.context
    @end
 
 ** Matches
    Position of matches which were found during filtering. This is just used to highlight them in the
-   completion menu with `@neocomplete.match`.
+   completion menu with `@care.match`.
    #tangle
    @code lua
    --- Matches in filter text
@@ -89,7 +89,7 @@ version: 1.1.1
 
 ** Score
    This is the score obtained from filtering. It is used to sort which happens in the
-   `neocomplete.sorter` module.
+   `care.sorter` module.
    #tangle
    @code lua
    --- Score from filtering
@@ -101,5 +101,5 @@ version: 1.1.1
    #tangle
    @code lua
    --- Get offset of entry from beginning of line
-   ---@field get_offset fun(self: neocomplete.entry): integer
+   ---@field get_offset fun(self: care.entry): integer
    @end

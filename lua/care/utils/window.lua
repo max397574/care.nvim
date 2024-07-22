@@ -1,13 +1,13 @@
----@type neocomplete.window
+---@type care.window
 ---@diagnostic disable-next-line: missing-fields
 local Window = {}
 
 function Window.new()
-    ---@type neocomplete.window
+    ---@type care.window
     local self = setmetatable({}, { __index = Window })
     self.winnr = nil
-    self.config = require("neocomplete.config").options
-    self.ns = vim.api.nvim_create_namespace("neocomplete_window")
+    self.config = require("care.config").options
+    self.ns = vim.api.nvim_create_namespace("care_window")
     self.buf = vim.api.nvim_create_buf(false, true)
     self.position = nil
     self.opened_at = {}

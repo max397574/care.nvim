@@ -1,16 +1,16 @@
---- A completion source for neocomplete.nvim
----@class neocomplete.source
+--- A completion source for care.nvim
+---@class care.source
 --- Name of the source
 ---@field name string
 --- Whether the source will provide completions in the current context or not
 ---@field is_available? fun(): boolean
 --- Resolve a completion item
----@field resolve_item? fun(self: neocomplete.source, item: lsp.CompletionItem, callback: fun(item: lsp.CompletionItem)): nil
+---@field resolve_item? fun(self: care.source, item: lsp.CompletionItem, callback: fun(item: lsp.CompletionItem)): nil
 --- Characters which should trigger new completions of the source
 ---@field get_trigger_characters? fun(): string[]
 --- Keyword pattern for this source
 ---@field keyword_pattern? string
 --- Get keyword pattern for this source
----@field get_keyword_pattern? fun(self: neocomplete.source): string
+---@field get_keyword_pattern? fun(self: care.source): string
 --- Returns completion in the provided context
----@field complete fun(completion_context: neocomplete.completion_context, callback: fun(items: lsp.CompletionItem[], is_incomplete?: boolean)): nil
+---@field complete fun(completion_context: care.completion_context, callback: fun(items: lsp.CompletionItem[], is_incomplete?: boolean)): nil

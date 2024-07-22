@@ -3,11 +3,11 @@ local sorter = {}
 
 --- Filters and sorts entries by a prefix using fzy algorithm
 --- Sets `score` and `matches` field of remaining entries
----@param entries neocomplete.entry[]
+---@param entries care.entry[]
 ---@param prefix string
----@return neocomplete.entry[]
+---@return care.entry[]
 function sorter.sort(entries, prefix)
-    ---@param entry neocomplete.entry
+    ---@param entry care.entry
     local function get_filter_text(entry)
         -- TODO: makes more sense like this because label is what user sees?
         -- return entry.filterText or entry.label

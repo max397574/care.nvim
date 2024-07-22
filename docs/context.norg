@@ -12,7 +12,7 @@ created: 2023-11-15T17:42:46+0100
 updated: 2024-06-18T18:18:38+0100
 tangle: {
     languages: {
-        lua: ../lua/neocomplete/types/context.lua
+        lua: ../lua/care/types/context.lua
     }
     scope: tagged
     delimiter: none
@@ -26,7 +26,7 @@ version: 1.1.1
   #tangle
   @code lua
   --- Context provided to completion sources
-  ---@class neocomplete.context
+  ---@class care.context
   @end
 
 * Methods
@@ -36,7 +36,7 @@ version: 1.1.1
    #tangle
    @code lua
    --- Context changed since previous
-   ---@field changed fun(neocomplete.context): boolean
+   ---@field changed fun(care.context): boolean
    @end
 
 ** New
@@ -47,7 +47,7 @@ version: 1.1.1
    #tangle
    @code lua
    --- Create a new context
-   ---@field new fun(previous: neocomplete.context?): neocomplete.context
+   ---@field new fun(previous: care.context?): care.context
    @end
 
 * Fields
@@ -56,7 +56,7 @@ version: 1.1.1
    #tangle
    @code lua
    --- The previous context
-   ---@field previous neocomplete.context?
+   ---@field previous care.context?
    @end
 
 ** Cursor
@@ -64,7 +64,7 @@ version: 1.1.1
    #tangle
    @code lua
    --- The cursor position
-   ---@field cursor neocomplete.context.cursor
+   ---@field cursor care.context.cursor
    @end
 
 ** Bufnr
@@ -80,7 +80,7 @@ version: 1.1.1
    #tangle
    @code lua
    --- Reason for triggering completion
-   ---@field reason neocomplete.completionReason?
+   ---@field reason care.completionReason?
    @end
 
 ** Current line
@@ -103,7 +103,7 @@ version: 1.1.1
    #tangle
    @code lua
    --- A cursor position
-   ---@class neocomplete.context.cursor
+   ---@class care.context.cursor
    ---@field row integer
    ---@field col integer
    @end

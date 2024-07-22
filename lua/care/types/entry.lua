@@ -1,0 +1,19 @@
+--- An entry for the care completion menu
+---@class care.entry
+---@field completion_item lsp.CompletionItem
+--- Creates a new entry
+---@field new fun(completion_item: lsp.CompletionItem, source: care.internal_source, context: care.context): care.entry
+--- Get insert text
+---@field get_insert_text fun(self: care.entry): string
+--- Get insert word
+---@field get_insert_word fun(self: care.entry): string
+--- Source from which the entry came
+---@field source care.internal_source
+--- Context in which entry was completed
+---@field context care.context
+--- Matches in filter text
+---@field matches integer[]
+--- Score from filtering
+---@field score number
+--- Get offset of entry from beginning of line
+---@field get_offset fun(self: care.entry): integer

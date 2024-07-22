@@ -12,7 +12,7 @@ created: 2024-05-31T12:48:14+0100
 updated: 2024-06-18T19:34:31+0100
 tangle: {
     languages: {
-        lua: ../lua/neocomplete/types/internal_source.lua
+        lua: ../lua/care/types/internal_source.lua
     }
     scope: tagged
     delimiter: none
@@ -25,8 +25,8 @@ version: 1.1.1
   metadata about which the source author doesn't have to care and sometimes can't know.
   #tangle
   @code lua
-  --- Internal class for neocomplete to store source metadata
-  ---@class neocomplete.internal_source
+  --- Internal class for care to store source metadata
+  ---@class care.internal_source
   @end
 
 ** Source
@@ -34,7 +34,7 @@ version: 1.1.1
    #tangle
    @code lua
    --- The external completion source
-   ---@field source neocomplete.source
+   ---@field source care.source
    @end
 
 
@@ -44,7 +44,7 @@ version: 1.1.1
    #tangle
    @code lua
    --- The entries recieved by last completion
-   ---@field entries neocomplete.entry[]
+   ---@field entries care.entry[]
    @end
 
 ** New
@@ -52,7 +52,7 @@ version: 1.1.1
    #tangle
    @code lua
    --- The entries recieved by last completion
-   ---@field new fun(completion_source: neocomplete.source): neocomplete.internal_source
+   ---@field new fun(completion_source: care.source): care.internal_source
    @end
 
 ** Incomplete
@@ -70,7 +70,7 @@ version: 1.1.1
    #tangle
    @code lua
    --- Get the keyword pattern
-   ---@field get_keyword_pattern fun(self: neocomplete.internal_source): string
+   ---@field get_keyword_pattern fun(self: care.internal_source): string
    @end
 
 ** Get offset
@@ -80,5 +80,5 @@ version: 1.1.1
    #tangle
    @code lua
    --- The offset at which completions from source were loaded
-   ---@field get_offset fun(self: neocomplete.internal_source, context: neocomplete.context): integer
+   ---@field get_offset fun(self: care.internal_source, context: care.context): integer
    @end
