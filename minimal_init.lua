@@ -61,7 +61,7 @@ local plugins = {
 
             vim.api.nvim_create_autocmd("InsertLeave", {
                 callback = function()
-                    require("neocomplete").core.menu:close()
+                    require("neocomplete").api.close()
                 end,
             })
         end,
