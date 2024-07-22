@@ -46,8 +46,8 @@ It can be setup with the following options:
             -- See the configuration section for more details
             -- Load luvit types when the `vim.uv` word is found
             { path = "luvit-meta/library", words = { "vim%.uv" } },
-            { path = "luassert/library", words = { "vim%.uv" } },
-            { path = "busted/library", words = { "vim%.uv" } },
+            { path = "luassert/library", words = { "assert" } },
+            { path = "busted/library", words = { "describe", "it" } },
             { path = "care.nvim/lua/care/types/" },
         },
     },
