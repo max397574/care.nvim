@@ -35,6 +35,7 @@ function Menu.close(self)
     self.menu_window:close()
     self.docs_window:close()
     self.ghost_text:hide()
+    vim.api.nvim_exec_autocmds("User", { pattern = "CareMenuClosed" })
     local sources = require("care.sources").get_sources()
     for i, _ in ipairs(sources) do
         require("care.sources").sources[i].entries = nil
@@ -157,6 +158,7 @@ function Menu:open(entries, offset)
     if not entries or #entries < 1 then
         return
     end
+    vim.api.nvim_exec_autocmds("User", { pattern = "CareMenuOpened" })
     self.index = 0
     local width, _ = format_utils.get_width(self.entries)
     self.menu_window:open_cursor_relative(width, #self.entries, offset, self.config.ui.menu)
@@ -185,9 +187,11 @@ function Menu:confirm()
         return
     end
     require("care.menu.confirm")(entry)
+    vim.api.nvim_exec_autocmds("User", { pattern = "CareConfirmed", data = entry })
     self.ghost_text:hide()
     self.menu_window:close()
     self.docs_window:close()
+    vim.api.nvim_exec_autocmds("User", { pattern = "CareMenuClosed" })
 end
 
 function Menu:is_open()

@@ -8,7 +8,7 @@ categories: [
     docs
 ]
 created: 2023-11-15T17:42:49+0100
-updated: 2024-07-22T18:34:25+0100
+updated: 2024-07-29T18:36:03+0100
 version: 1.1.1
 @end
 
@@ -103,13 +103,18 @@ version: 1.1.1
 *** Mapping system
     The mapping system is quite confusing. It's a table in the config with keys to be mapped as keys
     and a call to `cmp.mapping()` with a callback to the actual functionality as value.
+    Users should able to just use normal mappings or functions with `vim.keymap.set`.
+
+*** Custom solutions for builtin functionality
+    An example for this is the {*** Mapping system}. Another example would be the `cmp.event.on`
+    which could just be done with User autocmds.
 
 *** Why not contribute?
     The maintainer is in general quite conservative. There were pull-requests for many features open
     which were liked by the community (seen by reactions and comments). But they were abandoned
     because the maintainer saw no reason to add it. There was for example a pull-request to fix the
     issue with the limited fields in the configuration {https://github.com/hrsh7th/nvim-cmp/pull/1238}[here].
-    This pull request was closed because *No specific use cases have emerged at this stage.*
+    This pull request was closed because /No specific use cases have emerged at this stage./
     according to the author. Even though there was clearly a problem described and what the pr would
     allow (this pr allowed custom fields which still isn't nice but fixed the obvious problems).
     There were also some features (in particular the custom scrollbars) removed because there were
@@ -124,6 +129,10 @@ version: 1.1.1
    matically) to our own plugin. We *don't want to adapt to cmp's apis* for this though. We won't
    extend our own formats e.g. for entries or sources to match cmps. Even when it's complicated we
    will just convert between the different formats.
+
+** Native things
+   Use as many native things as possible. This includes setting mappings with `vim.keymap.set` or
+   add events as user autocmd events.
 
 * Non-Goals
 ** Different views
