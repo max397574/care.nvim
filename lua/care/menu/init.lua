@@ -187,7 +187,7 @@ function Menu:confirm()
         return
     end
     require("care.menu.confirm")(entry)
-    vim.api.nvim_exec_autocmds("User", { pattern = "CareConfirmed", data = entry })
+    vim.api.nvim_exec_autocmds("User", { pattern = "CareConfirmed" })
     self.ghost_text:hide()
     self.menu_window:close()
     self.docs_window:close()
