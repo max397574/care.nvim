@@ -21,9 +21,11 @@
 --- Configuration of ghost text
 ---@field ghost_text care.config.ui.ghost_text
 
+--- Configuration for the ghost text
 ---@class care.config.ui.ghost_text
 ---@field enabled boolean
 ---@field position "inline"|"overlay"
+
 --- Configuration of the completion menu of care.nvim
 ---@class care.config.ui.menu
 --- Maximum height of the menu
@@ -38,6 +40,7 @@
 ---@field format_entry fun(entry: care.entry): { [1]: string, [2]: string }[][]
 --- How the sections in the menu should be aligned
 ---@field alignment ("left"|"center"|"right")[]
+
 --- Configuration of the completion menu of care.nvim
 ---@class care.config.ui.docs
 --- Maximum height of the documentation view
@@ -48,5 +51,6 @@
 ---@field border string|string[]|string[][]
 --- Character used for the scrollbar
 ---@field scrollbar string
+
 --- The icons used for the different completion item types
 ---@alias care.config.ui.type_icons table<string, string>

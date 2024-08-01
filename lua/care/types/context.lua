@@ -16,6 +16,7 @@
 ---@field line string
 --- Line before cursor
 ---@field line_before_cursor string
+
 --- A cursor position
 ---@class care.context.cursor
 ---@field row integer
