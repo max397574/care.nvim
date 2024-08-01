@@ -15,6 +15,7 @@ end
 function core:complete(reason)
     reason = reason or 2
     local sources = require("care.sources").get_sources()
+    ---@type care.entry[]
     local entries = {}
     local remaining = #sources
     self.context.reason = reason
@@ -35,6 +36,9 @@ function core:complete(reason)
                     local filtered_items = vim.iter(items):filter(function(entry)
                         return not entry.score or entry.score > 0
                     end)
+                    if source.config.filter then
+                        filtered_items:filter(source.config.filter)
+                    end
                     if source.config.max_entries then
                         filtered_items:take(source.config.max_entries)
                     end

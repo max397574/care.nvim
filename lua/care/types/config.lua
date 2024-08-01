@@ -51,6 +51,8 @@
 ---@field max_entries integer?
 --- The priority of this source. Is more important than matching score
 ---@field priority integer?
+--- Filter function for entries by the source
+---@field filter fun(entry: care.entry): boolean
 
 --- Configuration of the completion menu of care.nvim
 ---@class care.config.ui.docs
