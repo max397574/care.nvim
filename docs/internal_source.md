@@ -46,3 +46,7 @@ if the method exists on the source and otherwise just returns an empty table.
 With this function the offset of the source is determined. The offset describes at which point
 the completions for this source start. This is required to be able to remove that text if needed
 and to determine the characters used for filtering and sorting.
+
+## Is enabled
+
+This function checks whether the function is enabled or not based on it's config.
