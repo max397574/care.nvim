@@ -20,7 +20,6 @@ function core:complete(reason)
     self.context.reason = reason
     local offset = self.context.cursor.col
     for i, source in ipairs(sources) do
-        -- TODO: check if enabled in config
         if source.source.is_available() and source:is_enabled() then
             require("care.sources").complete(self.context, source, function(items, is_incomplete)
                 source.incomplete = is_incomplete or false
@@ -33,22 +32,23 @@ function core:complete(reason)
                     if source_offset then
                         offset = math.min(offset, source_offset)
                     end
+                    local filtered_items = vim.iter(items):filter(function(entry)
+                        return not entry.score or entry.score > 0
+                    end)
+                    if source.config.max_entries then
+                        filtered_items:take(source.config.max_entries)
+                    end
 
-                    vim.list_extend(entries, items)
+                    vim.list_extend(entries, filtered_items:totable())
                     vim.schedule(function()
                         if remaining == 0 then
-                            local filtered_entries = vim.iter(entries)
-                                :filter(function(entry)
-                                    return not entry.score or entry.score > 0
-                                end)
-                                :totable()
                             -- TODO: source priority and max entries
                             local opened_at = offset
                             if opened_at == self.last_opened_at and self.menu:is_open() then
-                                self.menu.entries = filtered_entries
+                                self.menu.entries = entries
                                 self.menu:readjust_win(offset)
                             else
-                                self.menu:open(filtered_entries, offset)
+                                self.menu:open(entries, offset)
                             end
                             self.last_opened_at = opened_at
                         end
