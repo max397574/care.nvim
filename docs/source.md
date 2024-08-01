@@ -6,14 +6,6 @@ author:
 categories:
   - docs,
   - types
-created: 2023-11-15T17:42:46+0100
-updated: 2024-07-15T20:10:47+0100
-tangle:
-  languages:
-    lua: ../lua/care/types/source.lua
-  scope: tagged
-  delimiter: none
-version: 1.1.1
 ---
 
 # General
