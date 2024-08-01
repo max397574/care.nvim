@@ -1,7 +1,9 @@
 --- A completion source for care.nvim
 ---@class care.source
---- Name of the source
+--- Name of the source (used for configuration)
 ---@field name string
+--- Display name of the source (used for display)
+---@field display_name string?
 --- Whether the source will provide completions in the current context or not
 ---@field is_available? fun(): boolean
 --- Resolve a completion item

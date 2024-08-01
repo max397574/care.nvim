@@ -1,13 +1,13 @@
 ---
 title: Source
 description: Type description of care.nvim config
-author: 
+author:
   - max397574
-categories: 
+categories:
   - docs,
   - types
-tangle: 
-  languages: 
+tangle:
+  languages:
     lua: ../lua/care/types/config.lua
   scope: tagged
   delimiter: none
@@ -16,25 +16,29 @@ updated: 2024-07-14T09:46:26+0100
 version: 1.1.1
 ---
 
-
 # General
+
 The config of care is used to configure the ui and care itself.
 
 There are two main parts to the config. The first one is the `ui` field and the second on is the
 rest of the configuration which is for configuring care itself.
 
 ## UI
+
 In the ui field the completion menu, the docs view and the format of the entries are configured.
 There is also a field for configuring type icons.
 
 ## Snippet expansion
+
 Here a function for expanding snippets is defined. By default this is the builtin
 `vim.snippet.expand()`. You can also use a plugin like luasnip for this like this:
+
 ```lua
 snippet_expansion = function(body)
     require("luasnip").lsp_expand(body)
 end
 ```
+
 ## Selection behavior
 
 With the selection behavior the user can determine what happens when selecting an entry. This can
@@ -42,14 +46,21 @@ either be `select` or `insert`. Selecting will just select the entry and do noth
 will actually insert the text of the entry (this is not necessarily the whole text).
 
 ## Keyword pattern
+
 Pattern used to determine keywords, used to determine what to use for filtering and what to
 remove if insert text is used.
 
+## Sources
+
+TODO
+
 ## Enabled
+
 This function can be used to disable care in certain contexts. By default this disables
 care in prompts.
 
 # UI
+
 The ui configuration is used to configure the whole ui of care. One of the main goals of
 this is to be as extensible as possible. This is especially important for the completion entries.
 Read more about that under [Configuraton of item display](./design.md#configuraton-of-item-display).
@@ -72,6 +83,7 @@ where the cursor is. With the overlay position the text will overlap with existi
 cursor.
 
 ## Menu
+
 This configuration should allow you to completely adapt the completion menu to your likings.
 
 It includes some basic window properties like the border and the maximum height of the window. It
@@ -91,6 +103,7 @@ with the alignment of each section.
 For example you want to have the label of an entry in a red highlight and an icon in a entry-kind
 specific color left aligned first and then the source of the entry right aligned in blue.
 You could do that like this:
+
 ```lua
 format_entry = function(entry)
     return {
@@ -110,9 +123,11 @@ aligned at the same column and not be next to the labels. In the example there a
 spacing added in between the two.
 
 ## Documentation view
+
 This configuration allows you to configure the documentation view.
 It consists of some basic window properties like the border and the maximum height of the window.
 It also has a field to define the character used for the scrollbar.
 
 ## Type Icons
+
 This is a table which defines the different icons.

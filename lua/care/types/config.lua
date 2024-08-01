@@ -20,6 +20,8 @@
 ---@field type_icons care.config.ui.type_icons
 --- Configuration of ghost text
 ---@field ghost_text care.config.ui.ghost_text
+--- Configuration for the different sources
+---@field sources neocomplete.config.source[]
 
 --- Configuration for the ghost text
 ---@class care.config.ui.ghost_text
@@ -40,6 +42,14 @@
 ---@field format_entry fun(entry: care.entry): { [1]: string, [2]: string }[][]
 --- How the sections in the menu should be aligned
 ---@field alignment ("left"|"center"|"right")[]
+
+---@class neocomplete.config.source
+--- Whether the source is enabled (default true)
+---@field enabled (fun(): boolean)?|boolean?
+--- The maximum amount of entries which can be displayed by this source
+---@field max_entries integer?
+--- The priority of this source. Is more important than matching score
+---@field priority integer?
 
 --- Configuration of the completion menu of care.nvim
 ---@class care.config.ui.docs
