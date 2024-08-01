@@ -7,6 +7,7 @@ function source.new(completion_source)
     local self = setmetatable({}, { __index = source })
     self.source = completion_source
     self.entries = {}
+    self.config = require("care.config").options.sources[completion_source.name] or {}
     return self
 end
 
@@ -52,6 +53,19 @@ function source.get_trigger_characters(self)
         return self.source.get_trigger_characters()
     end
     return trigger_characters
+end
+
+function source.is_enabled(self)
+    if self.config.enabled == nil then
+        return true
+    end
+    if type(self.config.enabled) == "boolean" then
+        ---@type boolean
+        return self.config.enabled
+    elseif type(self.config.enabled) == "function" then
+        return self.config.enabled()
+    end
+    return true
 end
 
 return source

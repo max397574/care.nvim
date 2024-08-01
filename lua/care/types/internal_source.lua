@@ -14,3 +14,7 @@
 ---@field get_offset fun(self: care.internal_source, context: care.context): integer
 ---Get the trigger characters
 ---@field get_trigger_characters fun(self: care.internal_source): string[]
+--- The configuration for the source
+---@field config neocomplete.config.source
+--- Whether the source is enabled or not
+---@field is_enabled fun(self: care.internal_source): boolean

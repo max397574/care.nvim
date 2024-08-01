@@ -21,7 +21,7 @@ function core:complete(reason)
     local offset = self.context.cursor.col
     for i, source in ipairs(sources) do
         -- TODO: check if enabled in config
-        if source.source.is_available() then
+        if source.source.is_available() and source:is_enabled() then
             require("care.sources").complete(self.context, source, function(items, is_incomplete)
                 source.incomplete = is_incomplete or false
                 source.entries = items

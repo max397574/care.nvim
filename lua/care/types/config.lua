@@ -6,11 +6,14 @@
 ---@field snippet_expansion fun(string): nil
 --- Behavior when selecting entry
 ---@field selection_behavior "select"|"insert"
+--- Configuration for the different sources
+---@field sources neocomplete.config.source[]
 --- Pattern used to determine keywords
 ---@field keyword_pattern string
 --- Configuration for the ui of care
 ---@field enabled fun(): boolean
 --- The main class for the ui configuration of care.nvim
+
 ---@class care.config.ui
 --- Configuration of the completion menu of care.nvim
 ---@field menu care.config.ui.menu
@@ -20,8 +23,6 @@
 ---@field type_icons care.config.ui.type_icons
 --- Configuration of ghost text
 ---@field ghost_text care.config.ui.ghost_text
---- Configuration for the different sources
----@field sources neocomplete.config.source[]
 
 --- Configuration for the ghost text
 ---@class care.config.ui.ghost_text
@@ -45,7 +46,7 @@
 
 ---@class neocomplete.config.source
 --- Whether the source is enabled (default true)
----@field enabled (fun(): boolean)?|boolean?
+---@field enabled boolean|nil|fun():boolean
 --- The maximum amount of entries which can be displayed by this source
 ---@field max_entries integer?
 --- The priority of this source. Is more important than matching score
