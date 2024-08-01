@@ -46,4 +46,12 @@ function source.get_offset(self, context)
     -- return context.cursor.col - word_boundary
 end
 
+function source.get_trigger_characters(self)
+    local trigger_characters = {}
+    if self.source.get_trigger_characters then
+        return self.source.get_trigger_characters()
+    end
+    return trigger_characters
+end
+
 return source

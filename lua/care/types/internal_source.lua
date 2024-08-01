@@ -12,3 +12,5 @@
 ---@field get_keyword_pattern fun(self: care.internal_source): string
 --- The offset at which completions from source were loaded
 ---@field get_offset fun(self: care.internal_source, context: care.context): integer
+---Get the trigger characters
+---@field get_trigger_characters fun(self: care.internal_source): string[]

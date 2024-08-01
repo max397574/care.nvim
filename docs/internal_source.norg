@@ -9,7 +9,7 @@ categories: [
     types
 ]
 created: 2024-05-31T12:48:14+0100
-updated: 2024-06-18T19:34:31+0100
+updated: 2024-08-01T10:46:49+0100
 tangle: {
     languages: {
         lua: ../lua/care/types/internal_source.lua
@@ -71,6 +71,15 @@ version: 1.1.1
    @code lua
    --- Get the keyword pattern
    ---@field get_keyword_pattern fun(self: care.internal_source): string
+   @end
+
+** Get trigger characters
+   This function is used to get the trigger characters for the source. At the moment it just checks
+   if the method exists on the source and otherwise just returns an empty table.
+   #tangle
+   @code lua
+   --- Get the trigger characters
+   ---@field get_trigger_characters fun(self: care.internal_source): string[]
    @end
 
 ** Get offset

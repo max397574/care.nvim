@@ -24,7 +24,7 @@ function care_sources.complete(context, source, callback)
     local completion_context
     if context.reason == 1 then
         if
-            vim.tbl_contains(source.source.get_trigger_characters(), last_char)
+            vim.tbl_contains(source:get_trigger_characters(), last_char)
             or (not source.entries or #source.entries == 0)
         then
             -- if vim.tbl_contains(source.source.get_trigger_characters(), last_char) or true then
