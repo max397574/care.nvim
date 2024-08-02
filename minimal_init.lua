@@ -58,12 +58,6 @@ local plugins = {
                     vim.api.nvim_feedkeys(vim.keycode("<c-f>"), "n", false)
                 end
             end)
-
-            vim.api.nvim_create_autocmd("InsertLeave", {
-                callback = function()
-                    require("care").api.close()
-                end,
-            })
         end,
     },
     {
