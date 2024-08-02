@@ -8,6 +8,8 @@
 ---@field selection_behavior "select"|"insert"
 --- Configuration for the different sources
 ---@field sources neocomplete.config.source[]
+--- Events with which autocomplete is triggered
+---@field completion_events string[]
 --- Pattern used to determine keywords
 ---@field keyword_pattern string
 --- Configuration for the ui of care

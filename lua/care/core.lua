@@ -66,7 +66,10 @@ function core:complete(reason)
 end
 
 function core.setup(self)
-    vim.api.nvim_create_autocmd("TextChangedI", {
+    if #require("care.config").options.completion_events == 0 then
+        return
+    end
+    vim.api.nvim_create_autocmd(require("care.config").options.completion_events, {
         callback = function()
             self:on_change()
         end,

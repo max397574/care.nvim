@@ -74,6 +74,7 @@ config.defaults = {
     selection_behavior = "select",
     keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
     sources = {},
+    completion_events = { "TextChangedI" },
     enabled = function()
         local enabled = true
         if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt" then

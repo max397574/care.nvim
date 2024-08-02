@@ -34,13 +34,18 @@ end
 ## Selection behavior
 
 With the selection behavior the user can determine what happens when selecting an entry. This can
-either be `select` or `insert`. Selecting will just select the entry and do nothing else. Insert
+either be `"select"` or `"insert"`. Selecting will just select the entry and do nothing else. Insert
 will actually insert the text of the entry (this is not necessarily the whole text).
 
 ## Keyword pattern
 
 Pattern used to determine keywords, used to determine what to use for filtering and what to
 remove if insert text is used.
+
+## Completion events
+
+The `completion_events` table is used to set events for completion. By default it just contains
+`"TextChangedI"`. You can set it to an empty table (`{}`) to disable autocompletion.
 
 ## Sources
 
