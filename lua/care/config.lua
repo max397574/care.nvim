@@ -76,6 +76,7 @@ config.defaults = {
     selection_behavior = "select",
     keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
     sources = {},
+    preselect = true,
     completion_events = { "TextChangedI" },
     enabled = function()
         local enabled = true

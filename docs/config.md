@@ -51,6 +51,10 @@ The `completion_events` table is used to set events for completion. By default i
 
 TODO
 
+## Preselect
+
+Whether items should be preselected or not
+
 ## Enabled
 
 This function can be used to disable care in certain contexts. By default this disables

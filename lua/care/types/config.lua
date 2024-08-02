@@ -14,8 +14,10 @@
 ---@field keyword_pattern string
 --- Configuration for the ui of care
 ---@field enabled fun(): boolean
---- The main class for the ui configuration of care.nvim
+--- Whether items should be preselected or not
+---@field preselect boolean
 
+--- The main class for the ui configuration of care.nvim
 ---@class care.config.ui
 --- Configuration of the completion menu of care.nvim
 ---@field menu care.config.ui.menu
