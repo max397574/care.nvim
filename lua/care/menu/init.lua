@@ -19,18 +19,6 @@ end
 
 Menu.draw = require("care.menu.draw")
 
-function Menu:readjust_win(offset)
-    self.index = 0
-    local width, _ = format_utils.get_width(self.entries)
-    if not self.entries or #self.entries < 1 then
-        self.menu_window:close()
-        return
-    end
-    self.menu_window:readjust(#self.entries, width, offset)
-    self:draw()
-    self.menu_window:draw_scrollbar()
-end
-
 function Menu.close(self)
     self.menu_window:close()
     self.docs_window:close()
@@ -44,7 +32,10 @@ end
 
 ---@param menu care.menu
 local function draw_docs(menu, entry, config)
-    if not entry then
+    if not entry or menu.index == 0 then
+        if menu:docs_visible() then
+            menu.docs_window:close()
+        end
         return
     end
 
@@ -111,6 +102,19 @@ local function draw_docs(menu, entry, config)
                 + 1
         )
     end
+end
+
+function Menu:readjust_win(offset)
+    self.index = 0
+    local width, _ = format_utils.get_width(self.entries)
+    if not self.entries or #self.entries < 1 then
+        self.menu_window:close()
+        return
+    end
+    draw_docs(self, self:get_active_entry(), self.config.ui.docs_view)
+    self.menu_window:readjust(#self.entries, width, offset)
+    self:draw()
+    self.menu_window:draw_scrollbar()
 end
 
 function Menu:docs_visible()
