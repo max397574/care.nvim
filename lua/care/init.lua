@@ -57,6 +57,11 @@ function care.setup(options)
         once = true,
         group = augroup,
     })
+    vim.api.nvim_create_autocmd("InsertLeave", {
+        callback = function()
+            care.api.close()
+        end,
+    })
 end
 
 return care
