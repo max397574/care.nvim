@@ -26,7 +26,9 @@ function sorter.sort(entries, prefix)
 
     for _, res in ipairs(fzy.filter(prefix, filter_texts)) do
         -- res is a table like `{2, {1, 5,  9}, 2.63}` {<index>, {<matches>}, <score>}
+        -- priority * 10 because fzy scores aren't always between 0 and 1 but quire likely between 0 and 10
         entries[res[1]].score = res[3]
+            + (entries[res[1]].source.config.priority and (entries[res[1]].source.config.priority * 10) or 0)
         entries[res[1]].matches = res[2]
     end
     entries = vim.iter(entries)
