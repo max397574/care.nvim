@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmax_397574_github_io=self.webpackChunkmax_397574_github_io||[]).push([[121],{8070:e=>{e.exports=JSON.parse('{"tags":[{"label":"Neovim","permalink":"/blog/tags/neovim","description":"Posts about neovim","count":1}]}')}}]);
