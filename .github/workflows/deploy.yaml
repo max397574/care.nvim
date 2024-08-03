@@ -75,7 +75,7 @@ jobs:
           node-version: 18
           cache: pnpm
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
       - name: Build website
         run: pnpm build
       - name: Upload Build Artifact
