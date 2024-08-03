@@ -69,5 +69,5 @@ The `get_keyword_pattern` function has higher priority and will overwrite the st
 ## Complete
 
 This is arguably the most important function of each source. This function returns completions.
-The function takes in a [completion context](./index.md#completion-context) and should return a
-list of [entries](#entrymd).
+The function takes in a completion context and should return a
+list of entries.
