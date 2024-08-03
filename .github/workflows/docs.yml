@@ -1,0 +1,19 @@
+# from https://www.github.com/folke/lazy.nvim
+name: Docs
+on:
+  push:
+    branches:
+      - main
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' && github.repository_owner == 'max397574' }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: docs
+      - name: Generate Docs
+        shell: bash
+        run: gh workflow run "Deploy to Github Pages" --ref docs
