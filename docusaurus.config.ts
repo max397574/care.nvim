@@ -11,12 +11,12 @@ const config: Config = {
   url: 'https://max397574.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  baseUrl: '/care.nvim',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'max397574', // Usually your GitHub org/user name.
-  projectName: 'max397574.github.io', // Usually your repo name.
+  projectName: 'care.nvim', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
