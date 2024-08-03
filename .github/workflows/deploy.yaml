@@ -75,6 +75,9 @@ jobs:
         with:
           node-version: 18
           cache: pnpm
+      - name: Debug
+        run: |
+          ls docs
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Build website
