@@ -1,11 +1,7 @@
 ---
-title: Source
-description: Type description of care.nvim config
-author:
-  - max397574
-categories:
-  - docs,
-  - types
+title: Configuration
+description: Configuration for care.nvim
+sidebar_position: 2
 ---
 
 # General
