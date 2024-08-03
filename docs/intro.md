@@ -1,11 +1,3 @@
----
-sidebar_position: 1
----
+# Care.nvim
 
-# Documentations
-
-## Care.nvim
-
-Care.nvim is a neovim completion engine.
-
-## Omega.nvim
+See `dev` for more information about the code and developing sources.
