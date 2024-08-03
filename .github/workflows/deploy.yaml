@@ -59,7 +59,7 @@ jobs:
           ref: docs
       - name: Copy docs for building
         run: |
-          cp -r /tmp/temp-docs/docs/ docs
+          cp -r /tmp/temp-docs/docs/* docs
           ls docs
   docusaurus:
     name: Build Docusaurus
