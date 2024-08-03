@@ -34,10 +34,12 @@ const config: Config = {
       'classic',
       {
         docs: {
+          routeBasePath: '/',
           sidebarPath: './sidebars.ts',
           editUrl:
             'https://github.com/max397574/max397574.github.io',
         },
+        blog: false,
         theme: {
           customCss: './src/css/custom.css',
         },
