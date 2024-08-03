@@ -41,7 +41,7 @@ jobs:
         #     commit_user_name: "github-actions[bot]"
         #     commit_user_email: "github-actions[bot]@users.noreply.github.com"
         #     commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
-  sync-docs:
+  copy-docs:
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -58,9 +58,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: docs
+      - name: Copy docs for building
+        run: |
+          cp -r /tmp/temp-docs/docs/ ./docs
   docusaurus:
     name: Build Docusaurus
-    needs: build
+    needs: copy-docs
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
