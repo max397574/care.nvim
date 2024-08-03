@@ -59,6 +59,7 @@ jobs:
           ref: docs
       - name: Copy docs for building
         run: |
+          rm -rf docs/*
           cp -r /tmp/temp-docs/docs/* docs
           ls docs
       - name: Push changes
