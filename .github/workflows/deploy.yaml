@@ -53,7 +53,7 @@ jobs:
         run: |
           mkdir -p /tmp/temp-docs
           cp -r docs/ /tmp/temp-docs/
-          cp README.md /tmp/temp-readme/
+          cp readme.md /tmp/temp-readme/
       - name: Checkout docs branch
         uses: actions/checkout@v4
         with:
