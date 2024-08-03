@@ -38,11 +38,6 @@ const config: Config = {
           editUrl:
             'https://github.com/max397574/max397574.github.io',
         },
-        blog: {
-          showReadingTime: true,
-          editUrl:
-            'https://github.com/max397574/max397574.github.io',
-        },
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -66,7 +61,6 @@ const config: Config = {
           position: 'left',
           label: 'Docs',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
         {
           href: 'https://github.com/max397574/max397574.github.io',
           label: 'GitHub',
@@ -102,10 +96,6 @@ const config: Config = {
         {
           title: 'More',
           items: [
-            {
-              label: 'Blog',
-              to: '/blog',
-            },
             {
               label: 'GitHub',
               href: 'https://github.com/max397574',
