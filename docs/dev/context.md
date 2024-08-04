@@ -12,7 +12,7 @@ cursor position. It is passed to completion sources to get completions.
 
 ## Changed
 
-`context:changed(): bool`
+`context:changed(): boolean`
 
 Whether the context changed in comparison to the previous one. This is used to
 check whether to get new completions or not when using autocompletion.
