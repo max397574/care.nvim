@@ -8,6 +8,9 @@ description: Ressources to devlop care.nvim or sources for it
 This is the internal documentation of the care.nvim code base. It also includes
 documentation for developing sources for care.nvim.
 
+If you want to contribute you should read the
+[code style documentation](./code_style).
+
 ## Conventions used
 
 For describing classes there is always a section for methods (functions) and one

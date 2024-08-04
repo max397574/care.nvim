@@ -20,7 +20,7 @@ function context.new(previous)
     return self
 end
 
-function context.changed(self)
+function context:changed()
     if not self.previous then
         return true
     end

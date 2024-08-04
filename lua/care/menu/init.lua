@@ -19,7 +19,7 @@ end
 
 Menu.draw = require("care.menu.draw")
 
-function Menu.close(self)
+function Menu:close()
     self.menu_window:close()
     self.docs_window:close()
     self.ghost_text:hide()
