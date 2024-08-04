@@ -25,11 +25,13 @@ export default function Home(): JSX.Element {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title={`Max397574`}
-      description="Personal page from max397574">
+      title={`Care.nvim`}
+      description="Completion And Recommendation Engine">
       <HomepageHeader />
       <main>
-        <HomepageFeatures />
+        <a href="getting_started">Getting Started</a>
+        <a href="config">Configuration</a>
+        <a href="dev">For Developers</a>
       </main>
     </Layout>
   );
