@@ -11,7 +11,7 @@ function source.new(completion_source)
     return self
 end
 
-function source.get_keyword_pattern(self)
+function source:get_keyword_pattern()
     local keyword_pattern = require("care.config").options.keyword_pattern
     if self.source.keyword_pattern then
         ---@type string
@@ -23,7 +23,7 @@ function source.get_keyword_pattern(self)
     return keyword_pattern
 end
 
-function source.get_offset(self, context)
+function source:get_offset(context)
     if not context then
         return context.cursor.col
     end
@@ -47,7 +47,7 @@ function source.get_offset(self, context)
     -- return context.cursor.col - word_boundary
 end
 
-function source.get_trigger_characters(self)
+function source:get_trigger_characters()
     local trigger_characters = {}
     if self.source.get_trigger_characters then
         return self.source.get_trigger_characters()
@@ -55,7 +55,7 @@ function source.get_trigger_characters(self)
     return trigger_characters
 end
 
-function source.is_enabled(self)
+function source:is_enabled()
     if self.config.enabled == nil then
         return true
     end

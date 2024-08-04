@@ -65,7 +65,7 @@ function core:complete(reason)
     end
 end
 
-function core.setup(self)
+function core:setup()
     if #require("care.config").options.completion_events == 0 then
         return
     end
@@ -84,7 +84,7 @@ function core:block()
     end)
 end
 
-function core.on_change(self)
+function core:on_change()
     if self.blocked then
         return
     end
