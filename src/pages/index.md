@@ -2,9 +2,9 @@
 title: Care.nvim
 ---
 
-# Care.nvim
-
 <div align="center">
+
+# Care.nvim
 
 Completion And Recommendation Engine for Neovim
 
