@@ -17,7 +17,7 @@ behavior of care.
 The ui configuration is used to configure the whole ui of care. One of the main
 goals of this is to be as extensible as possible. This is especially important
 for the completion entries. Read more about that under
-[Configuraton of item display](../design#configuraton-of-item-display).
+[Configuration of item display](../design#configuration-of-item-display).
 
 The most important part for many users will be the `menu` field. It's used to
 configure the completion menu.
