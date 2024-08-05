@@ -14,7 +14,11 @@ Completion And Recommendation Engine for Neovim
 •
 [Getting Started](./getting_started)
 
+</div>
+
 <br>
+
+<div align="center">
 
 [Developing](./dev)
 
