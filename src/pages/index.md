@@ -14,7 +14,7 @@ Completion And Recommendation Engine for Neovim
 •
 [Getting Started](./getting_started)
 
-</br>
+<br>
 
 [Developing](./dev)
 
