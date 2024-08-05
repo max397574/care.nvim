@@ -3,8 +3,8 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'Max397574',
-  tagline: 'Homepage for personal projects',
+  title: 'Care.nvim',
+  tagline: 'Completion And Recommendation Engine',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -37,7 +37,7 @@ const config: Config = {
           routeBasePath: '/',
           sidebarPath: './sidebars.ts',
           editUrl:
-            'https://github.com/max397574/max397574.github.io',
+            'https://github.com/max397574/care.nvim/tree/main/docs',
         },
         blog: false,
         theme: {
@@ -64,7 +64,7 @@ const config: Config = {
           label: 'Docs',
         },
         {
-          href: 'https://github.com/max397574/max397574.github.io',
+          href: 'https://github.com/max397574/care.nvim',
           label: 'GitHub',
           position: 'right',
         },
@@ -77,21 +77,25 @@ const config: Config = {
           title: 'Navigation',
           items: [
             {
-              label: 'Documentations',
+              label: 'Start Page',
               to: '/',
+            },
+            {
+              label: 'Getting Started',
+              to: '/getting_starated',
+            },
+            {
+              label: 'For Developers',
+              to: '/dev',
             },
           ],
         },
         {
-          title: 'Projects',
+          title: 'Development',
           items: [
             {
-              label: 'Care',
+              label: 'GitHub',
               href: 'https://github.com/max397574/care.nvim',
-            },
-            {
-              label: 'Omega-nvim',
-              href: 'https://github.com/omega-nvim/omega-nvim',
             },
           ],
         },
@@ -99,7 +103,7 @@ const config: Config = {
           title: 'More',
           items: [
             {
-              label: 'GitHub',
+              label: 'Author\'s github',
               href: 'https://github.com/max397574',
             },
           ],
