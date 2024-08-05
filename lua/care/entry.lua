@@ -23,7 +23,7 @@ function Entry:get_offset()
         if range then
             local c = range.start.character
             for idx = c, self.context.cursor.col do
-                if not is_white(string.byte(self.context.line, idx)) then
+                if not is_white(string.byte(self.context.line, idx) or "") then
                     offset = idx
                     break
                 end
