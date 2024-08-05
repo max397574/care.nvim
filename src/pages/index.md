@@ -16,8 +16,6 @@ Completion And Recommendation Engine for Neovim
 
 </div>
 
-<br>
-
 <div align="center">
 
 [Developing](./dev)
