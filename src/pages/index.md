@@ -10,7 +10,7 @@ Completion And Recommendation Engine for Neovim
 
 [Features](#Features)
 •
-[Requirements](Requirements)
+[Requirements](#Requirements)
 •
 [Getting Started](./getting_started)
 
