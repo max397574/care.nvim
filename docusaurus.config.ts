@@ -51,7 +51,7 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'Max397574',
+      title: 'Care.nvim',
       logo: {
         alt: 'Max397574 Logo',
         src: 'img/logo.svg',
