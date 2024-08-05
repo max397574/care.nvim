@@ -82,7 +82,7 @@ const config: Config = {
             },
             {
               label: 'Getting Started',
-              to: '/getting_starated',
+              to: '/getting_started',
             },
             {
               label: 'For Developers',
