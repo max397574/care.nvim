@@ -4,14 +4,28 @@ title: Care.nvim
 
 # Care.nvim
 
-## Completion And Recommendation Engine
+<div align="center">
 
-### Getting Started
+Completion And Recommendation Engine for Neovim
 
+[Features](#Features)
+•
+[Requirements](Requirements)
+•
 [Getting Started](./getting_started)
 
-### Features
+</br>
 
-### Developers
+[Developing](./dev)
 
-[For Developers](./dev)
+</div>
+
+## Features
+
+- Fully configurable UI
+- Integration for nvim-cmp sources with [care-cmp](https://www.github.com/max397574/care-cmp)
+
+## Requirements
+
+- Neovim >= 0.10
+- Optionally a [Nerd Font](https://www.nerdfonts.com)
