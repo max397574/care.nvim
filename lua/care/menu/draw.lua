@@ -93,13 +93,4 @@ return function(self)
             vim.api.nvim_buf_add_highlight(self.menu_window.buf, self.ns, "@care.match", line - 1, idx - 1, idx)
         end
     end
-    if not self.config.preselect then
-        return
-    end
-    for index, entry in ipairs(self.entries) do
-        if entry.completion_item.preselect then
-            self.index = index
-            break
-        end
-    end
 end

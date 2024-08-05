@@ -104,6 +104,18 @@ local function draw_docs(menu, entry, config)
     end
 end
 
+local function preselect(menu)
+    if not menu.config.preselect then
+        return
+    end
+    for index, entry in ipairs(menu.entries) do
+        if entry.completion_item.preselect then
+            menu.index = index
+            break
+        end
+    end
+end
+
 function Menu:readjust_win(offset)
     self.index = 0
     local width, _ = format_utils.get_width(self.entries)
@@ -113,6 +125,7 @@ function Menu:readjust_win(offset)
     end
     draw_docs(self, self:get_active_entry(), self.config.ui.docs_view)
     self.menu_window:readjust(#self.entries, width, offset)
+    preselect(self)
     self:draw()
     self.menu_window:draw_scrollbar()
 end
@@ -164,6 +177,7 @@ function Menu:open(entries, offset)
     end
     vim.api.nvim_exec_autocmds("User", { pattern = "CareMenuOpened" })
     self.index = 0
+    preselect(self)
     local width, _ = format_utils.get_width(self.entries)
     self.menu_window:open_cursor_relative(width, #self.entries, offset, self.config.ui.menu)
     self:draw()
