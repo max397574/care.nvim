@@ -6,6 +6,94 @@ sidebar_position: 2
 
 # Config
 
+<details>
+  <summary>Full Default Config</summary>
+```lua
+---@type care.config
+{
+    ui = {
+        menu = {
+            max_height = 10,
+            border = "rounded",
+            position = "auto",
+            format_entry = function(entry)
+                local deprecated = entry.completion_item.deprecated
+                    or vim.tbl_contains(entry.completion_item.tags or {}, 1)
+                local completion_item = entry.completion_item
+                local type_icons = config.options.ui.type_icons
+                -- TODO: remove since now can only be number, or also allow custom string kinds?
+                local entry_kind = type(completion_item.kind) == "string" and completion_item.kind
+                    or require("care.utils.lsp").get_kind_name(completion_item.kind)
+                return {
+                    { { completion_item.label .. " ", deprecated and "Comment" or "@care.entry" } },
+                    {
+                        {
+                            " " .. (type_icons[entry_kind] or type_icons.Text) .. " ",
+                            ("@care.type.%s"):format(entry_kind),
+                        },
+                    },
+                }
+            end,
+            scrollbar = "█",
+            alignment = {},
+        },
+        docs_view = {
+            max_height = 8,
+            max_width = 80,
+            border = "rounded",
+            scrollbar = "█",
+        },
+        type_icons = {
+            Class = "",
+            Color = "",
+            Constant = "",
+            Constructor = "",
+            Enum = "",
+            EnumMember = "",
+            Event = "",
+            Field = "󰜢",
+            File = "",
+            Folder = "",
+            Function = "",
+            Interface = "",
+            Keyword = "",
+            Method = "ƒ",
+            Module = "",
+            Operator = "󰆕",
+            Property = "",
+            Reference = "",
+            Snippet = "",
+            Struct = "",
+            Text = "",
+            TypeParameter = "",
+            Unit = "󰑭",
+            Value = "󰎠",
+            Variable = "󰫧",
+        },
+        ghost_text = {
+            enabled = true,
+            position = "overlay",
+        },
+    },
+    snippet_expansion = function(snippet_body)
+        vim.snippet.expand(snippet_body)
+    end,
+    selection_behavior = "select",
+    keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
+    sources = {},
+    preselect = true,
+    completion_events = { "TextChangedI" },
+    enabled = function()
+        local enabled = true
+        if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt" then
+            enabled = false
+        end
+        return enabled
+    end,
+}
+```
+</details>
+
 The config of care is used to configure the ui and care itself.
 
 There are two main parts to the config. The first one is the `ui` field and the
