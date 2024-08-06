@@ -1,12 +1,12 @@
 ---@type care.context
 ---@diagnostic disable-next-line: missing-fields
-local context = {}
+local Context = {}
 
 ---@type lsp.CompletionContext
 
-function context.new(previous)
+function Context.new(previous)
     ---@type care.context
-    local self = setmetatable({}, { __index = context })
+    local self = setmetatable({}, { __index = Context })
     previous = previous or {}
     -- reset so table doesn't get too big
     previous.previous = nil
@@ -20,7 +20,7 @@ function context.new(previous)
     return self
 end
 
-function context:changed()
+function Context:changed()
     if not self.previous then
         return true
     end
@@ -42,4 +42,4 @@ function context:changed()
     return false
 end
 
-return context
+return Context

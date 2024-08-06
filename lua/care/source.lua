@@ -1,17 +1,17 @@
 ---@type care.internal_source
 ---@diagnostic disable-next-line: missing-fields
-local source = {}
+local Source = {}
 
-function source.new(completion_source)
+function Source.new(completion_source)
     ---@type care.internal_source
-    local self = setmetatable({}, { __index = source })
+    local self = setmetatable({}, { __index = Source })
     self.source = completion_source
     self.entries = {}
     self.config = require("care.config").options.sources[completion_source.name] or {}
     return self
 end
 
-function source:get_keyword_pattern()
+function Source:get_keyword_pattern()
     local keyword_pattern = require("care.config").options.keyword_pattern
     if self.source.keyword_pattern then
         ---@type string
@@ -23,7 +23,7 @@ function source:get_keyword_pattern()
     return keyword_pattern
 end
 
-function source:get_offset(context)
+function Source:get_offset(context)
     if not context then
         return context.cursor.col
     end
@@ -47,7 +47,7 @@ function source:get_offset(context)
     -- return context.cursor.col - word_boundary
 end
 
-function source:get_trigger_characters()
+function Source:get_trigger_characters()
     local trigger_characters = {}
     if self.source.get_trigger_characters then
         return self.source.get_trigger_characters()
@@ -55,7 +55,7 @@ function source:get_trigger_characters()
     return trigger_characters
 end
 
-function source:is_enabled()
+function Source:is_enabled()
     if self.config.enabled == nil then
         return true
     end
@@ -68,4 +68,4 @@ function source:is_enabled()
     return true
 end
 
-return source
+return Source

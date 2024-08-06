@@ -1,10 +1,10 @@
 ---@type care.core
 ---@diagnostic disable-next-line: missing-fields
-local core = {}
+local Core = {}
 
-function core.new()
+function Core.new()
     ---@type care.core
-    local self = setmetatable({}, { __index = core })
+    local self = setmetatable({}, { __index = Core })
     self.context = require("care.context").new()
     self.menu = require("care.menu").new()
     self.blocked = false
@@ -12,7 +12,7 @@ function core.new()
     return self
 end
 
-function core:complete(reason)
+function Core:complete(reason)
     reason = reason or 2
     local sources = require("care.sources").get_sources()
     ---@type care.entry[]
@@ -65,7 +65,7 @@ function core:complete(reason)
     end
 end
 
-function core:setup()
+function Core:setup()
     if #require("care.config").options.completion_events == 0 then
         return
     end
@@ -77,14 +77,14 @@ function core:setup()
     })
 end
 
-function core:block()
+function Core:block()
     self.blocked = true
     return vim.schedule_wrap(function()
         self.blocked = false
     end)
 end
 
-function core:on_change()
+function Core:on_change()
     if self.blocked then
         return
     end
@@ -98,4 +98,4 @@ function core:on_change()
     self:complete(1)
 end
 
-return core
+return Core
