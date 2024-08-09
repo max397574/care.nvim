@@ -4,7 +4,7 @@ title: Care.nvim
 
 <div align="center">
 
-<img src="static/img/logo.svg" width="300">
+<img src="img/logo.svg" width="300">
 
 # Care.nvim
 
