@@ -1,4 +1,8 @@
+<div align="center">
+<img src="res/care.svg" width=300>
 # care.nvim
+
+</div>
 
 initialized automatically
 
