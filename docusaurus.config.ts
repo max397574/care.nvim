@@ -49,7 +49,7 @@ const config: Config = {
 
   themeConfig: {
     // Replace with your project's social card
-    image: 'img/docusaurus-social-card.jpg',
+    image: 'img/care_social_card.jpg',
     navbar: {
       title: 'Care.nvim',
       logo: {
