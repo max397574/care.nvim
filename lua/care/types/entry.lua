@@ -17,3 +17,7 @@
 ---@field score number
 --- Get offset of entry from beginning of line
 ---@field get_offset fun(self: care.entry): integer
+--- Gets the range for inserting the entry (insert of InsertReplaceEdit)
+---@field get_insert_range fun(self: care.entry): lsp.Range
+--- Gets the range for inserting the entry (insert of InsertReplaceEdit)
+---@field get_replace_range fun(self: care.entry): lsp.Range

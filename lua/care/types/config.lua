@@ -6,6 +6,8 @@
 ---@field snippet_expansion fun(string): nil
 --- Behavior when selecting entry
 ---@field selection_behavior "select"|"insert"
+--- Behavior when confirming entry
+---@field confirm_behavior "insert"|"replace"
 --- Configuration for the different sources
 ---@field sources neocomplete.config.source[]
 --- Events with which autocomplete is triggered

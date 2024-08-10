@@ -65,4 +65,46 @@ function Entry:get_insert_word()
     return text
 end
 
+function Entry:get_insert_range()
+    if self.completion_item.textEdit then
+        if self.completion_item.textEdit.insert then
+            return self.completion_item.textEdit.insert
+        else
+            return self.completion_item.textEdit.range
+        end
+    else
+        return {
+            start = {
+                character = self:get_offset(),
+                line = self.context.cursor.row - 1,
+            },
+            ["end"] = {
+                character = self.context.cursor.col,
+                line = self.context.cursor.row - 1,
+            },
+        }
+    end
+end
+
+function Entry:get_replace_range()
+    if self.completion_item.textEdit then
+        if self.completion_item.textEdit.replace then
+            return self.completion_item.textEdit.replace
+        else
+            return self.completion_item.textEdit.range
+        end
+    else
+        return {
+            start = {
+                character = self:get_offset(),
+                line = self.context.cursor.row - 1,
+            },
+            ["end"] = {
+                character = self.context.cursor.col,
+                line = self.context.cursor.row - 1,
+            },
+        }
+    end
+end
+
 return Entry

@@ -29,7 +29,7 @@ return function(entry)
     local completion_item = entry.completion_item
     completion_item = normalize_entry(completion_item)
 
-    -- Restore context where entry was completed
+    -- Restore context where entry was completed (remove filter)
     vim.api.nvim_buf_set_text(
         cur_ctx.bufnr,
         cur_ctx.cursor.row - 1,
@@ -44,31 +44,10 @@ return function(entry)
 
     cur_ctx = require("care.context").new()
 
-    ---@param e care.entry
-    local function get_insert_range(e)
-        if e.completion_item.textEdit then
-            if e.completion_item.textEdit.insert then
-                return e.completion_item.textEdit.insert
-            else
-                return e.completion_item.textEdit.range
-            end
-        else
-            return {
-                start = {
-                    character = e:get_offset(),
-                    line = e.context.cursor.row - 1,
-                },
-                ["end"] = {
-                    character = e.context.cursor.col,
-                    line = e.context.cursor.row - 1,
-                },
-            }
-        end
-    end
-    local range = get_insert_range(entry)
+    local range = config.confirm_behavior == "insert" and entry:get_insert_range() or entry:get_replace_range()
 
     if _G.care_debug then
-        print("Range before adjustments:")
+        print(config.confirm_behavior .. " Range (before adjustments):")
         vim.print(range)
         print("------")
     end

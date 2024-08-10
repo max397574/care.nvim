@@ -74,6 +74,7 @@ config.defaults = {
         vim.snippet.expand(snippet_body)
     end,
     selection_behavior = "select",
+    confirm_behavior = "insert",
     keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
     sources = {},
     preselect = true,
