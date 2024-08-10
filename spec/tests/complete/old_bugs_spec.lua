@@ -148,6 +148,55 @@ describe("Old Bugs:", function()
         assert.is.equal("    ./init.lua", context.line_before_cursor)
         assert.is.equal(14, context.cursor.col)
     end)
+    it("problem with string enums when there is already a closing quote", function()
+        vim.fn.setline(1, 'local x = "t"')
+        vim.cmd.normal({ "ftl", bang = true })
+        vim.cmd.startinsert()
+
+        ---@type lsp.CompletionItem
+        local completion_item = {
+            insertTextFormat = 2,
+            kind = 20,
+            label = '"test"',
+            sortText = "0001",
+            textEdit = {
+                newText = '"test"',
+                range = {
+                    ["end"] = {
+                        character = 13,
+                        line = 0,
+                    },
+                    start = {
+                        character = 10,
+                        line = 0,
+                    },
+                },
+            },
+        }
+        local entry_context = {
+            bufnr = 1,
+            cursor = {
+                col = 12,
+                row = 1,
+            },
+            line = 'local x = "t"',
+            line_before_cursor = 'local x = "t',
+            reason = 1,
+        }
+
+        ---@diagnostic disable-next-line: missing-fields
+        local entry = Entry.new(completion_item, {
+            get_keyword_pattern = function(_)
+                return "\\%([^/\\\\:\\*?<>'\"`\\|]\\)" .. "*"
+            end,
+        }, entry_context)
+        require("care.menu.confirm")(entry)
+
+        local context = Context:new()
+        assert.is.equal('local x = "test"', context.line)
+        assert.is.equal('local x = "test"', context.line_before_cursor)
+        assert.is.equal(16, context.cursor.col)
+    end)
     it('problem with ["end"] from luals', function()
         vim.fn.setline(1, "    completion_item.range.")
         vim.cmd.startinsert({ bang = true })
