@@ -14,8 +14,13 @@ end
 return function(entry)
     local config = require("care.config").options
     if _G.care_debug then
+        print("Confirming Entry")
+        print("Completion item:")
         vim.print(entry.completion_item)
+        print("------")
+        print("Entry context:")
         vim.print(entry.context)
+        print("------")
     end
 
     local cur_ctx = require("care.context").new()
@@ -24,6 +29,7 @@ return function(entry)
     local completion_item = entry.completion_item
     completion_item = normalize_entry(completion_item)
 
+    -- Restore context where entry was completed
     vim.api.nvim_buf_set_text(
         cur_ctx.bufnr,
         cur_ctx.cursor.row - 1,
@@ -38,6 +44,35 @@ return function(entry)
 
     cur_ctx = require("care.context").new()
 
+    ---@param e care.entry
+    local function get_insert_range(e)
+        if e.completion_item.textEdit then
+            if e.completion_item.textEdit.insert then
+                return e.completion_item.textEdit.insert
+            else
+                return e.completion_item.textEdit.range
+            end
+        else
+            return {
+                start = {
+                    character = e:get_offset(),
+                    line = e.context.cursor.row - 1,
+                },
+                ["end"] = {
+                    character = e.context.cursor.col,
+                    line = e.context.cursor.row - 1,
+                },
+            }
+        end
+    end
+    local range = get_insert_range(entry)
+
+    if _G.care_debug then
+        print("Range before adjustments:")
+        vim.print(range)
+        print("------")
+    end
+
     -- TODO: entry.insertTextMode
     local is_snippet = completion_item.insertTextFormat == 2
     local snippet_text
@@ -47,26 +82,10 @@ return function(entry)
         completion_item.textEdit = {
             newText = completion_item.insertText,
         }
-    else
-        if not completion_item.textEdit.range then
-            -- TODO: config option to determine whether to pick insert or replace
-            ---@type lsp.TextEdit
-            completion_item.textEdit =
-                { range = completion_item.textEdit.insert, newText = completion_item.textEdit.newText }
-        end
     end
 
     -- TODO: check out cmp insert and replace range
-    completion_item.textEdit.range = {
-        start = {
-            character = entry:get_offset(),
-            line = entry.context.cursor.row - 1,
-        },
-        ["end"] = {
-            character = entry.context.cursor.col,
-            line = entry.context.cursor.row - 1,
-        },
-    }
+    completion_item.textEdit.range = range
 
     local diff_before = math.max(0, entry.context.cursor.col - completion_item.textEdit.range.start.character)
     local diff_after = math.max(0, completion_item.textEdit.range["end"].character - entry.context.cursor.col)
@@ -79,6 +98,15 @@ return function(entry)
     if is_snippet then
         snippet_text = completion_item.textEdit.newText or completion_item.insertText
         completion_item.textEdit.newText = ""
+    end
+
+    if _G.care_debug then
+        print("Text Edit:")
+        vim.print(completion_item.textEdit)
+        print("------")
+        print("Snippet Text:")
+        vim.print(snippet_text)
+        print("------")
     end
 
     vim.lsp.util.apply_text_edits({ completion_item.textEdit }, cur_ctx.bufnr, "utf-16")
