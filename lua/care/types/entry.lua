@@ -21,3 +21,5 @@
 ---@field get_insert_range fun(self: care.entry): lsp.Range
 --- Gets the range for inserting the entry (insert of InsertReplaceEdit)
 ---@field get_replace_range fun(self: care.entry): lsp.Range
+--- Gets the default range for entry (if there is no textEdit)
+---@field _get_default_range fun(self: care.entry): lsp.Range

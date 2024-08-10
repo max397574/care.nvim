@@ -45,6 +45,7 @@ return function(entry)
     cur_ctx = require("care.context").new()
 
     local range = config.confirm_behavior == "insert" and entry:get_insert_range() or entry:get_replace_range()
+    range["end"].character = cur_ctx.cursor.col + math.max(0, range["end"].character - entry.context.cursor.col)
 
     if _G.care_debug then
         print(config.confirm_behavior .. " Range (before adjustments):")
@@ -63,16 +64,7 @@ return function(entry)
         }
     end
 
-    -- TODO: check out cmp insert and replace range
     completion_item.textEdit.range = range
-
-    local diff_before = math.max(0, entry.context.cursor.col - completion_item.textEdit.range.start.character)
-    local diff_after = math.max(0, completion_item.textEdit.range["end"].character - entry.context.cursor.col)
-
-    completion_item.textEdit.range.start.line = cur_ctx.cursor.row - 1
-    completion_item.textEdit.range.start.character = cur_ctx.cursor.col - diff_before
-    completion_item.textEdit.range["end"].line = cur_ctx.cursor.row - 1
-    completion_item.textEdit.range["end"].character = cur_ctx.cursor.col + diff_after
 
     if is_snippet then
         snippet_text = completion_item.textEdit.newText or completion_item.insertText

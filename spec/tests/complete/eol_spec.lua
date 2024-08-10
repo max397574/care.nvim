@@ -344,4 +344,36 @@ describe("Complete at EOL", function()
             end)
         end)
     end)
+    it("Additional text Edit", function()
+        vim.fn.setline(1, "x.")
+        vim.cmd.startinsert({ bang = true })
+        ---@type lsp.CompletionItem
+        local completion_item = {
+            additionalTextEdits = {
+                {
+                    newText = "",
+                    range = {
+                        ["end"] = { character = 2, line = 0 },
+                        start = { character = 1, line = 0 },
+                    },
+                },
+            },
+            insertTextFormat = 2,
+            label = '"end"',
+            textEdit = {
+                newText = '["end"]',
+                range = {
+                    ["end"] = { character = 2, line = 0 },
+                    start = { character = 2, line = 0 },
+                },
+            },
+        }
+        local entry_context = Context.new()
+        complete(completion_item, entry_context)
+
+        local context = Context:new()
+        assert.is.equal('x["end"]', context.line)
+        assert.is.equal('x["end"]', context.line_before_cursor)
+        assert.is.equal(8, context.cursor.col)
+    end)
 end)

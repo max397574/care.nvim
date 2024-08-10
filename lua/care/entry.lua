@@ -65,6 +65,19 @@ function Entry:get_insert_word()
     return text
 end
 
+function Entry:_get_default_range()
+    return {
+        start = {
+            character = self:get_offset(),
+            line = self.context.cursor.row - 1,
+        },
+        ["end"] = {
+            character = self.context.cursor.col,
+            line = self.context.cursor.row - 1,
+        },
+    }
+end
+
 function Entry:get_insert_range()
     if self.completion_item.textEdit then
         if self.completion_item.textEdit.insert then
@@ -73,16 +86,7 @@ function Entry:get_insert_range()
             return self.completion_item.textEdit.range
         end
     else
-        return {
-            start = {
-                character = self:get_offset(),
-                line = self.context.cursor.row - 1,
-            },
-            ["end"] = {
-                character = self.context.cursor.col,
-                line = self.context.cursor.row - 1,
-            },
-        }
+        return self:_get_default_range()
     end
 end
 
@@ -94,16 +98,7 @@ function Entry:get_replace_range()
             return self.completion_item.textEdit.range
         end
     else
-        return {
-            start = {
-                character = self:get_offset(),
-                line = self.context.cursor.row - 1,
-            },
-            ["end"] = {
-                character = self.context.cursor.col,
-                line = self.context.cursor.row - 1,
-            },
-        }
+        return self:_get_default_range()
     end
 end
 
