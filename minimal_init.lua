@@ -25,7 +25,6 @@ local plugins = {
     { "folke/tokyonight.nvim" },
     {
         "max397574/care.nvim",
-        event = "InsertEnter",
         dependencies = { "max397574/care-lsp" },
         config = function()
             vim.keymap.set("i", "<c-n>", function()
