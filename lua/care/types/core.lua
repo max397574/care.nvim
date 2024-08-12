@@ -11,6 +11,8 @@
 ---@field block fun(care.core): fun(): nil
 --- Setup core (for now autocommands)
 ---@field setup fun(self: care.core): nil
+--- Filter currently visible menu
+---@field filter fun(self: care.core): nil
 --- Context instance of the core
 ---@field context care.context
 --- Menu instance of the core
