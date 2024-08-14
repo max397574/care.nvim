@@ -41,6 +41,9 @@ care.api = {
     scroll_docs = function(delta)
         care.core.menu:scroll_docs(delta)
     end,
+    set_index = function(index)
+        care.core.menu.index = index
+    end,
 }
 
 --- Sets up care
