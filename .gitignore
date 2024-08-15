@@ -2,4 +2,5 @@ todo.norg
 .libraries/
 .luarc.json
 .direnv
+.repro/
 result
