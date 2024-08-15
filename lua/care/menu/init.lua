@@ -120,7 +120,7 @@ function Menu:readjust_win(offset)
     self.index = 0
     local width, _ = format_utils.get_width(self.entries)
     if not self.entries or #self.entries < 1 then
-        self.menu_window:close()
+        self:close()
         return
     end
     draw_docs(self, self:get_active_entry(), self.config.ui.docs_view)
@@ -206,9 +206,7 @@ function Menu:confirm()
     end
     require("care.menu.confirm")(entry)
     vim.api.nvim_exec_autocmds("User", { pattern = "CareConfirmed" })
-    self.ghost_text:hide()
-    self.menu_window:close()
-    self.docs_window:close()
+    self:close()
     vim.api.nvim_exec_autocmds("User", { pattern = "CareMenuClosed" })
 end
 
