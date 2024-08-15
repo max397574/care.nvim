@@ -169,7 +169,7 @@ end
 
 function Menu:open(entries, offset)
     self.entries = entries
-    if self.winnr then
+    if self.menu_window:is_open() then
         self:close()
     end
     if not entries or #entries < 1 then

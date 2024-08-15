@@ -43,6 +43,16 @@ care.api = {
     end,
     set_index = function(index)
         care.core.menu.index = index
+        care.core.menu:draw()
+    end,
+    ---@param index integer 1-based index of entry to select
+    select_visible = function(index)
+        local topline
+        vim.api.nvim_win_call(care.core.menu.menu_window.winnr, function()
+            topline = vim.fn.winsaveview().topline
+        end)
+        care.core.menu.index = topline + index - 1
+        care.core.menu:draw()
     end,
 }
 

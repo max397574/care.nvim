@@ -40,8 +40,6 @@
 ---@field config care.config
 --- Buffer of the menu
 ---@field buf integer
---- Window of menu
----@field winnr integer?
 --- Index of selected item
 ---@field index integer
 --- Buffer for the scrollbar
