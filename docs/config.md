@@ -8,6 +8,7 @@ sidebar_position: 2
 
 <details>
   <summary>Full Default Config</summary>
+
 ```lua
 ---@type care.config
 {
@@ -92,6 +93,7 @@ sidebar_position: 2
     end,
 }
 ```
+
 </details>
 
 The config of care is used to configure the ui and care itself.
