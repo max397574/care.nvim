@@ -11,9 +11,9 @@ jobs:
     name: Generate docs
     runs-on: ubuntu-latest
     steps:
-      # - uses: actions/checkout@v4
-      #   with:
-      #     ref: docs
+      - uses: actions/checkout@v4
+        with:
+          ref: main
       - name: Install Neovim
         shell: bash
         run: |
