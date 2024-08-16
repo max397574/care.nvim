@@ -16,27 +16,34 @@ Creates a new instance of the completion menu.
 ## Draw
 `menu:draw(): nil`
 
-Draws the menu. This includes formatting the entries with the function from the config and setting the virtual text used to display the labels. It also adds the highlights for the selected entry and for the matched chars.
+Draws the menu. This includes formatting the entries with the function from the
+config and setting the virtual text used to display the labels. It also adds the
+highlights for the selected entry and for the matched chars.
 
 ## Is Open
 `menu:is_open(): boolean`
 
-This is a function which can be used to determine whether the completion menu is open or not. This is especially useful for mappings which have a fallback action when the menu isn't visible.
+This is a function which can be used to determine whether the completion menu is
+open or not. This is especially useful for mappings which have a fallback action
+when the menu isn't visible.
 
 ## Select Next
 `menu:select_next(count: integer): nil`
 
-This function can be used to select the next entry. It accepts a count to skip over some entries. It automatically wraps at the bottom and jumps up again.
+This function can be used to select the next entry. It accepts a count to skip
+over some entries. It automatically wraps at the bottom and jumps up again.
 
 ## Select Prev
 `menu:select_prev(count: integer): nil`
 
-This function is used to select the previous entry analogous to [Select next](#select-next)
+This function is used to select the previous entry analogous to
+[Select next](#select-next)
 
 ## Open
 `menu:open(entries: care.entry[], offset: integer): nil`
 
-The `open` function is used to open the completion menu with a specified set of entries. This includes opening the window and displaying the text.
+The `open` function is used to open the completion menu with a specified set of
+entries. This includes opening the window and displaying the text.
 
 ## Close
 `menu:close(): nil`
@@ -46,17 +53,22 @@ This function closes the menu and resets some internal things.
 ## Get Active Entry
 `menu:get_active_entry(): care.entry?`
 
-With this function you can get the currently selected entry. This can be used for the docs view or some other api functions. It is also used when the selection is confirmed.
+With this function you can get the currently selected entry. This can be used
+for the docs view or some other api functions. It is also used when the
+selection is confirmed.
 
 ## Confirm
 `menu:confirm(): nil`
 
-This is the function to trigger the completion with a selected entry. It gets the selected entry closes the menu and completes.
+This is the function to trigger the completion with a selected entry. It gets
+the selected entry closes the menu and completes.
 
 ## Complete
 `menu:complete(entry: care.entry): nil`
 
-This function completes with a given entry. That means it removes text used for filtering (if necessary), expands snippet with the configured function, applies text edits and lsp commands.
+This function completes with a given entry. That means it removes text used for
+filtering (if necessary), expands snippet with the configured function, applies
+text edits and lsp commands.
 
 ## Readjust Win
 `menu:readjust_win(offset: integer): nil`
@@ -107,12 +119,15 @@ In this field the user config is stored for easier access.
 ## Buf
 `menu.buf integer`
 
-This is the buffer used for the menu. It's just created once when initially creating a new instance.
+This is the buffer used for the menu. It's just created once when initially
+creating a new instance.
 
 ## Index
 `menu.index integer`
 
-The index is used to determine the selected entry. It is used to get this entry when confirming the completion. The function to select the next and previous entries simply change this index.
+The index is used to determine the selected entry. It is used to get this entry
+when confirming the completion. The function to select the next and previous
+entries simply change this index.
 
 ## Scrollbar Buf
 `menu.scrollbar_buf integer`
