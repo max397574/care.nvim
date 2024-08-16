@@ -50,7 +50,6 @@ The complete line on which the cursor was when the context was created.
 The line before the cursor. This is mostly important to be correct in insert mode. In normal mode the character on which the cursor is is not included.
 # `care.context.cursor`
 
-# Methods
 # Fields
 
 ## Row

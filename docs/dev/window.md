@@ -110,7 +110,6 @@ Namespace used for setting extmarks
 Current scroll of the window
 # `care.window.data`
 
-# Methods
 # Fields
 
 ## First Visible Line
