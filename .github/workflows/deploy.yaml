@@ -11,9 +11,9 @@ jobs:
     name: Generate docs
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: docs
+      # - uses: actions/checkout@v4
+      #   with:
+      #     ref: docs
       - name: Install Neovim
         shell: bash
         run: |
@@ -23,8 +23,6 @@ jobs:
           chmod a+x ./nvim.appimage
           ./nvim.appimage --appimage-extract
           echo "/tmp/nvim/squashfs-root/usr/bin/" >> $GITHUB_PATH
-        # - name: Generate docs
-        #   run: ./build.sh
         # - name: panvimdoc
         #   uses: kdheepak/panvimdoc@main
         #   with:
