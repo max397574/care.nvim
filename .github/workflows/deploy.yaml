@@ -34,6 +34,7 @@ jobs:
       - name: Copy docs to tmp
         run: |
           mkdir -p /tmp/temp-docs
+          ls docs/dev/
           cp -r docs/ /tmp/temp-docs/
       - name: Checkout docs branch
         uses: actions/checkout@v4
