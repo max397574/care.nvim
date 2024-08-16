@@ -111,7 +111,7 @@ for _, files in ipairs(docs_files) do
     local classes = read_class(files.type_file)
     local contents = {
         "---",
-        "title: ",
+        "title: " .. files.title,
         "description: Type description of " .. table.concat(
             vim.iter(classes)
                 :map(function(class)
