@@ -23,22 +23,22 @@ jobs:
           chmod a+x ./nvim.appimage
           ./nvim.appimage --appimage-extract
           echo "/tmp/nvim/squashfs-root/usr/bin/" >> $GITHUB_PATH
-      - name: Install Neovim
+      - name: Run docgen
         shell: bash
         run: |
           nvim -l scripts/docs.lua
-  copy-docs:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
       - name: Checkout main branch
         uses: actions/checkout@v4
         with:
           ref: main
-      - name: Copy docs
+      - name: Copy docs to tmp
         run: |
           mkdir -p /tmp/temp-docs
           cp -r docs/ /tmp/temp-docs/
+  copy-docs:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
       - name: Checkout docs branch
         uses: actions/checkout@v4
         with:
