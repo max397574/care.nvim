@@ -1,52 +1,55 @@
 ---
-title: Internal source
-description: Type description of internal neovim source
-author:
-  - max397574
-categories:
-  - docs,
-  - types
+title: 
+description: Type description of care.internal_source
 ---
+# Internal Source
 
-# General
+# `care.internal_source`
 
-The internal sources are used on top of [completion sources](#sourcemd) to store additional
-metadata about which the source author doesn't have to care and sometimes can't know.
+# Methods
+
+## New
+`Internal_source.new(completion_source: care.source): care.internal_source`
+
+This function creates a new instance.
+
+## Get Keyword Pattern
+`internal_source:get_keyword_pattern(): string`
+
+This function is used to get the keyword pattern for the source. It uses the string field, the method to get it and as fallback the one from the config.
+
+## Get Offset
+`internal_source:get_offset(context: care.context): integer`
+
+With this function the offset of the source is determined. The offset describes at which point the completions for this source start. This is required to be able to remove that text if needed and to determine the characters used for filtering and sorting.
+
+## Get Trigger Characters
+`internal_source:get_trigger_characters(): string[]`
+
+This function is used to get the trigger characters for the source. At the moment it just checks if the method exists on the source and otherwise just returns an empty table.
+
+## Is Enabled
+`internal_source:is_enabled(): boolean`
+
+This function checks whether the function is enabled or not based on it's config.
+# Fields
 
 ## Source
+`internal_source.source care.source`
 
 This field is used to store the source written by the source author.
 
 ## Entries
+`internal_source.entries care.entry[]`
 
-In the entries field entries gotten from the source are stored. This is used to be able to sort
-and filter the entries when not getting new ones.
-
-## New
-
-This function creates a new instance.
+In the entries field entries gotten from the source are stored. This is used to be able to sort and filter the entries when not getting new ones.
 
 ## Incomplete
+`internal_source.incomplete boolean`
 
-Here a boolean is set which shows whether the source already completed all it's entries or not.
-This is mostly used by sources for performance reasons.
+Here a boolean is set which shows whether the source already completed all it's entries or not. This is mostly used by sources for performance reasons.
 
-## Get keyword pattern
+## Config
+`internal_source.config neocomplete.config.source`
 
-This function is used to get the keyword pattern for the source. It uses the string field, the
-method to get it and as fallback the one from the config.
-
-## Get trigger characters
-
-This function is used to get the trigger characters for the source. At the moment it just checks
-if the method exists on the source and otherwise just returns an empty table.
-
-## Get offset
-
-With this function the offset of the source is determined. The offset describes at which point
-the completions for this source start. This is required to be able to remove that text if needed
-and to determine the characters used for filtering and sorting.
-
-## Is enabled
-
-This function checks whether the function is enabled or not based on it's config.
+The configuration for the source
