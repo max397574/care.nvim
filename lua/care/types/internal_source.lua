@@ -22,6 +22,6 @@
 --- if the method exists on the source and otherwise just returns an empty table.
 ---@field get_trigger_characters fun(self: care.internal_source): string[]
 --- The configuration for the source
----@field config neocomplete.config.source
+---@field config care.config.source
 --- This function checks whether the function is enabled or not based on it's config.
 ---@field is_enabled fun(self: care.internal_source): boolean

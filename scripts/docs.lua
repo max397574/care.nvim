@@ -17,21 +17,23 @@ local function extract_match(path, pattern)
     return read_file(path):match(pattern)
 end
 
-local function read_class(path)
+local function read_classes(path)
     local contents = read_file(path)
     local classes = {}
     local class_strings = vim.split(contents, "\n\n")
     for i, class_string in ipairs(class_strings) do
         local class_desc =
-            table.concat(vim.split(class_string:match("--- (.-)\n%-%-%-@class") or "", "\n%-%-%- "), "\n")
+            table.concat(vim.split(class_string:match("%-%-%- (.-)\n%-%-%-@class") or "", "\n%-%-%- "), "\n")
         local class_name = class_string:match("%-%-%-@class (.-)\n")
         local fields_string = class_string:match(".-%-%-%-@class .-\n(.*)")
         local fields = { { descriptions = {} } }
         local field_index = 1
+        -- print("====")
+        -- print(class_string)
         vim.iter(vim.split(fields_string, "\n")):each(function(line)
             if vim.startswith(line, "---@field") then
-                fields[field_index].annotation = line:match("---@field (.*)")
-                fields[field_index].name = line:match("---@field (..-) ")
+                fields[field_index].annotation = line:match("%-%-%-@field (.*)")
+                fields[field_index].name = line:match("%-%-%-@field (..-) ")
                 field_index = field_index + 1
                 fields[field_index] = {}
                 fields[field_index].descriptions = {}
@@ -107,11 +109,11 @@ local function cleanup_annotation(short_class_name, annotation)
     end
 end
 
-for _, files in ipairs(docs_files) do
-    local classes = read_class(files.type_file)
+local function get_class_docs(path, title)
+    local classes = read_classes(path)
     local contents = {
         "---",
-        "title: " .. files.title,
+        "title: " .. title,
         "description: Type description of " .. table.concat(
             vim.iter(classes)
                 :map(function(class)
@@ -121,7 +123,7 @@ for _, files in ipairs(docs_files) do
             ", "
         ),
         "---",
-        "# " .. files.title,
+        "# " .. title,
         "",
     }
     local function format_field(field, short_class_name)
@@ -133,7 +135,7 @@ for _, files in ipairs(docs_files) do
         end
         table.insert(contents, "`" .. cleanup_annotation(short_class_name, field.annotation) .. "`")
         table.insert(contents, "")
-        table.insert(contents, table.concat(field.descriptions, " "))
+        table.insert(contents, table.concat(field.descriptions, "\n"))
     end
     for _, class in ipairs(classes) do
         -- table.insert(contents, "#" .. class_titles[class.name])
@@ -152,10 +154,33 @@ for _, files in ipairs(docs_files) do
             end
         end
     end
-
-    write_file(files.doc_file, table.concat(contents, "\n"))
+    return contents
 end
 
-read_class("lua/care/types/window.lua")
+local function write_class_docs()
+    for _, docs in ipairs(docs_files) do
+        local contents = get_class_docs(docs.type_file, docs.title)
+        write_file(docs.doc_file, table.concat(contents, "\n"))
+    end
+end
+local function write_config_docs()
+    local default_config = extract_match("lua/care/config.lua", "\n(---@type care.config\nconfig.defaults.-\n})")
+    local default_config_block = table.concat({
+        "",
+        "<details>",
+        "  <summary>Full Default Config</summary>",
+        "",
+        "```lua",
+        default_config,
+        "```",
+        "",
+        "</details>",
+    }, "\n")
+    local config_class = get_class_docs("lua/care/types/config.lua", "Config")
+    table.insert(config_class, 6, default_config_block)
+    config_class[3] = "description: Configuration for care.nvim"
+    write_file("docs/config.md", table.concat(config_class, "\n"))
+end
 
-local default_config = extract_match("lua/care/config.lua", "\n(---@type care.config\nconfig.defaults.-\n})")
+write_class_docs()
+write_config_docs()

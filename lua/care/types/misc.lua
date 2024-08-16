@@ -7,3 +7,6 @@
 ---@alias care.completionReason
 ---| 1 # Auto
 ---| 2 # Manual
+
+--- The icons used for the different completion item types
+---@alias care.config.ui.type_icons table<string, string>
