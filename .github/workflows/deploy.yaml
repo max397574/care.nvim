@@ -27,10 +27,6 @@ jobs:
         shell: bash
         run: |
           nvim -l scripts/docs.lua
-      - name: Checkout main branch
-        uses: actions/checkout@v4
-        with:
-          ref: main
       - name: Copy docs to tmp
         run: |
           mkdir -p /tmp/temp-docs
