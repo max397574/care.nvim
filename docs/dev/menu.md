@@ -1,5 +1,5 @@
 ---
-title: 
+title: Menu
 description: Type description of care.menu
 ---
 # Menu

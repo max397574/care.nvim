@@ -1,5 +1,5 @@
 ---
-title: 
+title: Core
 description: Type description of care.core
 ---
 # Core

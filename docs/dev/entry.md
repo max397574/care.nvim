@@ -1,5 +1,5 @@
 ---
-title: 
+title: Entry
 description: Type description of care.entry
 ---
 # Entry

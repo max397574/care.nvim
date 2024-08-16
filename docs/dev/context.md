@@ -1,5 +1,5 @@
 ---
-title: 
+title: Context
 description: Type description of care.context, care.context.cursor
 ---
 # Context
