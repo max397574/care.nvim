@@ -23,24 +23,21 @@ function care_sources.complete(context, source, callback)
     ---@type lsp.CompletionContext
     local completion_context
     if context.reason == 1 then
-        if
-            vim.tbl_contains(source:get_trigger_characters(), last_char)
-            or (not source.entries or #source.entries == 0)
-        then
-            -- if vim.tbl_contains(source.source.get_trigger_characters(), last_char) or true then
+        if vim.tbl_contains(source:get_trigger_characters(), last_char) then
+            completion_context = {
+                triggerKind = 2,
+                triggerCharacter = last_char,
+            }
+        elseif (context.cursor.col - source:get_offset(context)) < 1 then
+            callback(source.entries)
+            return
+        elseif not source.entries or #source.entries == 0 then
             completion_context = {
                 triggerKind = 2,
                 triggerCharacter = last_char,
             }
         elseif not source.incomplete then
-            -- TODO: cleanup
-            local keyword_pattern = require("care.config").options.keyword_pattern
-            if source.source.keyword_pattern then
-                keyword_pattern = source.source.keyword_pattern
-            end
-            if source.source.get_keyword_pattern then
-                keyword_pattern = source.source:get_keyword_pattern()
-            end
+            local keyword_pattern = source:get_keyword_pattern()
             -- Can add $ to keyword pattern because we just match on line to cursor
             local word_boundary = vim.fn.match(context.line_before_cursor, keyword_pattern .. "$")
             if word_boundary == -1 then
@@ -71,13 +68,7 @@ function care_sources.complete(context, source, callback)
                     return Entry.new(item, source, context)
                 end)
                 :totable()
-            local keyword_pattern = require("care.config").options.keyword_pattern
-            if source.source.keyword_pattern then
-                keyword_pattern = source.source.keyword_pattern
-            end
-            if source.source.get_keyword_pattern then
-                keyword_pattern = source.source:get_keyword_pattern()
-            end
+            local keyword_pattern = source:get_keyword_pattern()
             -- Can add $ to keyword pattern because we just match on line to cursor
             local word_boundary = vim.fn.match(context.line_before_cursor, keyword_pattern .. "$")
             if word_boundary == -1 then
