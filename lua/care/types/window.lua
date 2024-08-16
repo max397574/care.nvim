@@ -1,3 +1,4 @@
+--- Utility class for working with windows in care
 ---@class care.window
 --- Creates a new instance of the menu window
 ---@field new fun(): care.window

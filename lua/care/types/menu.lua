@@ -1,46 +1,63 @@
---- The completion menu of care
+--- This is the main class of the care completion menu. The menu is used to display
+--- completion entries and also contains the logic for selecting and inserting the
+--- completions.
 ---@class care.menu
---- Create a new instance of the menu
+--- Creates a new instance of the completion menu.
 ---@field new fun(): care.menu
---- Draws the menu
+--- Draws the menu. This includes formatting the entries with the function from the
+--- config and setting the virtual text used to display the labels. It also adds the
+--- highlights for the selected entry and for the matched chars.
 ---@field draw fun(self: care.menu): nil
---- Returns true if completion window is visible
+--- This is a function which can be used to determine whether the completion menu is
+--- open or not. This is especially useful for mappings which have a fallback action
+--- when the menu isn't visible.
 ---@field is_open fun(self: care.menu): boolean
---- Select next entry in menu
+--- This function can be used to select the next entry. It accepts a count to skip
+--- over some entries. It automatically wraps at the bottom and jumps up again.
 ---@field select_next fun(self: care.menu, count: integer): nil
---- Select previous entry in menu
+--- This function is used to select the previous entry analogous to
+--- [Select next](#select-next)
 ---@field select_prev fun(self: care.menu, count: integer): nil
---- Opens the menu with specified entries
+--- The `open` function is used to open the completion menu with a specified set of
+--- entries. This includes opening the window and displaying the text.
 ---@field open fun(self: care.menu, entries: care.entry[], offset: integer): nil
---- Closes the window of the menu
+--- This function closes the menu and resets some internal things.
 ---@field close fun(self: care.menu): nil
---- Gets the currently selected entry
+--- With this function you can get the currently selected entry. This can be used
+--- for the docs view or some other api functions. It is also used when the
+--- selection is confirmed.
 ---@field get_active_entry fun(self: care.menu): care.entry?
---- Selects the current entry and inserts it's text
+--- This is the function to trigger the completion with a selected entry. It gets
+--- the selected entry closes the menu and completes.
 ---@field confirm fun(self: care.menu): nil
---- Completes with the given entry
+--- This function completes with a given entry. That means it removes text used for
+--- filtering (if necessary), expands snippet with the configured function, applies
+--- text edits and lsp commands.
 ---@field complete fun(self: care.menu, entry: care.entry): nil
---- Readjust size of completino window
+--- This function readjusts the size of the completion window without reopening it.
 ---@field readjust_win fun(self: care.menu, offset: integer): nil
---- Checks if docs are open
+--- Checks whether docs are visible or not
 ---@field docs_visible fun(self: care.menu): boolean
---- Scroll in the docs window
+--- Scroll up or down in the docs window by `delta` lines.
 ---@field scroll_docs fun(self: care.menu, delta: integer): nil
 --- Wrapper for utilities for the window of the menu
 ---@field menu_window care.window
 --- Wrapper for utilities for the window of the docs
 ---@field docs_window care.window
---- Instance of ghost text to draw the ghost text
+--- The ghost text instance used to draw the ghost text.
 ---@field ghost_text care.ghost_text
---- Entries of the menu
+--- This field is used to store all the entries of the completion menu.
 ---@field entries care.entry[]
---- Namespace used for the menu
+--- The namespace is used to draw the extmarks and add the additional highlights.
 ---@field ns integer
---- Care config to be used in the menu
+--- In this field the user config is stored for easier access.
 ---@field config care.config
---- Buffer of the menu
+--- This is the buffer used for the menu. It's just created once when initially
+--- creating a new instance.
 ---@field buf integer
---- Index of selected item
+--- The index is used to determine the selected entry. It is used to get this entry
+--- when confirming the completion. The function to select the next and previous
+--- entries simply change this index.
 ---@field index integer
---- Buffer for the scrollbar
+--- This field is used to store the buffer for drawing the scrollbar.
 ---@field scrollbar_buf integer
