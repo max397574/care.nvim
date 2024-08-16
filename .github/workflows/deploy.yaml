@@ -35,10 +35,6 @@ jobs:
         run: |
           mkdir -p /tmp/temp-docs
           cp -r docs/ /tmp/temp-docs/
-  copy-docs:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
       - name: Checkout docs branch
         uses: actions/checkout@v4
         with:
