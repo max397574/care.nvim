@@ -4,6 +4,8 @@ description: Type description of care.core
 ---
 # Core
 
+This module is for the core of care. Here everything comes together with the
+most important things being the menu being opened and the completion triggered.
 # `care.core`
 
 # Methods

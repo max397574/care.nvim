@@ -4,6 +4,8 @@ description: Type description of care.entry
 ---
 # Entry
 
+Entries are the basic items in the completion menu. Arguably the most important field is the
+completion item for which the lsp type is used.
 # `care.entry`
 
 # Methods

@@ -4,6 +4,9 @@ description: Type description of care.menu
 ---
 # Menu
 
+This is the main class of the care completion menu. The menu is used to display
+completion entries and also contains the logic for selecting and inserting the
+completions.
 # `care.menu`
 
 # Methods

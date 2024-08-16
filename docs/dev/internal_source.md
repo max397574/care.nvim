@@ -4,6 +4,8 @@ description: Type description of care.internal_source
 ---
 # Internal Source
 
+The internal sources are used on top of [completion sources](#source) to store additional
+metadata about which the source author doesn't have to care and sometimes can't know.
 # `care.internal_source`
 
 # Methods

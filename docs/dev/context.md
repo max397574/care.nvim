@@ -4,6 +4,8 @@ description: Type description of care.context, care.context.cursor
 ---
 # Context
 
+This is a class representing the current state. It includes buffer number and
+cursor position. It is passed to completion sources to get completions.
 # `care.context`
 
 # Methods
@@ -58,6 +60,7 @@ The complete line on which the cursor was when the context was created.
 
 The line before the cursor. This is mostly important to be correct in insert
 mode. In normal mode the character on which the cursor is is not included.
+A cursor position
 # `care.context.cursor`
 
 # Fields

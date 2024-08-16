@@ -4,6 +4,7 @@ description: Type description of care.window, care.window.data
 ---
 # Window Util
 
+Utility class for working with windows in care
 # `care.window`
 
 # Methods
@@ -108,6 +109,7 @@ Namespace used for setting extmarks
 `window.current_scroll integer`
 
 Current scroll of the window
+
 # `care.window.data`
 
 # Fields
