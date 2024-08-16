@@ -52,7 +52,7 @@ jobs:
           commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
   docusaurus:
     name: Build Docusaurus
-    needs: copy-docs
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
