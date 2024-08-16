@@ -139,7 +139,7 @@ local function get_class_docs(path, title)
     end
     for _, class in ipairs(classes) do
         -- table.insert(contents, "#" .. class_titles[class.name])
-        table.insert(contents, table.concat(class.desc, "\n"))
+        table.insert(contents, class.desc, "\n")
         table.insert(contents, "# `" .. class.name .. "`\n")
         local short_class_name = class.name:match("care%.(.*)")
         if #class.methods > 0 then
