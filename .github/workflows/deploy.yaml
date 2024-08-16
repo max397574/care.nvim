@@ -52,6 +52,7 @@ jobs:
       - name: Copy docs
         run: |
           mkdir -p /tmp/temp-docs
+          nvim -l scripts/docs.lua
           cp -r docs/ /tmp/temp-docs/
       - name: Checkout docs branch
         uses: actions/checkout@v4
@@ -61,7 +62,6 @@ jobs:
         run: |
           rm -rf docs/*
           cp -r /tmp/temp-docs/docs/* docs
-          ls docs
       - name: Push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
