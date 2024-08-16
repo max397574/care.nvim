@@ -139,13 +139,17 @@ for _, files in ipairs(docs_files) do
         -- table.insert(contents, "#" .. class_titles[class.name])
         table.insert(contents, "# `" .. class.name .. "`\n")
         local short_class_name = class.name:match("care%.(.*)")
-        table.insert(contents, "# Methods")
-        for _, field in ipairs(class.methods) do
-            format_field(field, short_class_name)
+        if #class.methods > 0 then
+            table.insert(contents, "# Methods")
+            for _, field in ipairs(class.methods) do
+                format_field(field, short_class_name)
+            end
         end
-        table.insert(contents, "# Fields")
-        for _, field in ipairs(class.fields) do
-            format_field(field, short_class_name)
+        if #class.fields > 0 then
+            table.insert(contents, "# Fields")
+            for _, field in ipairs(class.fields) do
+                format_field(field, short_class_name)
+            end
         end
     end
 
