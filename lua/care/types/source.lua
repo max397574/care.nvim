@@ -26,7 +26,7 @@
 --- characters is types the completion will be retriggered. Otherwise newly entered characters are
 --- used for sorting and filtering.
 --- An example for this could be `.`, `\\` and `/` when working with paths.
---- 
+---
 --- ```lua
 --- function my_source.get_trigger_characters()
 ---     return { ".", "\\", "/" }
