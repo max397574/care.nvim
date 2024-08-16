@@ -23,22 +23,10 @@ jobs:
           chmod a+x ./nvim.appimage
           ./nvim.appimage --appimage-extract
           echo "/tmp/nvim/squashfs-root/usr/bin/" >> $GITHUB_PATH
-        # - name: panvimdoc
-        #   uses: kdheepak/panvimdoc@main
-        #   with:
-        #     vimdoc: lazy.nvim
-        #     version: "Neovim >= 0.8.0"
-        #     description: "A modern plugin manager for Neovim"
-        #     pandoc: "README.vim.md"
-        #     demojify: false
-        #     treesitter: true
-        # - name: Push changes
-        #   uses: stefanzweifel/git-auto-commit-action@v5
-        #   with:
-        #     commit_message: "chore(build): auto-generate docs"
-        #     commit_user_name: "github-actions[bot]"
-        #     commit_user_email: "github-actions[bot]@users.noreply.github.com"
-        #     commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+      - name: Install Neovim
+        shell: bash
+        run: |
+          nvim -l scripts/docs.lua
   copy-docs:
     needs: build
     runs-on: ubuntu-latest
@@ -50,7 +38,6 @@ jobs:
       - name: Copy docs
         run: |
           mkdir -p /tmp/temp-docs
-          nvim -l scripts/docs.lua
           cp -r docs/ /tmp/temp-docs/
       - name: Checkout docs branch
         uses: actions/checkout@v4
