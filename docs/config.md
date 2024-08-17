@@ -2,7 +2,7 @@
 title: Config
 description: Configuration for care.nvim
 ---
-# Config
+
 
 <details>
   <summary>Full Default Config</summary>
@@ -94,9 +94,10 @@ config.defaults = {
 ```
 
 </details>
+# Config
 
 The config of care is used to configure the ui and care itself.
----
+
 There are two main parts to the config. The first one is the `ui` field and the
 second on is the rest of the configuration which is for configuring the general
 behavior of care.
@@ -172,6 +173,7 @@ and what to remove if insert text is used.
 `config.preselect boolean`
 
 Whether items should be preselected or not
+
 # Ui Configuration
 The main class for the ui configuration of care.nvim
 # `care.config.ui`
@@ -199,6 +201,7 @@ This is a table which defines the different icons.
 `config.ui.ghost_text care.config.ui.ghost_text`
 
 Configuration of ghost text
+
 Configuration for the ghost text
 # `care.config.ui.ghost_text`
 
@@ -216,9 +219,10 @@ the text will overlap with existing text after the cursor.
 `config.ui.ghost_text.position "inline"|"overlay"`
 
 
+
 This configuration should allow you to completely adapt the completion menu to
 your likings.
----
+
 It includes some basic window properties like the border and the maximum height
 of the window. It also has a field to define the character used for the
 scrollbar. Set `scrollbar` to `nil` value to disable the scrollbar.
@@ -228,6 +232,7 @@ scrollbar. Set `scrollbar` to `nil` value to disable the scrollbar.
 
 ## Format Entry
 `config.ui.menu.format_entry(entry: care.entry): { [1]: string, [2]: string }[][]`
+See: [care.entry](/dev/entry)
 
 Another field is `format_entry`. This is a function which recieves an entry of
 the completion menu and determines how it's formatted. For that a table with
@@ -283,6 +288,7 @@ If the menu should be displayed on top, bottom or automatically
 
 How the sections in the menu should be aligned
 
+
 # `care.config.source`
 
 # Methods
@@ -294,6 +300,7 @@ Whether the source is enabled (default true)
 
 ## Filter
 `config.source.filter(entry: care.entry): boolean`
+See: [care.entry](/dev/entry)
 
 Filter function for entries by the source
 # Fields
@@ -307,6 +314,7 @@ The maximum amount of entries which can be displayed by this source
 `config.source.priority integer?`
 
 The priority of this source. Is more important than matching score
+
 Configuration of the completion menu of care.nvim
 # `care.config.ui.docs`
 

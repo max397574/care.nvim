@@ -2,6 +2,7 @@
 title: Context
 description: Type description of care.context, care.context.cursor
 ---
+
 # Context
 
 This is a class representing the current state. It includes buffer number and
@@ -12,12 +13,14 @@ cursor position. It is passed to completion sources to get completions.
 
 ## Changed
 `context.changed(care.context): boolean`
+See: [care.context](/dev/context)
 
 Whether the context changed in comparison to the previous one. This is used to
 check whether to get new completions or not when using autocompletion.
 
 ## New
 `Context.new(previous: care.context?): care.context`
+See: [care.context](/dev/context)
 
 Create a new context. This takes a previous context as argument. This one is
 stored to determine if the context changed or not when completing. The previous
@@ -27,6 +30,7 @@ really large.
 
 ## Previous
 `context.previous care.context?`
+See: [care.context](/dev/context)
 
 The previous context which is used to determine whether the context changed or
 not. The `previous` field of the previous context should always be `nil` so the
@@ -34,6 +38,7 @@ data structure doesn't grow infinitely.
 
 ## Cursor
 `context.cursor care.context.cursor`
+See: [care.context](/dev/context)
 
 The cursor position. This will have a `col` and a `row` field and has 1-based
 line and 0-based column indexes. This is the same as in
@@ -60,6 +65,7 @@ The complete line on which the cursor was when the context was created.
 
 The line before the cursor. This is mostly important to be correct in insert
 mode. In normal mode the character on which the cursor is is not included.
+
 A cursor position
 # `care.context.cursor`
 

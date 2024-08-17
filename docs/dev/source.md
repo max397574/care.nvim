@@ -2,6 +2,7 @@
 title: Source
 description: Type description of care.source
 ---
+
 # Source
 
 The sources are used to get get completions for care.nvim.

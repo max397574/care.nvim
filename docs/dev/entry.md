@@ -2,6 +2,7 @@
 title: Entry
 description: Type description of care.entry
 ---
+
 # Entry
 
 Entries are the basic items in the completion menu. Arguably the most important field is the
@@ -12,6 +13,7 @@ completion item for which the lsp type is used.
 
 ## New
 `Entry.new(completion_item: lsp.CompletionItem, source: care.internal_source, context: care.context): care.entry`
+See: [care.entry](/dev/entry), [care.context](/dev/context), [care.internal_source](/dev/internal_source)
 
 The new function is the constructor for a new completion entry.
 
@@ -57,12 +59,14 @@ Gets the default range for entry (if there is no textEdit)
 
 ## Source
 `entry.source care.internal_source`
+See: [care.internal_source](/dev/internal_source)
 
 This is the source from which the entry came. This is important for using the right keyword
 pattern and getting the right offset.
 
 ## Context
 `entry.context care.context`
+See: [care.context](/dev/context)
 
 This is the context in which the entry was completed. This is important to now what context text-
 edits of the entry target.

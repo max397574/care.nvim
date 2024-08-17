@@ -2,6 +2,7 @@
 title: Window Util
 description: Type description of care.window, care.window.data
 ---
+
 # Window Util
 
 Utility class for working with windows in care
@@ -11,6 +12,7 @@ Utility class for working with windows in care
 
 ## New
 `Window.new(): care.window`
+See: [care.window](/dev/window)
 
 Creates a new instance of the menu window
 
@@ -61,6 +63,7 @@ Change scroll of window
 
 ## Get Data
 `window:get_data(): care.window.data`
+See: [care.window](/dev/window)
 
 
 # Fields
@@ -109,6 +112,7 @@ Namespace used for setting extmarks
 `window.current_scroll integer`
 
 Current scroll of the window
+
 
 # `care.window.data`
 
