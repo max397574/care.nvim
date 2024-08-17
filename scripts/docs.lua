@@ -1,6 +1,3 @@
--- TODO: a list of stuff to be substituted for links
--- so e.g. to the source:complete() method a link to care.entry would be added
--- the link should be on a line below the annotations
 local function read_file(path)
     local file = assert(io.open(path, "r"))
     ---@type string
@@ -23,13 +20,11 @@ local function read_classes(path)
     local class_strings = vim.split(contents, "\n\n")
     for i, class_string in ipairs(class_strings) do
         local class_desc =
-            table.concat(vim.split(class_string:match("%-%-%- (.-)\n%-%-%-@class") or "", "\n%-%-%- "), "\n")
+            table.concat(vim.split(class_string:match("%-%-%- (.-)\n%-%-%-@class") or "", "\n%-%-%- *"), "\n")
         local class_name = class_string:match("%-%-%-@class (.-)\n")
         local fields_string = class_string:match(".-%-%-%-@class .-\n(.*)")
         local fields = { { descriptions = {} } }
         local field_index = 1
-        -- print("====")
-        -- print(class_string)
         vim.iter(vim.split(fields_string, "\n")):each(function(line)
             if vim.startswith(line, "---@field") then
                 fields[field_index].annotation = line:match("%-%-%-@field (.*)")
@@ -71,6 +66,16 @@ local docs_files = {
         title = "Internal Source",
     },
     { type_file = "lua/care/types/context.lua", doc_file = "docs/dev/context.md", title = "Context" },
+}
+
+local link_list = {
+    { "care.entry", "[care.entry](/dev/entry)" },
+    { "care.context", "[care.context](/dev/context)" },
+    { "care.menu", "[care.menu](/dev/menu)" },
+    { "care.core", "[care.core](/dev/core)" },
+    { "care.internal_source", "[care.internal_source](/dev/internal_source)" },
+    { "care.source", "[care.source](/dev/source)" },
+    { "care.window", "[care.window](/dev/window)" },
 }
 
 local function gen_title(input)
@@ -123,8 +128,8 @@ local function get_class_docs(path, title)
             ", "
         ),
         "---",
-        "# " .. title,
         "",
+        "# " .. title,
     }
     local function format_field(field, short_class_name)
         table.insert(contents, "")
@@ -133,11 +138,22 @@ local function get_class_docs(path, title)
         else
             table.insert(contents, "## " .. gen_title(field.name))
         end
-        table.insert(contents, "`" .. cleanup_annotation(short_class_name, field.annotation) .. "`")
+        local annotation = cleanup_annotation(short_class_name, field.annotation)
+        table.insert(contents, "`" .. annotation .. "`")
+        local links = {}
+        for _, type_link in ipairs(link_list) do
+            if annotation:find(type_link[1]) then
+                table.insert(links, type_link[2])
+            end
+        end
+        if #links > 0 then
+            table.insert(contents, "See: " .. table.concat(links, ", "))
+        end
         table.insert(contents, "")
         table.insert(contents, table.concat(field.descriptions, "\n"))
     end
     for _, class in ipairs(classes) do
+        table.insert(contents, "")
         table.insert(contents, class.desc)
         table.insert(contents, "# `" .. class.name .. "`\n")
         local short_class_name = class.name:match("care%.(.*)")
