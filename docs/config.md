@@ -3,6 +3,7 @@ title: Config
 description: Configuration for care.nvim
 ---
 
+# Config
 
 <details>
   <summary>Full Default Config</summary>
@@ -94,24 +95,20 @@ config.defaults = {
 ```
 
 </details>
-# Config
 
-The config of care is used to configure the ui and care itself.
+The config of care is used to configure the UI and care itself.
 
-There are two main parts to the config. The first one is the `ui` field and the
-second on is the rest of the configuration which is for configuring the general
-behavior of care.
+The configuration consists of two main parts. The UI Configuration and the
+configuration of the completion behaviors of care.
 # `care.config`
 
 # Methods
 
 ## Snippet Expansion
-`config.snippet_expansion(string): nil`
+`config.snippet_expansion(body: string): nil`
 
-Here a function for expanding snippets is defined. By default this is the
-builtin `vim.snippet.expand()`. You can also use a plugin like luasnip for this
-like this:
-
+With this field a function for expanding snippets is defined. By default this is the
+builtin `vim.snippet.expand()`. You can also use a plugin like luasnip for this:
 ```lua
 snippet_expansion = function(body)
     require("luasnip").lsp_expand(body)
@@ -128,15 +125,10 @@ disables care in prompts.
 ## Ui
 `config.ui care.config.ui`
 
-The [ui configuration](#Ui-Configuration) is used to configure the whole ui of care. One of the main
-goals of this is to be as extensible as possible. This is especially important
+The [UI Configuration](#Ui-Configuration) is used to configure the whole UI of care.
+One of the main goals of this is to be as extensible as possible. This is especially important
 for the completion entries. Read more about that under
 [Configuration of item display](/design/#configuration-of-item-display).
-The most important part for many users will be the `menu` field. It's used to
-configure the completion menu.
-You can also configure the documentation view just like the main menu.
-Lastly the users can also configure the icons which will be used for the
-different items.
 
 ## Selection Behavior
 `config.selection_behavior "select"|"insert"`
@@ -149,33 +141,35 @@ the entry (this is not necessarily the whole text).
 ## Confirm Behavior
 `config.confirm_behavior "insert"|"replace"`
 
-Behavior when confirming entry
+This field controls the behavior when confirming an entry.
 
 ## Sources
 `config.sources care.config.source[]`
 
-Configuration for the different sources
+This field is used to configure the sources for care.nvim.
 
 ## Completion Events
 `config.completion_events string[]`
 
-The `completion_events` table is used to set events for completion. By default
+The `completion_events` table is used to set events for autocompletion. By default
 it just contains `"TextChangedI"`. You can set it to an empty table (`{}`) to
 disable autocompletion.
 
 ## Keyword Pattern
 `config.keyword_pattern string`
 
-Pattern used to determine keywords, used to determine what to use for filtering
-and what to remove if insert text is used.
+The keyword pattern is used to determine keywords. These are used to determine what
+to use for filtering and what to remove if insert text is used.
+It should essentially just describe the entries of a source.
 
 ## Preselect
 `config.preselect boolean`
 
-Whether items should be preselected or not
+Whether items should be preselected or not. Which items are preselected is determined
+by the source.
 
 # Ui Configuration
-The main class for the ui configuration of care.nvim
+This is used to configure the whole UI of care.
 # `care.config.ui`
 
 # Fields
@@ -200,9 +194,9 @@ This is a table which defines the different icons.
 ## Ghost Text
 `config.ui.ghost_text care.config.ui.ghost_text`
 
-Configuration of ghost text
+Configuration of ghost text.
 
-Configuration for the ghost text
+With this field the user can control how ghost text is displayed.
 # `care.config.ui.ghost_text`
 
 # Fields
@@ -211,14 +205,14 @@ Configuration for the ghost text
 `config.ui.ghost_text.enabled boolean`
 
 You can use the `enabled` field to determine whether the ghost text should be
-enabled or not. The `position` can either be `"inline"` or `"overlay"`. Inline
-will add the text inline right where the cursor is. With the overlay position
-the text will overlap with existing text after the cursor.
+enabled or not.
 
 ## Position
 `config.ui.ghost_text.position "inline"|"overlay"`
 
-
+The `position` can either be `"inline"` or `"overlay"`. Inline
+will add the text inline right where the cursor is. With the overlay position
+the text will overlap with existing text after the cursor.
 
 This configuration should allow you to completely adapt the completion menu to
 your likings.
@@ -232,7 +226,8 @@ scrollbar. Set `scrollbar` to `nil` value to disable the scrollbar.
 
 ## Format Entry
 `config.ui.menu.format_entry(entry: care.entry): { [1]: string, [2]: string }[][]`
-See: [care.entry](/dev/entry)
+
+See [care.entry](/dev/entry)
 
 Another field is `format_entry`. This is a function which recieves an entry of
 the completion menu and determines how it's formatted. For that a table with
@@ -300,7 +295,8 @@ Whether the source is enabled (default true)
 
 ## Filter
 `config.source.filter(entry: care.entry): boolean`
-See: [care.entry](/dev/entry)
+
+See [care.entry](/dev/entry)
 
 Filter function for entries by the source
 # Fields

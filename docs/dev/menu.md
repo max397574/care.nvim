@@ -14,7 +14,8 @@ completions.
 
 ## New
 `Menu.new(): care.menu`
-See: [care.menu](/dev/menu)
+
+See [care.menu](/dev/menu)
 
 Creates a new instance of the completion menu.
 
@@ -46,7 +47,8 @@ This function is used to select the previous entry analogous to
 
 ## Open
 `menu:open(entries: care.entry[], offset: integer): nil`
-See: [care.entry](/dev/entry)
+
+See [care.entry](/dev/entry)
 
 The `open` function is used to open the completion menu with a specified set of
 entries. This includes opening the window and displaying the text.
@@ -58,7 +60,8 @@ This function closes the menu and resets some internal things.
 
 ## Get Active Entry
 `menu:get_active_entry(): care.entry?`
-See: [care.entry](/dev/entry)
+
+See [care.entry](/dev/entry)
 
 With this function you can get the currently selected entry. This can be used
 for the docs view or some other api functions. It is also used when the
@@ -72,7 +75,8 @@ the selected entry closes the menu and completes.
 
 ## Complete
 `menu:complete(entry: care.entry): nil`
-See: [care.entry](/dev/entry)
+
+See [care.entry](/dev/entry)
 
 This function completes with a given entry. That means it removes text used for
 filtering (if necessary), expands snippet with the configured function, applies
@@ -96,13 +100,15 @@ Scroll up or down in the docs window by `delta` lines.
 
 ## Menu Window
 `menu.menu_window care.window`
-See: [care.window](/dev/window)
+
+See [care.window](/dev/window)
 
 Wrapper for utilities for the window of the menu
 
 ## Docs Window
 `menu.docs_window care.window`
-See: [care.window](/dev/window)
+
+See [care.window](/dev/window)
 
 Wrapper for utilities for the window of the docs
 
@@ -113,7 +119,8 @@ The ghost text instance used to draw the ghost text.
 
 ## Entries
 `menu.entries care.entry[]`
-See: [care.entry](/dev/entry)
+
+See [care.entry](/dev/entry)
 
 This field is used to store all the entries of the completion menu.
 

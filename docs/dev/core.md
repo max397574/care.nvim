@@ -13,7 +13,8 @@ most important things being the menu being opened and the completion triggered.
 
 ## New
 `Core.new(): care.core`
-See: [care.core](/dev/core)
+
+See [care.core](/dev/core)
 
 Use this function to create a new instance. It takes no arguments and should be
 called only once when the plugin is first set up.
@@ -54,14 +55,16 @@ Filter currently visible menu. This is used when moving the cursor.
 
 ## Context
 `core.context care.context`
-See: [care.context](/dev/context)
+
+See [care.context](/dev/context)
 
 This is used to store the current context. There is always a new one created in
 `on_change` and compared to see if it changed.
 
 ## Menu
 `core.menu care.menu`
-See: [care.menu](/dev/menu)
+
+See [care.menu](/dev/menu)
 
 In this field a menu instance which is used in core is stored.
 

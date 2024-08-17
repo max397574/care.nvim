@@ -12,7 +12,8 @@ Utility class for working with windows in care
 
 ## New
 `Window.new(): care.window`
-See: [care.window](/dev/window)
+
+See [care.window](/dev/window)
 
 Creates a new instance of the menu window
 
@@ -63,7 +64,8 @@ Change scroll of window
 
 ## Get Data
 `window:get_data(): care.window.data`
-See: [care.window](/dev/window)
+
+See [care.window](/dev/window)
 
 
 # Fields
