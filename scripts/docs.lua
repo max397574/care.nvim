@@ -147,7 +147,8 @@ local function get_class_docs(path, title)
             end
         end
         if #links > 0 then
-            table.insert(contents, "See: " .. table.concat(links, ", "))
+            table.insert(contents, "")
+            table.insert(contents, "See " .. table.concat(links, ", "))
         end
         table.insert(contents, "")
         table.insert(contents, table.concat(field.descriptions, "\n"))
@@ -193,7 +194,7 @@ local function write_config_docs()
         "</details>",
     }, "\n")
     local config_class = get_class_docs("lua/care/types/config.lua", "Config")
-    table.insert(config_class, 6, default_config_block)
+    table.insert(config_class, 7, default_config_block)
     config_class[3] = "description: Configuration for care.nvim"
     write_file("docs/config.md", table.concat(config_class, "\n"))
 end
