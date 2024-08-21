@@ -25,6 +25,7 @@
           inherit system;
           overlays = [
             gen-luarc.overlays.default
+            self.overlays.default
           ];
         };
         luarc = pkgs.mk-luarc {
@@ -53,11 +54,7 @@
 
         packages = rec {
           default = care-nvim;
-          care-nvim = pkgs.vimUtils.buildVimPlugin {
-            pname = "care.nvim";
-            version = "dev";
-            src = self;
-          };
+          inherit (pkgs.vimPlugins) care-nvim;
           nvim = let
             config = pkgs.neovimUtils.makeNeovimConfig {
               plugins = with pkgs; [
@@ -67,6 +64,40 @@
             };
           in
             pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped config;
+        };
+      };
+      flake = {
+        overlays.default = final: prev: let
+          luaPackage-override = luaself: luaprev: {
+            care-nvim = luaself.callPackage ({
+              buildLuarocksPackage,
+              lua,
+              fzy,
+            }:
+              buildLuarocksPackage {
+                pname = "care.nvim";
+                version = "scm-1";
+                knownRockspec = "${self}/care.nvim-scm-1.rockspec";
+                propagatedBuildInputs = [
+                  lua
+                  fzy
+                ];
+              }) {};
+          };
+        in {
+          lua5_1 = prev.lua5_1.override {
+            packageOverrides = luaPackage-override;
+          };
+          lua51Packages = prev.lua51Packages // final.lua5_1.pkgs;
+          vimPlugins =
+            prev.vimPlugins
+            // {
+              care-nvim = final.neovimUtils.buildNeovimPlugin {
+                pname = "care.nvim";
+                version = "dev";
+                src = self;
+              };
+            };
         };
       };
     };
