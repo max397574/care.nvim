@@ -109,7 +109,7 @@
 --- of the menu because the left sides of the icons would be aligned at the same
 --- column and not be next to the labels. In the example there also was some spacing
 --- added in between the two.
----@field format_entry fun(entry: care.entry): { [1]: string, [2]: string }[][]
+---@field format_entry fun(entry: care.entry, data: care.format_data): { [1]: string, [2]: string }[][]
 --- How the sections in the menu should be aligned
 ---@field alignment ("left"|"center"|"right")[]
 
@@ -133,3 +133,8 @@
 ---@field border string|string[]|string[][]
 --- Character used for the scrollbar
 ---@field scrollbar string
+
+--- Additional data passed to format function to allow more advanced formatting
+---@class care.format_data
+--- Index of the entry in the completion menu
+---@field index integer

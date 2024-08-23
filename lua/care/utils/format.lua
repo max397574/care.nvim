@@ -7,8 +7,11 @@ local utils = require("care.utils")
 ---@return number, string[]
 function format_utils.get_width(entries)
     local formatted_concat = {}
-    for _, entry in ipairs(entries) do
-        local formatted = config.ui.menu.format_entry(entry)
+    for i, entry in ipairs(entries) do
+        local format_data = {
+            index = i,
+        }
+        local formatted = config.ui.menu.format_entry(entry, format_data)
         local chunk_texts = {}
         for _, aligned in ipairs(formatted) do
             for _, chunk in ipairs(aligned) do
@@ -24,8 +27,11 @@ end
 ---@return table
 function format_utils.get_align_tables(entries)
     local aligned_table = {}
-    for _, entry in ipairs(entries) do
-        local formatted = config.ui.menu.format_entry(entry)
+    for i, entry in ipairs(entries) do
+        local format_data = {
+            index = i,
+        }
+        local formatted = config.ui.menu.format_entry(entry, format_data)
         for aligned_index, aligned_chunks in ipairs(formatted) do
             if not aligned_table[aligned_index] then
                 aligned_table[aligned_index] = {}
