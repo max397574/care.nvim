@@ -86,7 +86,7 @@
 --- sections which are represented by tables and can have a different alignment
 --- each. This is specified with another field which takes a table with the
 --- alignment of each section.
---- 
+---
 --- For example you want to have the label of an entry in a red highlight and an
 --- icon in a entry-kind specific color left aligned first and then the source of
 --- the entry right aligned in blue. You could do that like this:
