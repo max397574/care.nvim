@@ -42,6 +42,7 @@ config.defaults = {
             max_width = 80,
             border = "rounded",
             scrollbar = "█",
+            position = "auto",
         },
         type_icons = {
             Class = "",
@@ -334,6 +335,12 @@ The border of the documentation view
 `config.ui.docs.scrollbar string`
 
 Character used for the scrollbar
+
+## Position
+`config.ui.docs.position "auto"|"left"|"right"`
+
+Position of docs view.
+Auto will prefer right if there is enough space
 
 Additional data passed to format function to allow more advanced formatting
 # `care.format_data`
