@@ -225,7 +225,7 @@ scrollbar. Set `scrollbar` to `nil` value to disable the scrollbar.
 # Methods
 
 ## Format Entry
-`config.ui.menu.format_entry(entry: care.entry): { [1]: string, [2]: string }[][]`
+`config.ui.menu.format_entry(entry: care.entry, data: care.format_data): { [1]: string, [2]: string }[][]`
 
 See [care.entry](/dev/entry)
 
@@ -235,7 +235,6 @@ text-highlight chunks like `:h nvim_buf_set_extmarks()` is used. You can create
 sections which are represented by tables and can have a different alignment
 each. This is specified with another field which takes a table with the
 alignment of each section.
-
 For example you want to have the label of an entry in a red highlight and an
 icon in a entry-kind specific color left aligned first and then the source of
 the entry right aligned in blue. You could do that like this:
@@ -335,3 +334,13 @@ The border of the documentation view
 `config.ui.docs.scrollbar string`
 
 Character used for the scrollbar
+
+Additional data passed to format function to allow more advanced formatting
+# `care.format_data`
+
+# Fields
+
+## Index
+`format_data.index integer`
+
+Index of the entry in the completion menu
