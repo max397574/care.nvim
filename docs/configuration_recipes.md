@@ -1,6 +1,6 @@
 ---
-title: Getting started
-description: How to get started using care.nvim
+title: Configuration Recipes
+description: Some common configuration recipes for care.nvim
 ---
 
 # Configuration recipes
