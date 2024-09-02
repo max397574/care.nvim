@@ -58,7 +58,6 @@ local function draw_docs(menu, entry, config)
         local menu_has_border = menu_border and menu_border ~= "none"
 
         local TODO = 100000
-        --- Width of full window including borders
         local right_width = math.min(
             vim.o.columns
                 - (offset + (menu_has_border and 2 or 0))
@@ -67,6 +66,7 @@ local function draw_docs(menu, entry, config)
             config.max_width
         )
         local left_width = menu.menu_window.opened_at.col
+        --- Width of full window including borders
         local width
         local position
         if config.position == "right" then

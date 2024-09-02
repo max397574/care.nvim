@@ -60,6 +60,15 @@ function Window:open_cursor_relative(width, wanted_height, offset, config)
         row = cursor[1] - 1,
         col = offset,
     }
+    local columns_left = vim.o.columns
+        - (offset + (has_border and 2 or 0))
+        - vim.fn.getwininfo(vim.api.nvim_get_current_win())[1].textoff
+        - 1
+
+    if columns_left < width then
+        self.opened_at.col = self.opened_at.col - (width - columns_left) + 1
+    end
+
     self.winnr = vim.api.nvim_open_win(self.buf, false, {
         relative = "cursor",
         height = height,
