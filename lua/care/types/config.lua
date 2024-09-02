@@ -133,6 +133,9 @@
 ---@field border string|string[]|string[][]
 --- Character used for the scrollbar
 ---@field scrollbar string
+--- Position of docs view.
+--- Auto will prefer right if there is enough space
+---@field position "auto"|"left"|"right"
 
 --- Additional data passed to format function to allow more advanced formatting
 ---@class care.format_data

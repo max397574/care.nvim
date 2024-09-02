@@ -54,14 +54,43 @@ local function draw_docs(menu, entry, config)
             contents = vim.lsp.util.convert_input_to_markdown_lines(documentation --[[@as string]])
         end
 
+        local menu_border = menu.config.ui.menu.border
+        local menu_has_border = menu_border and menu_border ~= "none"
+
         local TODO = 100000
-        local width = math.min(vim.o.columns - offset, config.max_width)
+        --- Width of full window including borders
+        local right_width = math.min(
+            vim.o.columns
+                - (offset + (menu_has_border and 2 or 0))
+                - vim.fn.getwininfo(vim.api.nvim_get_current_win())[1].textoff
+                - 2,
+            config.max_width
+        )
+        local left_width = menu.menu_window.opened_at.col
+        local width
+        local position
+        if config.position == "right" then
+            width = right_width
+        elseif config.position == "left" then
+            width = left_width
+        elseif config.position == "auto" then
+            if right_width >= left_width then
+                width = right_width
+                position = "right"
+            else
+                width = left_width
+                position = "left"
+            end
+        end
         local height = math.min(TODO, config.max_height)
+
+        local border = menu.config.ui.docs_view.border
+        local has_border = border and border ~= "none"
 
         local do_stylize = format == "markdown" and vim.g.syntax_on ~= nil
 
         if do_stylize then
-            contents = vim.lsp.util._normalize_markdown(contents, { width = width })
+            contents = vim.lsp.util._normalize_markdown(contents, { width = width - (has_border and 2 or 0) })
             vim.bo[menu.docs_window.buf].filetype = "markdown"
             vim.treesitter.start(menu.docs_window.buf)
             vim.api.nvim_buf_set_lines(menu.docs_window.buf, 0, -1, false, contents)
@@ -74,13 +103,23 @@ local function draw_docs(menu, entry, config)
             end
             vim.api.nvim_buf_set_lines(menu.docs_window.buf, 0, -1, true, contents)
         end
+        width = math.min(width, require("care.utils").longest(contents) + (has_border and 2 or 0))
 
-        menu.docs_window:open_cursor_relative(
-            width,
-            math.min(height, menu.menu_window.max_height),
-            offset + 1,
-            menu.config.ui.docs_view
-        )
+        if position == "right" then
+            menu.docs_window:open_cursor_relative(
+                width,
+                math.min(height, menu.menu_window.max_height),
+                offset + (menu_has_border and 2 or 0),
+                menu.config.ui.docs_view
+            )
+        else
+            menu.docs_window:open_cursor_relative(
+                width,
+                math.min(height, menu.menu_window.max_height),
+                menu.menu_window.opened_at.col - width - 2,
+                menu.config.ui.docs_view
+            )
+        end
         menu.docs_window:draw_scrollbar()
 
         vim.api.nvim_set_option_value("scrolloff", 0, { win = menu.docs_window.winnr })
@@ -89,10 +128,7 @@ local function draw_docs(menu, entry, config)
     if entry.source.source.resolve_item then
         entry.source.source:resolve_item(entry.completion_item, function(resolved_item)
             entry.completion_item = resolved_item
-            open_docs_window(
-                entry,
-                menu.menu_window.opened_at.col + vim.api.nvim_win_get_width(menu.menu_window.winnr) + 1
-            )
+            open_docs_window(entry, menu.menu_window.opened_at.col + vim.api.nvim_win_get_width(menu.menu_window.winnr))
         end)
     else
         open_docs_window(

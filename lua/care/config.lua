@@ -37,6 +37,7 @@ config.defaults = {
             max_width = 80,
             border = "rounded",
             scrollbar = "█",
+            position = "auto",
         },
         type_icons = {
             Class = "",
