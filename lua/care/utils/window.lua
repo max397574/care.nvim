@@ -180,13 +180,15 @@ function Window:open_scrollbar_win(width, height, offset)
         pcall(vim.api.nvim_win_close, self.scrollbar.win, true)
         self.scrollbar.win = nil
     end
+    local config = vim.api.nvim_win_get_config(self.winnr)
+    local has_border = config.border and config.border ~= "none"
     local cursor = vim.api.nvim_win_get_cursor(0)
     if self.config.ui.menu.scrollbar then
         self.scrollbar.win = vim.api.nvim_open_win(self.scrollbar.buf, false, {
             height = height,
             relative = "cursor",
             col = offset + width - cursor[2],
-            row = self.position == "below" and 2 or -(height + 2) + 1,
+            row = self.position == "below" and (has_border and 2 or 1) or -(height + 2) + 1,
             width = 1,
             style = "minimal",
             border = "none",
