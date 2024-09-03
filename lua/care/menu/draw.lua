@@ -19,7 +19,7 @@ end
 ---@param buf integer
 ---@param ns integer
 ---@param column integer
-local function add_extmarks(aligned_sec, realign, buf, ns, column)
+local function add_extmarks(aligned_sec, realign, buf, ns, column, entries)
     for line, aligned_chunks in ipairs(aligned_sec) do
         local realigned_chunks = {}
         for _, chunk in ipairs(aligned_chunks) do
@@ -30,6 +30,29 @@ local function add_extmarks(aligned_sec, realign, buf, ns, column)
             virt_text_pos = "overlay",
             hl_mode = "combine",
         })
+
+        local start = string.find(
+            table.concat(vim.iter(realigned_chunks)
+                :map(function(chunk)
+                    return chunk[1]
+                end)
+                :totable()),
+            entries[line].completion_item.label:sub(1, 5),
+            nil,
+            true
+        )
+        if start then
+            for _, idx in ipairs(entries[line].matches or {}) do
+                vim.api.nvim_buf_add_highlight(
+                    buf,
+                    ns,
+                    "@care.match",
+                    line - 1,
+                    column + idx + start - 2,
+                    column + idx + start - 1
+                )
+            end
+        end
     end
 end
 
@@ -70,6 +93,19 @@ return function(self)
                     virt_text_pos = "overlay",
                     hl_mode = "combine",
                 })
+                local start = string.find(cur_line_text, self.entries[line].completion_item.label:sub(1, 5), nil, true)
+                if start then
+                    for _, idx in ipairs(self.entries[line].matches or {}) do
+                        vim.api.nvim_buf_add_highlight(
+                            self.menu_window.buf,
+                            self.ns,
+                            "@care.match",
+                            line - 1,
+                            column + idx + start - 2,
+                            column + idx + start - 1
+                        )
+                    end
+                end
             end
             column = column + utils.longest(texts)
         elseif alignment[i] == "right" then
@@ -77,20 +113,15 @@ return function(self)
             local length = utils.longest(texts)
             add_extmarks(aligned_sec, function(chunk)
                 return { string.rep(" ", length - #chunk[1]) .. chunk[1], chunk[2] }
-            end, self.menu_window.buf, self.ns, column)
+            end, self.menu_window.buf, self.ns, column, self.entries)
             column = column + length
         elseif alignment[i] == "center" then
             local texts = get_texts(aligned_sec)
             local length = utils.longest(texts)
             add_extmarks(aligned_sec, function(chunk)
                 return { string.rep(" ", math.floor((length - #chunk[1]) / 2)) .. chunk[1], chunk[2] }
-            end, self.menu_window.buf, self.ns, column)
+            end, self.menu_window.buf, self.ns, column, self.entries)
             column = column + length
-        end
-    end
-    for line, entry in ipairs(self.entries) do
-        for _, idx in ipairs(entry.matches or {}) do
-            vim.api.nvim_buf_add_highlight(self.menu_window.buf, self.ns, "@care.match", line - 1, idx - 1, idx)
         end
     end
 end
