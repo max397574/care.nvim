@@ -12,7 +12,7 @@ function Source.new(completion_source)
 end
 
 function Source:get_keyword_pattern()
-    local keyword_pattern = require("care.config").options.keyword_pattern
+    local keyword_pattern = require("care.config").options.keyword_pattern or ""
     if self.source.keyword_pattern then
         ---@type string
         keyword_pattern = self.source.keyword_pattern

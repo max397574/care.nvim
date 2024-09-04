@@ -58,7 +58,7 @@ end
 
 ---@param self care.menu
 return function(self)
-    local alignment = self.config.ui.menu.alignment
+    local alignment = self.config.ui.menu.alignment or {}
     local width, entry_texts = format_utils.get_width(self.entries)
     local aligned_table = format_utils.get_align_tables(self.entries)
     local column = 0
