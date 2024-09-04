@@ -7,7 +7,7 @@
 --- One of the main goals of this is to be as extensible as possible. This is especially important
 --- for the completion entries. Read more about that under
 --- [Configuration of item display](/design/#configuration-of-item-display).
----@field ui care.config.ui
+---@field ui? care.config.ui
 --- With this field a function for expanding snippets is defined. By default this is the
 --- builtin `vim.snippet.expand()`. You can also use a plugin like luasnip for this:
 ---
@@ -16,54 +16,65 @@
 ---     require("luasnip").lsp_expand(body)
 --- end
 --- ```
----@field snippet_expansion fun(body: string): nil
+---@field snippet_expansion? fun(body: string): nil
 --- With the selection behavior the user can determine what happens when selecting
 --- an entry. This can either be `"select"` or `"insert"`. Selecting will just
 --- select the entry and do nothing else. Insert will actually insert the text of
 --- the entry (this is not necessarily the whole text).
----@field selection_behavior "select"|"insert"
+---@field selection_behavior? "select"|"insert"
 --- This field controls the behavior when confirming an entry.
----@field confirm_behavior "insert"|"replace"
+---@field confirm_behavior? "insert"|"replace"
 --- This field is used to configure the sources for care.nvim.
----@field sources care.config.source[]
+--- Use a table where the fields is the source name and the value is the configuration
+--- ```lua
+--- sources = {
+---     nvim_lsp = {
+---         enabled = function()
+---             ...
+---         end,
+---         ...
+---     }
+--- }
+--- ```
+---@field sources? table<string, care.config.source>
 --- The `completion_events` table is used to set events for autocompletion. By default
 --- it just contains `"TextChangedI"`. You can set it to an empty table (`{}`) to
 --- disable autocompletion.
----@field completion_events string[]
+---@field completion_events? string[]
 --- The keyword pattern is used to determine keywords. These are used to determine what
 --- to use for filtering and what to remove if insert text is used.
 --- It should essentially just describe the entries of a source.
----@field keyword_pattern string
+---@field keyword_pattern? string
 --- This function can be used to disable care in certain contexts. By default this
 --- disables care in prompts.
----@field enabled fun(): boolean
+---@field enabled? fun(): boolean
 --- Whether items should be preselected or not. Which items are preselected is determined
 --- by the source.
----@field preselect boolean
+---@field preselect? boolean
 
 --- # Ui Configuration
 --- This is used to configure the whole UI of care.
 ---@class care.config.ui
 --- Configuration of the completion menu of care.nvim
----@field menu care.config.ui.menu
+---@field menu? care.config.ui.menu
 --- This configuration allows you to configure the documentation view. It consists
 --- of some basic window properties like the border and the maximum height of the
 --- window. It also has a field to define the character used for the scrollbar.
----@field docs_view care.config.ui.docs
+---@field docs_view? care.config.ui.docs
 --- This is a table which defines the different icons.
----@field type_icons care.config.ui.type_icons
+---@field type_icons? care.config.ui.type_icons
 --- Configuration of ghost text.
----@field ghost_text care.config.ui.ghost_text
+---@field ghost_text? care.config.ui.ghost_text
 
 --- With this field the user can control how ghost text is displayed.
 ---@class care.config.ui.ghost_text
 --- You can use the `enabled` field to determine whether the ghost text should be
 --- enabled or not.
----@field enabled boolean
+---@field enabled? boolean
 --- The `position` can either be `"inline"` or `"overlay"`. Inline
 --- will add the text inline right where the cursor is. With the overlay position
 --- the text will overlap with existing text after the cursor.
----@field position "inline"|"overlay"
+---@field position? "inline"|"overlay"
 
 --- This configuration should allow you to completely adapt the completion menu to
 --- your likings.
@@ -73,13 +84,13 @@
 --- scrollbar. Set `scrollbar` to `nil` value to disable the scrollbar.
 ---@class care.config.ui.menu
 --- Maximum height of the menu
----@field max_height integer
+---@field max_height? integer
 --- The border of the completion menu
----@field border string|string[]|string[][]
+---@field border? string|string[]|string[][]
 --- Character used for the scrollbar
----@field scrollbar string?
+---@field scrollbar? string
 --- If the menu should be displayed on top, bottom or automatically
----@field position "auto"|"bottom"|"top"
+---@field position? "auto"|"bottom"|"top"
 --- Another field is `format_entry`. This is a function which recieves an entry of
 --- the completion menu and determines how it's formatted. For that a table with
 --- text-highlight chunks like `:h nvim_buf_set_extmarks()` is used. You can create
@@ -109,35 +120,37 @@
 --- of the menu because the left sides of the icons would be aligned at the same
 --- column and not be next to the labels. In the example there also was some spacing
 --- added in between the two.
----@field format_entry fun(entry: care.entry, data: care.format_data): { [1]: string, [2]: string }[][]
+---@field format_entry? fun(entry: care.entry, data: care.format_data): { [1]: string, [2]: string }[][]
 --- How the sections in the menu should be aligned
----@field alignment ("left"|"center"|"right")[]
+---@field alignment? ("left"|"center"|"right")[]
 
+--- ## Source configuration
+--- Configuration for the sources of care.nvim
 ---@class care.config.source
 --- Whether the source is enabled (default true)
----@field enabled boolean|nil|fun():boolean
---- The maximum amount of entries which can be displayed by this source
----@field max_entries integer?
+---@field enabled? boolean|fun():boolean
+--- The maximum amount? of entries which can be displayed by this source
+---@field max_entries? integer
 --- The priority of this source. Is more important than matching score
----@field priority integer?
+---@field priority? integer
 --- Filter function for entries by the source
----@field filter fun(entry: care.entry): boolean
+---@field filter? fun(entry: care.entry): boolean
 
 --- Configuration of the completion menu of care.nvim
 ---@class care.config.ui.docs
 --- Maximum height of the documentation view
----@field max_height integer
+---@field max_height? integer
 --- Maximum width of the documentation view
----@field max_width integer
+---@field max_width? integer
 --- The border of the documentation view
----@field border string|string[]|string[][]
+---@field border? string|string[]|string[][]
 --- Character used for the scrollbar
----@field scrollbar string
+---@field scrollbar? string
 --- Position of docs view.
 --- Auto will prefer right if there is enough space
----@field position "auto"|"left"|"right"
+---@field position? "auto"|"left"|"right"
 
 --- Additional data passed to format function to allow more advanced formatting
 ---@class care.format_data
 --- Index of the entry in the completion menu
----@field index integer
+---@field index? integer
