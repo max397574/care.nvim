@@ -1,9 +1,9 @@
 ---
-title: Config
+title: Configuration
 description: Configuration for care.nvim
 ---
 
-# Config
+# Configuration
 
 <details>
   <summary>Full Default Config</summary>
@@ -99,6 +99,18 @@ config.defaults = {
 
 The config of care is used to configure the UI and care itself.
 
+To configure care you call the setup function of the config module with the options you want
+to override. Also see [configuration recipes](/configuration_recipes).
+```lua
+require("care.config").setup({
+...
+}
+```
+
+> [!IMPORTANT]
+> Notice that the `care.config` module is used for configuration
+> `require("care").setup()` is only used for setting up internal things
+> and is called automatically
 The configuration consists of two main parts. The UI Configuration and the
 configuration of the completion behaviors of care.
 # `care.config`
