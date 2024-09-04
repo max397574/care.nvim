@@ -30,7 +30,7 @@ config.defaults = {
                 }
             end,
             scrollbar = "█",
-            alignment = {},
+            alignments = {},
         },
         docs_view = {
             max_height = 8,

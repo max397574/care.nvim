@@ -134,7 +134,7 @@
 --- added in between the two.
 ---@field format_entry? fun(entry: care.entry, data: care.format_data): { [1]: string, [2]: string }[][]
 --- How the sections in the menu should be aligned
----@field alignment? ("left"|"center"|"right")[]
+---@field alignments? ("left"|"center"|"right")[]
 
 --- ## Source configuration
 --- Configuration for the sources of care.nvim
