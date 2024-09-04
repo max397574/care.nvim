@@ -96,6 +96,12 @@ Checks whether docs are visible or not
 `menu:scroll_docs(delta: integer): nil`
 
 Scroll up or down in the docs window by `delta` lines.
+
+## Select
+`menu:select(): nil`
+
+This method is used for selection. It's called in `select_prev` and `select_next` and is responsible
+for redrawing the menu, opening documentation and inserting the selected entry if required.
 # Fields
 
 ## Menu Window
