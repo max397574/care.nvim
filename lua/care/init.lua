@@ -11,9 +11,6 @@ local function on_insert_enter()
 end
 
 care.api = {
-    get_fallback = function(key)
-        return require("care.mappings").get_fallback(key)
-    end,
     is_open = function()
         return care.core and care.core.menu:is_open()
     end,
@@ -32,9 +29,6 @@ care.api = {
     select_next = function(count)
         care.core.menu:select_next(count)
     end,
-    jump_to_entry = function(index)
-        care.core.menu.index = index
-    end,
     doc_is_open = function()
         return care.core and care.core.menu and care.core.menu:docs_visible()
     end,
@@ -43,7 +37,7 @@ care.api = {
     end,
     set_index = function(index)
         care.core.menu.index = index
-        care.core.menu:draw()
+        care.core.menu:select()
     end,
     ---@param index integer 1-based index of entry to select
     select_visible = function(index)
@@ -52,7 +46,7 @@ care.api = {
             topline = vim.fn.winsaveview().topline
         end)
         care.core.menu.index = topline + index - 1
-        care.core.menu:draw()
+        care.core.menu:select()
     end,
 }
 

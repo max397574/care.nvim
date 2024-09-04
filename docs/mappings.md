@@ -10,10 +10,10 @@ sidebar_position: 3
 
 For basic mappings the user should use the provided `<Plug>` mappings.
 
-- `<Plug>(CareConfirm)`: Confirm the currently selected entry
-- `<Plug>(CareSelectNext)`: Select the next entry in the menu
-- `<Plug>(CareSelectPrev)`: Select the previous entry in the menu
-- `<Plug>(CareClose)`: Close the completion menu
+-   `<Plug>(CareConfirm)`: Confirm the currently selected entry
+-   `<Plug>(CareSelectNext)`: Select the next entry in the menu
+-   `<Plug>(CareSelectPrev)`: Select the previous entry in the menu
+-   `<Plug>(CareClose)`: Close the completion menu
 
 These mappings will automatically fallback to the default actions of the keys
 mapped if the menu isn't open. That means that if `<CR>` is mapped to confirm
@@ -25,11 +25,9 @@ vim.keymap.set("i", "<cr>", "<Plug>(CareConfirm)")
 
 pressing `<CR>` will still go to a new line when the completion menu isn't open.
 
-<!--TODO: link to api docs-->
-
-To create more advanced mappings the api should be used. For fallback to the
-unmapped action of a key `nvim_feedkeys` can be used. An example for this would
-be the following:
+To create more advanced mappings the [api](/api) should be used. For fallback to
+the unmapped action of a key `nvim_feedkeys` can be used. An example for this
+would be the following:
 
 ```lua
 vim.keymap.set("i", "<c-f>", function()
