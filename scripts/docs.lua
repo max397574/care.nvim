@@ -194,7 +194,7 @@ local function write_config_docs()
         "",
         "</details>",
     }, "\n")
-    local config_class = get_class_docs("lua/care/types/config.lua", "Config")
+    local config_class = get_class_docs("lua/care/types/config.lua", "Configuration")
     table.insert(config_class, 7, default_config_block)
     config_class[3] = "description: Configuration for care.nvim"
     write_file("docs/config.md", table.concat(config_class, "\n"))

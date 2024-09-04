@@ -57,9 +57,8 @@ care.api = {
 }
 
 --- Sets up care
-function care.setup(options)
+function care.setup()
     require("care.mappings").setup()
-    require("care.config").setup(options)
     require("care.highlights")
 
     local augroup = vim.api.nvim_create_augroup("care", {})
