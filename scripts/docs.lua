@@ -76,6 +76,7 @@ local link_list = {
     { "care.internal_source", "[care.internal_source](/dev/internal_source)" },
     { "care.source", "[care.source](/dev/source)" },
     { "care.window", "[care.window](/dev/window)" },
+    { "care.config.source", "[care.config.source](/config/#source-configuration)" },
 }
 
 local function gen_title(input)
