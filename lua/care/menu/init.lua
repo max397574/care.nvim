@@ -160,11 +160,9 @@ function Menu:readjust_win(offset)
         self:close()
         return
     end
-    draw_docs(self, self:get_active_entry(), self.config.ui.docs_view)
     self.menu_window:readjust(#self.entries, width, offset)
     preselect(self)
-    self:draw()
-    self.menu_window:draw_scrollbar()
+    self:select()
 end
 
 function Menu:docs_visible()
@@ -178,6 +176,13 @@ function Menu:scroll_docs(delta)
     self.docs_window:scroll(delta)
 end
 
+function Menu:select()
+    draw_docs(self, self:get_active_entry(), self.config.ui.docs_view)
+    self:draw()
+    self.menu_window:draw_scrollbar()
+    self.ghost_text:show(self:get_active_entry(), vim.api.nvim_get_current_win())
+end
+
 function Menu:select_next(count)
     count = count or 1
     self.index = self.index + count
@@ -185,10 +190,7 @@ function Menu:select_next(count)
         self.index = self.index - #self.entries - 1
     end
     self.menu_window:set_scroll(self.index, 1)
-    draw_docs(self, self:get_active_entry(), self.config.ui.docs_view)
-    self:draw()
-    self.menu_window:draw_scrollbar()
-    self.ghost_text:show(self:get_active_entry(), vim.api.nvim_get_current_win())
+    self:select()
 end
 
 function Menu:select_prev(count)
@@ -198,10 +200,7 @@ function Menu:select_prev(count)
         self.index = #self.entries + self.index + 1
     end
     self.menu_window:set_scroll(self.index, -1)
-    draw_docs(self, self:get_active_entry(), self.config.ui.docs_view)
-    self:draw()
-    self.menu_window:draw_scrollbar()
-    self.ghost_text:show(self:get_active_entry(), vim.api.nvim_get_current_win())
+    self:select()
 end
 
 function Menu:open(entries, offset)
@@ -217,10 +216,8 @@ function Menu:open(entries, offset)
     preselect(self)
     local width, _ = format_utils.get_width(self.entries)
     self.menu_window:open_cursor_relative(width, #self.entries, offset, self.config.ui.menu)
-    self:draw()
-    self.menu_window:draw_scrollbar()
     self.menu_window:set_scroll(self.index, -1)
-    self.ghost_text:show(self:get_active_entry(), vim.api.nvim_get_current_win())
+    self:select()
 end
 
 function Menu:get_active_entry()

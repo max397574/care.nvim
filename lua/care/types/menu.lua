@@ -61,3 +61,6 @@
 ---@field index integer
 --- This field is used to store the buffer for drawing the scrollbar.
 ---@field scrollbar_buf integer
+--- This method is used for selection. It's called in `select_prev` and `select_next` and is responsible
+--- for redrawing the menu, opening documentation and inserting the selected entry if required.
+---@field select fun(self: care.menu): nil
