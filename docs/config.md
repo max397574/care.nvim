@@ -147,6 +147,8 @@ This field controls the behavior when confirming an entry.
 ## Sources (optional)
 `config.sources? table<string, care.config.source>`
 
+See [care.config.source](/config/#source-configuration)
+
 This field is used to configure the sources for care.nvim.
 Use a table where the fields is the source name and the value is the configuration
 ```lua

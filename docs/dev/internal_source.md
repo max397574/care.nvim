@@ -69,4 +69,6 @@ This is mostly used by sources for performance reasons.
 ## Config
 `internal_source.config care.config.source`
 
+See [care.config.source](/config/#source-configuration)
+
 The configuration for the source
