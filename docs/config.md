@@ -35,7 +35,7 @@ config.defaults = {
                 }
             end,
             scrollbar = "█",
-            alignment = {},
+            alignments = {},
         },
         docs_view = {
             max_height = 8,
@@ -303,8 +303,8 @@ Character used for the scrollbar
 
 If the menu should be displayed on top, bottom or automatically
 
-## Alignment (optional)
-`config.ui.menu.alignment? ("left"|"center"|"right")[]`
+## Alignments (optional)
+`config.ui.menu.alignments? ("left"|"center"|"right")[]`
 
 How the sections in the menu should be aligned
 
