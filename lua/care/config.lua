@@ -15,7 +15,7 @@ config.defaults = {
                 local deprecated = entry.completion_item.deprecated
                     or vim.tbl_contains(entry.completion_item.tags or {}, 1)
                 local completion_item = entry.completion_item
-                local type_icons = config.options.ui.type_icons
+                local type_icons = config.options.ui.type_icons or {}
                 -- TODO: remove since now can only be number, or also allow custom string kinds?
                 local entry_kind = type(completion_item.kind) == "string" and completion_item.kind
                     or require("care.utils.lsp").get_kind_name(completion_item.kind)
