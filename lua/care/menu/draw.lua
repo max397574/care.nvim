@@ -58,7 +58,7 @@ end
 
 ---@param self care.menu
 return function(self)
-    local alignment = self.config.ui.menu.alignment or {}
+    local alignments = self.config.ui.menu.alignments or {}
     local width, entry_texts = format_utils.get_width(self.entries)
     local aligned_table = format_utils.get_align_tables(self.entries)
     local column = 0
@@ -79,7 +79,7 @@ return function(self)
         end
     end
     for i, aligned_sec in ipairs(aligned_table) do
-        if not alignment[i] or alignment[i] == "left" then
+        if not alignments[i] or alignments[i] == "left" then
             local texts = {}
             for line, aligned_chunks in ipairs(aligned_sec) do
                 local line_text = {}
@@ -108,14 +108,14 @@ return function(self)
                 end
             end
             column = column + utils.longest(texts)
-        elseif alignment[i] == "right" then
+        elseif alignments[i] == "right" then
             local texts = get_texts(aligned_sec)
             local length = utils.longest(texts)
             add_extmarks(aligned_sec, function(chunk)
                 return { string.rep(" ", length - #chunk[1]) .. chunk[1], chunk[2] }
             end, self.menu_window.buf, self.ns, column, self.entries)
             column = column + length
-        elseif alignment[i] == "center" then
+        elseif alignments[i] == "center" then
             local texts = get_texts(aligned_sec)
             local length = utils.longest(texts)
             add_extmarks(aligned_sec, function(chunk)
