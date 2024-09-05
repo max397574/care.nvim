@@ -31,16 +31,16 @@ function Menu:close()
     end
 end
 
----@param menu care.menu
-local function draw_docs(menu, entry, config)
-    if not entry or menu.index == 0 then
-        if menu:docs_visible() then
-            menu.docs_window:close()
+function Menu:draw_docs(entry)
+    if not entry or self.index == 0 or self.menu_window.winnr == nil then
+        if self:docs_visible() then
+            self.docs_window:close()
         end
         return
     end
 
     local function open_docs_window(doc_entry, offset)
+        local config = self.config.ui.docs_view or {}
         if not doc_entry.completion_item.documentation then
             return
         end
@@ -54,7 +54,7 @@ local function draw_docs(menu, entry, config)
             contents = vim.lsp.util.convert_input_to_markdown_lines(documentation --[[@as string]])
         end
 
-        local menu_border = menu.config.ui.menu.border
+        local menu_border = self.config.ui.menu.border
         local menu_has_border = menu_border and menu_border ~= "none"
 
         local TODO = 100000
@@ -65,7 +65,7 @@ local function draw_docs(menu, entry, config)
                 - 2,
             config.max_width
         )
-        local left_width = menu.menu_window.opened_at.col
+        local left_width = self.menu_window.opened_at.col
         --- Width of full window including borders
         local width
         local position
@@ -82,59 +82,67 @@ local function draw_docs(menu, entry, config)
                 position = "left"
             end
         end
+        if not width or width < 1 then
+            return
+        end
         local height = math.min(TODO, config.max_height)
 
-        local border = menu.config.ui.docs_view.border
+        local border = self.config.ui.docs_view.border
         local has_border = border and border ~= "none"
 
         local do_stylize = format == "markdown" and vim.g.syntax_on ~= nil
 
         if do_stylize then
             contents = vim.lsp.util._normalize_markdown(contents, { width = width - (has_border and 2 or 0) })
-            vim.bo[menu.docs_window.buf].filetype = "markdown"
-            vim.treesitter.start(menu.docs_window.buf)
-            vim.api.nvim_buf_set_lines(menu.docs_window.buf, 0, -1, false, contents)
+            vim.bo[self.docs_window.buf].filetype = "markdown"
+            vim.treesitter.start(self.docs_window.buf)
+            vim.api.nvim_buf_set_lines(self.docs_window.buf, 0, -1, false, contents)
         else
             -- Clean up input: trim empty lines
             contents = vim.split(table.concat(contents, "\n"), "\n", { trimempty = true })
 
             if format then
-                vim.bo[menu.docs_window.buf].syntax = format
+                vim.bo[self.docs_window.buf].syntax = format
             end
-            vim.api.nvim_buf_set_lines(menu.docs_window.buf, 0, -1, true, contents)
+            vim.api.nvim_buf_set_lines(self.docs_window.buf, 0, -1, true, contents)
         end
         width = math.min(width, require("care.utils").longest(contents) + (has_border and 2 or 0))
 
         if position == "right" then
-            menu.docs_window:open_cursor_relative(
+            self.docs_window:open_cursor_relative(
                 width,
-                math.min(height, menu.menu_window.max_height),
+                math.min(height, self.menu_window.max_height),
                 offset + (menu_has_border and 2 or 0),
-                menu.config.ui.docs_view
+                self.config.ui.docs_view
             )
         else
-            menu.docs_window:open_cursor_relative(
+            self.docs_window:open_cursor_relative(
                 width,
-                math.min(height, menu.menu_window.max_height),
-                menu.menu_window.opened_at.col - width - 2,
-                menu.config.ui.docs_view
+                math.min(height, self.menu_window.max_height),
+                self.menu_window.opened_at.col - width - 2,
+                self.config.ui.docs_view
             )
         end
-        menu.docs_window:draw_scrollbar()
+        self.docs_window:draw_scrollbar()
 
-        vim.api.nvim_set_option_value("scrolloff", 0, { win = menu.docs_window.winnr })
+        vim.api.nvim_set_option_value("scrolloff", 0, { win = self.docs_window.winnr })
     end
 
     if entry.source.source.resolve_item then
         entry.source.source:resolve_item(entry.completion_item, function(resolved_item)
             entry.completion_item = resolved_item
-            open_docs_window(entry, menu.menu_window.opened_at.col + vim.api.nvim_win_get_width(menu.menu_window.winnr))
+            -- TODO: perhaps better solution for this?, e.g. cancel callback?
+            -- Required to not run into issues when closing immediatelly after selection
+            if not self.menu_window:is_open() then
+                return
+            end
+            open_docs_window(entry, self.menu_window.opened_at.col + vim.api.nvim_win_get_width(self.menu_window.winnr))
         end)
     else
         open_docs_window(
             entry,
-            menu.menu_window.opened_at.col
-                + vim.api.nvim_win_get_width(menu.menu_window.winnr)
+            self.menu_window.opened_at.col
+                + vim.api.nvim_win_get_width(self.menu_window.winnr)
                 - (vim.api.nvim_win_get_cursor(0)[2] - 1)
                 + 1
         )
@@ -178,7 +186,7 @@ end
 
 function Menu:select()
     if self.index ~= 0 then
-        draw_docs(self, self:get_active_entry(), self.config.ui.docs_view)
+        self:draw_docs(self:get_active_entry())
     end
     self:draw()
     self.menu_window:draw_scrollbar()
@@ -196,6 +204,7 @@ function Menu:select_next(count)
 end
 
 function Menu:select_prev(count)
+    print("select prev")
     count = count or 1
     self.index = self.index - count
     if self.index < 0 then

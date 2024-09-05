@@ -64,3 +64,5 @@
 --- This method is used for selection. It's called in `select_prev` and `select_next` and is responsible
 --- for redrawing the menu, opening documentation and inserting the selected entry if required.
 ---@field select fun(self: care.menu): nil
+--- Opens the documentation window for a selected entry
+---@field draw_docs fun(self: care.menu, entry: care.entry?): nil
