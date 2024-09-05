@@ -177,7 +177,9 @@ function Menu:scroll_docs(delta)
 end
 
 function Menu:select()
-    draw_docs(self, self:get_active_entry(), self.config.ui.docs_view)
+    if self.index ~= 0 then
+        draw_docs(self, self:get_active_entry(), self.config.ui.docs_view)
+    end
     self:draw()
     self.menu_window:draw_scrollbar()
     self.ghost_text:show(self:get_active_entry(), vim.api.nvim_get_current_win())
