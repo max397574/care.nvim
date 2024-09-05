@@ -79,6 +79,7 @@ config.defaults = {
     keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
     sources = {},
     preselect = true,
+    sorting_direction = "top-down",
     completion_events = { "TextChangedI" },
     enabled = function()
         local enabled = true

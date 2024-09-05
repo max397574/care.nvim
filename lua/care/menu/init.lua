@@ -14,6 +14,7 @@ function Menu.new()
     self.menu_window = require("care.utils.window").new()
     self.docs_window = require("care.utils.window").new()
     self.ghost_text = require("care.ghost_text").new()
+    self.reversed = false
     return self
 end
 
@@ -23,6 +24,7 @@ function Menu:close()
     self.menu_window:close()
     self.docs_window:close()
     self.ghost_text:hide()
+    self.reversed = false
     vim.cmd.redraw({ bang = true })
     vim.api.nvim_exec_autocmds("User", { pattern = "CareMenuClosed" })
     local sources = require("care.sources").get_sources()
@@ -185,11 +187,15 @@ function Menu:scroll_docs(delta)
 end
 
 function Menu:select()
+    -- TODO: figure out a way to avoid duplicate draw
+    -- is required because data.visible_index depends on scroll being done
+    -- and scroll depends on being drawn for height of buffer
     if self.index ~= 0 then
         self:draw_docs(self:get_active_entry())
     end
     self:draw()
-    self.menu_window:draw_scrollbar()
+    self.menu_window:set_scroll(self.index, 1, self.reversed)
+    self:draw()
     self.ghost_text:show(self:get_active_entry(), vim.api.nvim_get_current_win())
 end
 
@@ -199,18 +205,15 @@ function Menu:select_next(count)
     if self.index > #self.entries then
         self.index = self.index - #self.entries - 1
     end
-    self.menu_window:set_scroll(self.index, 1)
     self:select()
 end
 
 function Menu:select_prev(count)
-    print("select prev")
     count = count or 1
     self.index = self.index - count
     if self.index < 0 then
         self.index = #self.entries + self.index + 1
     end
-    self.menu_window:set_scroll(self.index, -1)
     self:select()
 end
 
@@ -227,7 +230,7 @@ function Menu:open(entries, offset)
     preselect(self)
     local width, _ = format_utils.get_width(self.entries)
     self.menu_window:open_cursor_relative(width, #self.entries, offset, self.config.ui.menu)
-    self.menu_window:set_scroll(self.index, -1)
+    self.reversed = self.config.sorting_direction == "away-from-cursor" and self.menu_window.position == "above"
     self:select()
 end
 
@@ -235,11 +238,16 @@ function Menu:get_active_entry()
     if not self.entries then
         return nil
     end
-    -- TODO: make configurable (cmpts "autoselect")
-    if self.index == 0 then
-        return self.entries[1]
+    -- TODO: make 0->1 configurable (cmpts "autoselect")
+    if self.reversed then
+        if self.index == 0 then
+            return self.entries[1]
+        else
+            return self.entries[#self.entries - self.index + 1]
+        end
+    else
+        return self.entries[self.index == 0 and 1 or self.index]
     end
-    return self.entries[self.index]
 end
 
 function Menu:confirm()

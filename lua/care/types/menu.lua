@@ -66,3 +66,5 @@
 ---@field select fun(self: care.menu): nil
 --- Opens the documentation window for a selected entry
 ---@field draw_docs fun(self: care.menu, entry: care.entry?): nil
+--- Indicates if the menu is reversed (window above cursor and sorting_direction away from cursor)
+---@field reversed boolean

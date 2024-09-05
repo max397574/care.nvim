@@ -104,7 +104,6 @@ function Window:readjust(content_len, width, offset)
             math.min(self.max_height - (win_data.has_border and 2 or 0), content_len)
         )
     end
-    self:set_scroll(0, -1)
     self:open_scrollbar_win(width, math.min(win_data.height_without_border, content_len), offset)
 end
 
@@ -122,7 +121,7 @@ function Window:scroll(delta)
     self:draw_scrollbar()
 end
 
-function Window:set_scroll(index, direction)
+function Window:set_scroll(index, direction, reversed)
     --- Scrolls to a certain line in the window
     --- This line will be at the top of the window
     ---@param line integer
@@ -135,18 +134,23 @@ function Window:set_scroll(index, direction)
     local win_data = self:get_data()
     local selected_line = index
     if selected_line == 0 then
-        scroll_to_line(1)
-        return
+        if reversed then
+            scroll_to_line(win_data.total_lines - win_data.height_without_border + 1)
+        else
+            scroll_to_line(1)
+        end
     elseif selected_line >= win_data.first_visible_line and selected_line <= win_data.last_visible_line then
-        return
     elseif direction == 1 and selected_line > win_data.last_visible_line then
         scroll_to_line(selected_line - win_data.visible_lines + 1)
-    elseif direction == -1 and selected_line < win_data.first_visible_line then
+    elseif direction == 1 and selected_line < win_data.height_without_border then
         scroll_to_line(selected_line)
-    elseif direction == -1 and selected_line > win_data.last_visible_line then
+    elseif direction == -1 and selected_line < win_data.height_without_border then
+        scroll_to_line(selected_line)
+    elseif direction == -1 and selected_line > win_data.height_without_border then
         -- wrap around
-        scroll_to_line(selected_line - win_data.visible_lines + 1)
+        scroll_to_line(selected_line - win_data.height_without_border + 1)
     end
+    self:draw_scrollbar()
 end
 
 function Window:get_data()
