@@ -61,6 +61,12 @@ local docs_files = {
     { type_file = "lua/care/types/entry.lua", doc_file = "docs/dev/entry.md", title = "Entry" },
     { type_file = "lua/care/types/source.lua", doc_file = "docs/dev/source.md", title = "Source" },
     {
+        type_file = "lua/care/types/api.lua",
+        doc_file = "docs/api.md",
+        title = "API",
+        desc = "API documentation for care.nvim",
+    },
+    {
         type_file = "lua/care/types/internal_source.lua",
         doc_file = "docs/dev/internal_source.md",
         title = "Internal Source",
@@ -115,12 +121,12 @@ local function cleanup_annotation(short_class_name, annotation)
     end
 end
 
-local function get_class_docs(path, title)
+local function get_class_docs(path, title, desc)
     local classes = read_classes(path)
     local contents = {
         "---",
         "title: " .. title,
-        "description: Type description of " .. table.concat(
+        "description: " .. desc or "Type description of " .. table.concat(
             vim.iter(classes)
                 :map(function(class)
                     return class.name
@@ -177,7 +183,7 @@ end
 
 local function write_class_docs()
     for _, docs in ipairs(docs_files) do
-        local contents = get_class_docs(docs.type_file, docs.title)
+        local contents = get_class_docs(docs.type_file, docs.title, docs.desc or nil)
         write_file(docs.doc_file, table.concat(contents, "\n"))
     end
 end

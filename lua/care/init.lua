@@ -10,6 +10,7 @@ local function on_insert_enter()
     care.core:setup()
 end
 
+---@type care.api
 care.api = {
     is_open = function()
         return care.core and care.core.menu:is_open()
