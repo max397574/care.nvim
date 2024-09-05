@@ -126,7 +126,7 @@ local function get_class_docs(path, title, desc)
     local contents = {
         "---",
         "title: " .. title,
-        "description: " .. desc or "Type description of " .. table.concat(
+        "description: " .. (desc or "Type description of ") .. table.concat(
             vim.iter(classes)
                 :map(function(class)
                     return class.name
