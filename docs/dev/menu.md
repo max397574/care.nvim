@@ -164,3 +164,8 @@ entries simply change this index.
 `menu.scrollbar_buf integer`
 
 This field is used to store the buffer for drawing the scrollbar.
+
+## Reversed
+`menu.reversed boolean`
+
+Indicates if the menu is reversed (window above cursor and sorting_direction away from cursor)

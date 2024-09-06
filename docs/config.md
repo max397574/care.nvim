@@ -84,6 +84,7 @@ config.defaults = {
     keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
     sources = {},
     preselect = true,
+    sorting_direction = "top-down",
     completion_events = { "TextChangedI" },
     enabled = function()
         local enabled = true
@@ -193,6 +194,12 @@ It should essentially just describe the entries of a source.
 
 Whether items should be preselected or not. Which items are preselected is determined
 by the source.
+
+## Sorting Direction
+`config.sorting_direction "top-down"|"away-from-cursor"`
+
+How to sort the entries in the completion menu.
+This can either be top to bottom or so the best match is always next to the cursor.
 
 # Ui Configuration
 This is used to configure the whole UI of care.

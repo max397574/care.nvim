@@ -43,7 +43,7 @@ Opens the window for the scrollbar
 Closes the window and the scrollbar window and resets fields
 
 ## Set Scroll
-`window:set_scroll(index: integer, direction: integer): nil`
+`window:set_scroll(index: integer, direction: integer, reversed: boolean): nil`
 
 Sets the scroll of the window
 
