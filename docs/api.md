@@ -1,52 +1,63 @@
 ---
 title: API
-description: Description of the external api provided by care.nvim
+description: API documentation for care.nvimcare.api
 ---
 
-# Care.nvim API
+# API
 
-All the api can be accessed with the following code:
+The API for care. This should be used for most interactions with the plugins.
+The api can be accessed with the following code
 
 ```lua
-require("care").api
+local care_api = require("care").api
 ```
+# `care.api`
 
-From now on this will just be written as `Api`.
+# Methods
 
-# Is open
+## Is Open
+`api.is_open(): boolean`
 
-The function `Api.is_open()` returns a boolean which indicates whether the
+This function returns a boolean which indicates whether the
 completion menu is currently open or not. This is especially useful for mappings
 which should fallback to other actions if the menu isn't open.
 
-# Confirm
+## Confirm
+`api.confirm(): nil`
 
-With `Api.confirm()` you can confirm the currently selected entry. Note that
+Used to confirm the currently selected entry. Note that
 there is also `<Plug>(CareConfirm)` which should preferably be used in mappings.
 
-# Complete
+## Complete
+`api.complete(): nil`
 
-The function `Api.Complete` can be used to manually complete.
+This function is used to manually trigger completion
 
-# Close
+## Close
+`api.close(): nil`
 
-Use the function `Api.close()` to close the completion menu. There also is the
-`<Plug>(CareClose)` mapping which does the same thing.
+Closes the completion menu and documentation view if it is open.
+For mappings `<Plug>(CareClose)` should be used.
 
-# Select next
+## Select Next
+`api.select_next(count: integer): nil`
 
-Use `Api.select_next(count)` to select the next entry. Count determines how much
-the selection should move. It defaults to 1. `<Plug>(CareSelectNext)` can also
-be used to select the next entry.
+Select next entry in completion menu. If count is provided the selection
+will move down `count` entries.
+For mappings `<Plug>(CareSelectNext)` can be used where count defaults to 1.
 
-# Select prev
+## Select Prev
+`api.select_prev(count: integer): nil`
 
-Same as above but for the previous entry.
+Select next entry in completion menu. If count is provided the selection
+will move up `count` entries.
+For mappings `<Plug>(CareSelectPrev)` can be used where count defaults to 1.
 
-# Doc is open
+## Doc Is Open
+`api.doc_is_open(): boolean`
 
-The function `Api.doc_is_open` returns a boolean to indicate whether a
-documentation window is open. This is especially useful together with the
+Indicates whether there is a documentation window open or not.
+This is especially useful together with the
 function to scroll docs to only trigger the mapping in certain cases.
 
 ```lua
@@ -57,21 +68,22 @@ else
 end
 ```
 
-# Scroll docs
+## Scroll Docs
+`api.scroll_docs(delta: integer): nil`
 
-Use `Api.scroll_docs(delta)` to scroll docs by `delta` lines. When a negative
+Use `scroll_docs(delta)` to scroll docs by `delta` lines. When a negative
 delta is provided the docs will be scrolled upwards.
 
-# Set index
+## Set Index
+`api.set_index(index: integer): nil`
 
-With the function `Api.set_index(index)` the index which represents which entry
-is selected can be directly set. This allows to jump anywhere in the completion
-menu.
+Allows the index which represents which entry is selected to be directly set.
+This allows to jump anywhere in the completion menu.
 
-# Select visible
+## Select Visible
+`api.select_visible(index: integer): nil`
 
-The function `Api.select_visible(index)` is used to select the entry at index
-`index` where `index` indicates the visible position in the menu.
-
+This function is used to select the entry at index `index` where `index`
+indicates the visible position in the menu.
 This is really useful to create shortcuts to certain entries like in the
 [example in configuration recipes](/configuration_recipes#labels-and-shortcuts).

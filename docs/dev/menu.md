@@ -102,6 +102,13 @@ Scroll up or down in the docs window by `delta` lines.
 
 This method is used for selection. It's called in `select_prev` and `select_next` and is responsible
 for redrawing the menu, opening documentation and inserting the selected entry if required.
+
+## Draw Docs
+`menu:draw_docs(entry: care.entry?): nil`
+
+See [care.entry](/dev/entry)
+
+Opens the documentation window for a selected entry
 # Fields
 
 ## Menu Window
