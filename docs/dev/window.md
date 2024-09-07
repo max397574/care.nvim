@@ -70,7 +70,7 @@ See [care.window](/dev/window)
 
 # Fields
 
-## Winnr?
+## Winnr
 `window.winnr? integer`
 
 
@@ -85,7 +85,7 @@ Instance of the care config
 
 
 
-## Position?
+## Position
 `window.position? "above"|"below"`
 
 Whether the window is currently opened above or below the cursor
