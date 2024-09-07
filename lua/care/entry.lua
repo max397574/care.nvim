@@ -6,7 +6,19 @@ function Entry.new(completion_item, source, context)
     ---@type care.entry
     local self = setmetatable({}, { __index = Entry })
     self.completion_item = completion_item
-    self.source = source
+    -- to avoid recursion because source.entries has entries which store source again
+    self.source = {
+        config = source.config,
+        execute = source.execute,
+        get_keyword_pattern = source.get_keyword_pattern,
+        get_offset = source.get_offset,
+        get_trigger_characters = source.get_trigger_characters,
+        incomplete = source.incomplete,
+        is_enabled = source.is_enabled,
+        new = source.new,
+        source = source.source,
+        entries = {},
+    }
     self.context = context
     self.matches = {}
     return self
