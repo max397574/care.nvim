@@ -48,6 +48,9 @@ care.api = {
         care.core.menu.index = topline + index - 1
         care.core.menu:select()
     end,
+    is_reversed = function()
+        return care.core.menu.reversed
+    end,
 }
 
 --- Sets up care

@@ -49,3 +49,6 @@
 --- This is really useful to create shortcuts to certain entries like in the
 --- [example in configuration recipes](/configuration_recipes#labels-and-shortcuts).
 ---@field select_visible fun(index: integer): nil
+--- Indicated whether the menu is reversed
+--- Only relevant when using sorting direction "away-from-cursor"
+---@field is_reversed fun(): boolean
