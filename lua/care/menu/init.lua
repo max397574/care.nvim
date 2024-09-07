@@ -187,13 +187,17 @@ function Menu:scroll_docs(delta)
 end
 
 function Menu:select()
-    -- TODO: figure out a way to avoid duplicate draw
-    -- is required because data.visible_index depends on scroll being done
-    -- and scroll depends on being drawn for height of buffer
     if self.index ~= 0 then
         self:draw_docs(self:get_active_entry())
     end
-    self:draw()
+
+    local width, _ = format_utils.get_width(self.entries)
+    local spaces = {}
+    for _ = 1, #self.entries do
+        table.insert(spaces, (" "):rep(width))
+    end
+    vim.api.nvim_buf_set_lines(self.menu_window.buf, 0, -1, false, spaces)
+
     self.menu_window:set_scroll(self.index, 1, self.reversed)
     self:draw()
     self.ghost_text:show(self:get_active_entry(), vim.api.nvim_get_current_win())
