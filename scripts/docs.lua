@@ -121,7 +121,8 @@ local function cleanup_annotation(short_class_name, annotation)
     end
 end
 
-local function get_class_docs(path, title, desc)
+local function get_class_docs(path, title, desc, mark_optionals)
+    mark_optionals = mark_optionals or false
     local classes = read_classes(path)
     local contents = {
         "---",
@@ -140,7 +141,7 @@ local function get_class_docs(path, title, desc)
     }
     local function format_field(field, short_class_name)
         table.insert(contents, "")
-        if field.name:sub(-1) == "?" then
+        if field.name:sub(-1) == "?" and mark_optionals then
             table.insert(contents, "## " .. gen_title(field.name:sub(1, -2)) .. " (optional)")
         else
             table.insert(contents, "## " .. gen_title(field.name))
@@ -200,7 +201,7 @@ local function write_config_docs()
         "",
         "</details>",
     }, "\n")
-    local config_class = get_class_docs("lua/care/types/config.lua", "Configuration")
+    local config_class = get_class_docs("lua/care/types/config.lua", "Configuration", false)
     table.insert(config_class, 7, default_config_block)
     config_class[3] = "description: Configuration for care.nvim"
     write_file("docs/config.md", table.concat(config_class, "\n"))

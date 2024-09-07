@@ -65,7 +65,7 @@
 ---@field preselect? boolean
 --- How to sort the entries in the completion menu.
 --- This can either be top to bottom or so the best match is always next to the cursor.
----@field sorting_direction "top-down"|"away-from-cursor"
+---@field sorting_direction? "top-down"|"away-from-cursor"
 
 --- # Ui Configuration
 --- This is used to configure the whole UI of care.
