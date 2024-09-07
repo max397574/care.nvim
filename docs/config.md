@@ -118,7 +118,7 @@ configuration of the completion behaviors of care.
 
 # Methods
 
-## Snippet Expansion (optional)
+## Snippet Expansion?
 `config.snippet_expansion?(body: string): nil`
 
 With this field a function for expanding snippets is defined. By default this is the
@@ -129,14 +129,14 @@ snippet_expansion = function(body)
 end
 ```
 
-## Enabled (optional)
+## Enabled?
 `config.enabled?(): boolean`
 
 This function can be used to disable care in certain contexts. By default this
 disables care in prompts.
 # Fields
 
-## Ui (optional)
+## Ui?
 `config.ui? care.config.ui`
 
 The [UI Configuration](#Ui-Configuration) is used to configure the whole UI of care.
@@ -144,7 +144,7 @@ One of the main goals of this is to be as extensible as possible. This is especi
 for the completion entries. Read more about that under
 [Configuration of item display](/design/#configuration-of-item-display).
 
-## Selection Behavior (optional)
+## Selection Behavior?
 `config.selection_behavior? "select"|"insert"`
 
 With the selection behavior the user can determine what happens when selecting
@@ -152,12 +152,12 @@ an entry. This can either be `"select"` or `"insert"`. Selecting will just
 select the entry and do nothing else. Insert will actually insert the text of
 the entry (this is not necessarily the whole text).
 
-## Confirm Behavior (optional)
+## Confirm Behavior?
 `config.confirm_behavior? "insert"|"replace"`
 
 This field controls the behavior when confirming an entry.
 
-## Sources (optional)
+## Sources?
 `config.sources? table<string, care.config.source>`
 
 See [care.config.source](/config/#source-configuration)
@@ -175,28 +175,28 @@ sources = {
 }
 ```
 
-## Completion Events (optional)
+## Completion Events?
 `config.completion_events? string[]`
 
 The `completion_events` table is used to set events for autocompletion. By default
 it just contains `"TextChangedI"`. You can set it to an empty table (`{}`) to
 disable autocompletion.
 
-## Keyword Pattern (optional)
+## Keyword Pattern?
 `config.keyword_pattern? string`
 
 The keyword pattern is used to determine keywords. These are used to determine what
 to use for filtering and what to remove if insert text is used.
 It should essentially just describe the entries of a source.
 
-## Preselect (optional)
+## Preselect?
 `config.preselect? boolean`
 
 Whether items should be preselected or not. Which items are preselected is determined
 by the source.
 
-## Sorting Direction
-`config.sorting_direction "top-down"|"away-from-cursor"`
+## Sorting Direction?
+`config.sorting_direction? "top-down"|"away-from-cursor"`
 
 How to sort the entries in the completion menu.
 This can either be top to bottom or so the best match is always next to the cursor.
@@ -207,24 +207,24 @@ This is used to configure the whole UI of care.
 
 # Fields
 
-## Menu (optional)
+## Menu?
 `config.ui.menu? care.config.ui.menu`
 
 Configuration of the completion menu of care.nvim
 
-## Docs View (optional)
+## Docs View?
 `config.ui.docs_view? care.config.ui.docs`
 
 This configuration allows you to configure the documentation view. It consists
 of some basic window properties like the border and the maximum height of the
 window. It also has a field to define the character used for the scrollbar.
 
-## Type Icons (optional)
+## Type Icons?
 `config.ui.type_icons? care.config.ui.type_icons`
 
 This is a table which defines the different icons.
 
-## Ghost Text (optional)
+## Ghost Text?
 `config.ui.ghost_text? care.config.ui.ghost_text`
 
 Configuration of ghost text.
@@ -234,13 +234,13 @@ With this field the user can control how ghost text is displayed.
 
 # Fields
 
-## Enabled (optional)
+## Enabled?
 `config.ui.ghost_text.enabled? boolean`
 
 You can use the `enabled` field to determine whether the ghost text should be
 enabled or not.
 
-## Position (optional)
+## Position?
 `config.ui.ghost_text.position? "inline"|"overlay"`
 
 The `position` can either be `"inline"` or `"overlay"`. Inline
@@ -257,7 +257,7 @@ scrollbar. Set `scrollbar` to `nil` value to disable the scrollbar.
 
 # Methods
 
-## Format Entry (optional)
+## Format Entry?
 `config.ui.menu.format_entry?(entry: care.entry, data: care.format_data): { [1]: string, [2]: string }[][]`
 
 See [care.entry](/dev/entry)
@@ -290,27 +290,27 @@ column and not be next to the labels. In the example there also was some spacing
 added in between the two.
 # Fields
 
-## Max Height (optional)
+## Max Height?
 `config.ui.menu.max_height? integer`
 
 Maximum height of the menu
 
-## Border (optional)
+## Border?
 `config.ui.menu.border? string|string[]|string[][]`
 
 The border of the completion menu
 
-## Scrollbar (optional)
+## Scrollbar?
 `config.ui.menu.scrollbar? string`
 
 Character used for the scrollbar
 
-## Position (optional)
+## Position?
 `config.ui.menu.position? "auto"|"bottom"|"top"`
 
 If the menu should be displayed on top, bottom or automatically
 
-## Alignments (optional)
+## Alignments?
 `config.ui.menu.alignments? ("left"|"center"|"right")[]`
 
 How the sections in the menu should be aligned
@@ -321,12 +321,12 @@ Configuration for the sources of care.nvim
 
 # Methods
 
-## Enabled (optional)
+## Enabled?
 `config.source.enabled? boolean|fun():boolean`
 
 Whether the source is enabled (default true)
 
-## Filter (optional)
+## Filter?
 `config.source.filter?(entry: care.entry): boolean`
 
 See [care.entry](/dev/entry)
@@ -334,12 +334,12 @@ See [care.entry](/dev/entry)
 Filter function for entries by the source
 # Fields
 
-## Max Entries (optional)
+## Max Entries?
 `config.source.max_entries? integer`
 
 The maximum amount? of entries which can be displayed by this source
 
-## Priority (optional)
+## Priority?
 `config.source.priority? integer`
 
 The priority of this source. Is more important than matching score
@@ -349,27 +349,27 @@ Configuration of the completion menu of care.nvim
 
 # Fields
 
-## Max Height (optional)
+## Max Height?
 `config.ui.docs.max_height? integer`
 
 Maximum height of the documentation view
 
-## Max Width (optional)
+## Max Width?
 `config.ui.docs.max_width? integer`
 
 Maximum width of the documentation view
 
-## Border (optional)
+## Border?
 `config.ui.docs.border? string|string[]|string[][]`
 
 The border of the documentation view
 
-## Scrollbar (optional)
+## Scrollbar?
 `config.ui.docs.scrollbar? string`
 
 Character used for the scrollbar
 
-## Position (optional)
+## Position?
 `config.ui.docs.position? "auto"|"left"|"right"`
 
 Position of docs view.
@@ -380,7 +380,7 @@ Additional data passed to format function to allow more advanced formatting
 
 # Fields
 
-## Index (optional)
+## Index?
 `format_data.index? integer`
 
 Index of the entry in the completion menu
