@@ -30,12 +30,12 @@ function Log.log(message, ...)
     elseif type(data) == "function" then
         data = data()
     elseif type(data) == "table" then
-        data = table.concat(
-            vim.tbl_map(function(value)
-                return type(value) == "string" and value or vim.inspect(value):gsub("%s+", " ")
-            end, data),
-            " "
-        )
+        local new = {}
+        for key, val in pairs(data) do
+            val = type(val) == "string" and val or vim.inspect(val):gsub("%s+", " ")
+            table.insert(new, key .. ": " .. val)
+        end
+        data = table.concat(new, " ")
     end
     if not data then
         return

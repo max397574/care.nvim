@@ -16,7 +16,11 @@ local Log = require("care.utils.log")
 return function(entry)
     local config = require("care.config").options
     Log.log("Confirming Entry")
-    Log.log("Completion item", entry.completion_item)
+    Log.log("Completion item", function()
+        local item = vim.deepcopy(entry.completion_item)
+        item.documentation = "<documentation>"
+        return item
+    end)
     Log.log("Entry context:", entry.context)
 
     local cur_ctx = require("care.context").new()
