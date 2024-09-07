@@ -55,6 +55,13 @@ The `get_keyword_pattern` function has higher priority and will overwrite the st
 This is arguably the most important function of each source. This function returns completions.
 The function takes in a completion context and should return a
 list of entries.
+
+## Execute?
+`source:execute?(entry: care.entry): nil`
+
+See [care.entry](/dev/entry)
+
+
 # Fields
 
 ## Name

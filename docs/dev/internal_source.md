@@ -43,6 +43,14 @@ if the method exists on the source and otherwise just returns an empty table.
 `internal_source:is_enabled(): boolean`
 
 This function checks whether the function is enabled or not based on it's config.
+
+## Execute
+`internal_source:execute(entry: care.entry)`
+
+See [care.entry](/dev/entry)
+
+Executes a function for an entry after completion
+This can e.g. be used for snippet expansion by a source
 # Fields
 
 ## Source
