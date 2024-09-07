@@ -31,3 +31,28 @@ for i, label in ipairs(labels) do
     end)
 end
 ```
+
+## Reverse keybindings for reversed menu
+
+When using `"away-from-cursor"` as `sorting_direction` in the configuration the
+menu can be reversed. The `select_{next, prev}` mappings will still go in the
+same direction though. If you always want to use `select_next` to select the
+entry with a lower match than current one you can use mappings like this:
+
+```lua
+vim.keymap.set("i", "<c-n>", function()
+    if require("care").api.is_reversed() then
+        require("care").api.select_prev()
+    else
+        require("care").api.select_next()
+    end
+end)
+
+vim.keymap.set("i", "<c-p>", function()
+    if require("care").api.is_reversed() then
+        require("care").api.select_next()
+    else
+        require("care").api.select_prev()
+    end
+end)
+```
