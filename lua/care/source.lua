@@ -34,17 +34,6 @@ function Source:get_offset(context)
     end
 
     return context.cursor.col
-
-    -- -- Can add $ to keyword pattern because we just match on line to cursor
-    -- local word_boundary = vim.fn.match(line_to_cursor, keyword_pattern .. "$")
-    -- print(keyword_pattern)
-    -- print("match", word_boundary)
-    -- print("regex", vim.regex(keyword_pattern .. "\\m$"):match_str(line_to_cursor))
-    -- if word_boundary == -1 then
-    --     return 0
-    -- end
-    --
-    -- return context.cursor.col - word_boundary
 end
 
 function Source:get_trigger_characters()
