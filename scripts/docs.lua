@@ -141,8 +141,12 @@ local function get_class_docs(path, title, desc, mark_optionals)
     }
     local function format_field(field, short_class_name)
         table.insert(contents, "")
-        if field.name:sub(-1) == "?" and mark_optionals then
-            table.insert(contents, "## " .. gen_title(field.name:sub(1, -2)) .. " (optional)")
+        if field.name:sub(-1) == "?" then
+            if mark_optionals then
+                table.insert(contents, "## " .. gen_title(field.name:sub(1, -2)) .. " (optional)")
+            else
+                table.insert(contents, "## " .. gen_title(field.name:sub(1, -2)))
+            end
         else
             table.insert(contents, "## " .. gen_title(field.name))
         end
