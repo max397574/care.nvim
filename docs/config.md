@@ -93,6 +93,7 @@ config.defaults = {
         end
         return enabled
     end,
+    debug = false,
 }
 ```
 
@@ -200,6 +201,12 @@ by the source.
 
 How to sort the entries in the completion menu.
 This can either be top to bottom or so the best match is always next to the cursor.
+
+## Debug?
+`config.debug? boolean`
+
+Whether debugging should be enabled or not. This will write a log to a `care.log` file
+in the current directory.
 
 # Ui Configuration
 This is used to configure the whole UI of care.
