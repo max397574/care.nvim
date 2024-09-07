@@ -1,11 +1,10 @@
 local care = {}
 
-_G.care_debug = false
-
 ---@type care.core
 care.core = nil
 
 local function on_insert_enter()
+    require("care.utils.log").log("On Insert Enter")
     care.core = require("care.core").new()
     care.core:setup()
 end
@@ -53,6 +52,7 @@ care.api = {
 
 --- Sets up care
 function care.setup()
+    require("care.utils.log").log("Initial Setup")
     require("care.mappings").setup()
     require("care.highlights")
 

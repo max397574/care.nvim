@@ -88,6 +88,7 @@ config.defaults = {
         end
         return enabled
     end,
+    debug = false,
 }
 
 ---@param opts care.config

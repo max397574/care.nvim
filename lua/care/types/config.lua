@@ -66,6 +66,9 @@
 --- How to sort the entries in the completion menu.
 --- This can either be top to bottom or so the best match is always next to the cursor.
 ---@field sorting_direction? "top-down"|"away-from-cursor"
+--- Whether debugging should be enabled or not. This will write a log to a `care.log` file
+--- in the current directory.
+---@field debug? boolean
 
 --- # Ui Configuration
 --- This is used to configure the whole UI of care.
