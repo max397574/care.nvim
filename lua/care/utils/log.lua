@@ -35,7 +35,7 @@ function Log.log(message, ...)
             val = type(val) == "string" and val or vim.inspect(val):gsub("%s+", " ")
             table.insert(new, key .. ": " .. val)
         end
-        data = table.concat(new, " ")
+        data = table.concat(new, ", ")
     end
     if not data then
         return

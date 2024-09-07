@@ -2,6 +2,8 @@
 ---@diagnostic disable-next-line: missing-fields
 local Core = {}
 
+local Log = require("care.utils.log")
+
 function Core.new()
     ---@type care.core
     local self = setmetatable({}, { __index = Core })
@@ -66,6 +68,7 @@ function Core:complete(reason)
 end
 
 function Core:filter()
+    Log.log("Core: filtering")
     if not self.menu:is_open() then
         return
     end
@@ -105,6 +108,7 @@ function Core:filter()
 end
 
 function Core:setup()
+    Log.log("Setting up core")
     if #require("care.config").options.completion_events == 0 then
         return
     end
@@ -122,21 +126,27 @@ function Core:setup()
 end
 
 function Core:block()
+    Log.log("Core blocked")
     self.blocked = true
     return vim.schedule_wrap(function()
+        Log.log("Core unblocked")
         self.blocked = false
     end)
 end
 
 function Core:on_change()
+    Log.log("Core: on_change")
     if self.blocked then
         return
     end
     self.context = require("care.context").new(self.context)
+    Log.log("Context", self.context.line_before_cursor)
     if not require("care.config").options.enabled() then
+        Log.log("Core: care disabled")
         return
     end
     if not self.context:changed() then
+        Log.log("Core: Context not changed")
         return
     end
     self:complete(1)
