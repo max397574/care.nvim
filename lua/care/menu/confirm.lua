@@ -95,6 +95,8 @@ return function(entry)
         vim.lsp.buf.execute_command(completion_item.command)
     end
 
-    entry.source:execute(entry)
+    if entry.source.execute then
+        entry.source:execute(entry)
+    end
     unblock()
 end
