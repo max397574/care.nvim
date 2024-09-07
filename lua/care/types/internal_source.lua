@@ -25,3 +25,6 @@
 ---@field config care.config.source
 --- This function checks whether the function is enabled or not based on it's config.
 ---@field is_enabled fun(self: care.internal_source): boolean
+--- Executes a function for an entry after completion
+--- This can e.g. be used for snippet expansion by a source
+---@field execute fun(self: care.internal_source, entry: care.entry)

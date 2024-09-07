@@ -90,10 +90,11 @@ return function(entry)
         vim.lsp.util.apply_text_edits(completion_item.additionalTextEdits, cur_ctx.bufnr, "utf-16")
     end
 
-    unblock()
-
     if completion_item.command then
         ---@diagnostic disable-next-line: param-type-mismatch
         vim.lsp.buf.execute_command(completion_item.command)
     end
+
+    entry.source:execute(entry)
+    unblock()
 end

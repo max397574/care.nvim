@@ -42,3 +42,4 @@
 --- The function takes in a completion context and should return a
 --- list of entries.
 ---@field complete fun(completion_context: care.completion_context, callback: fun(items: lsp.CompletionItem[], is_incomplete?: boolean)): nil
+---@field execute? fun(self: care.source, entry: care.entry): nil

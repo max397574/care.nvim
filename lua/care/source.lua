@@ -68,4 +68,10 @@ function Source:is_enabled()
     return true
 end
 
+function Source:execute(entry)
+    if self.source.execute then
+        self.source:execute(entry)
+    end
+end
+
 return Source
