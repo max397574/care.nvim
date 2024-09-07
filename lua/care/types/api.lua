@@ -28,7 +28,7 @@
 --- Indicates whether there is a documentation window open or not.
 --- This is especially useful together with the
 --- function to scroll docs to only trigger the mapping in certain cases.
---- 
+---
 --- ```lua
 --- if require("care").api.doc_is_open() then
 ---     require("care").api.scroll_docs(4)
