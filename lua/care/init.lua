@@ -54,7 +54,7 @@ care.api = {
     end,
 }
 
----@param options care.config
+---@param options? care.config
 function care.setup(options)
     require("care.config").setup(options)
 end
