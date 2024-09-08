@@ -69,7 +69,6 @@ function Core:complete(reason, source_filter)
                 end
             end)
         else
-            vim.notify(":(")
             remaining = remaining - 1
         end
     end

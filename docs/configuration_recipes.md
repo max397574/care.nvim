@@ -39,6 +39,9 @@ a behavior like builtin neovim.
 
 There are always certain sources required for the mappings.
 
+You likely also want to set [completion_events](/config#completion-events) to an
+empty table `{}` to disable autocompletion if you want this behavior.
+
 ```lua
 -- Source: "hrsh7th/cmp-path" (requires "max397574/care-cmp")
 -- Limitations: In comparison to builtin completion the pattern to find filenames is different
