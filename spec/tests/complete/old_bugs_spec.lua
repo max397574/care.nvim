@@ -1,13 +1,20 @@
 local Context = require("care.context")
 local Entry = require("care.entry")
+local InternalSource = require("care.source")
 
 local function complete(completion_item, context)
     ---@diagnostic disable-next-line: missing-fields
-    local entry = Entry.new(completion_item, {
-        get_keyword_pattern = function(_)
-            return [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]]
-        end,
-    }, context)
+    local entry = Entry.new(
+        completion_item,
+        InternalSource.new({
+            name = "test",
+            complete = function() end,
+            get_keyword_pattern = function(_)
+                return [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]]
+            end,
+        }),
+        context
+    )
     require("care.menu.confirm")(entry)
 end
 
@@ -136,11 +143,17 @@ describe("Old Bugs:", function()
             reason = 1,
         }
         ---@diagnostic disable-next-line: missing-fields
-        local entry = Entry.new(completion_item, {
-            get_keyword_pattern = function(_)
-                return "\\%([^/\\\\:\\*?<>'\"`\\|]\\)" .. "*"
-            end,
-        }, entry_context)
+        local entry = Entry.new(
+            completion_item,
+            InternalSource.new({
+                name = "test",
+                complete = function() end,
+                get_keyword_pattern = function(_)
+                    return "\\%([^/\\\\:\\*?<>'\"`\\|]\\)" .. "*"
+                end,
+            }),
+            entry_context
+        )
         require("care.menu.confirm")(entry)
 
         local context = Context:new()
@@ -183,18 +196,92 @@ describe("Old Bugs:", function()
             line_before_cursor = 'local x = "t',
             reason = 1,
         }
-
-        ---@diagnostic disable-next-line: missing-fields
-        local entry = Entry.new(completion_item, {
-            get_keyword_pattern = function(_)
-                return "\\%([^/\\\\:\\*?<>'\"`\\|]\\)" .. "*"
-            end,
-        }, entry_context)
-        require("care.menu.confirm")(entry)
+        complete(completion_item, entry_context)
 
         local context = Context:new()
         assert.is.equal('local x = "test"', context.line)
         assert.is.equal('local x = "test"', context.line_before_cursor)
         assert.is.equal(16, context.cursor.col)
+    end)
+
+    it("neorg ls doesn't complete correctly with 2 leading chars", function()
+        vim.fn.setline(1, "{:")
+        vim.cmd.startinsert({ bang = true })
+        ---@type lsp.CompletionItem
+        local completion_item = {
+            kind = 17,
+            label = "{:$/gtd/index:}",
+        }
+        local entry_context = {
+            bufnr = 1,
+            cursor = {
+                col = 2,
+                row = 1,
+            },
+            line = "{:",
+            line_before_cursor = "{:",
+            reason = 1,
+        }
+
+        complete(completion_item, entry_context)
+
+        local context = Context:new()
+        assert.is.equal("{:$/gtd/index:}", context.line)
+        assert.is.equal("{:$/gtd/index:}", context.line_before_cursor)
+        assert.is.equal(15, context.cursor.col)
+    end)
+
+    it("neorg ls doesn't complete correctly with 1 leading chars", function()
+        vim.fn.setline(1, "{:")
+        vim.cmd.startinsert({ bang = true })
+        ---@type lsp.CompletionItem
+        local completion_item = {
+            kind = 17,
+            label = ":$/gtd/index:}",
+        }
+        local entry_context = {
+            bufnr = 1,
+            cursor = {
+                col = 2,
+                row = 1,
+            },
+            line = "{:",
+            line_before_cursor = "{:",
+            reason = 1,
+        }
+
+        complete(completion_item, entry_context)
+
+        local context = Context:new()
+        assert.is.equal("{:$/gtd/index:}", context.line)
+        assert.is.equal("{:$/gtd/index:}", context.line_before_cursor)
+        assert.is.equal(15, context.cursor.col)
+    end)
+
+    it("neorg ls doesn't complete correctly with no leading chars", function()
+        vim.fn.setline(1, "{:")
+        vim.cmd.startinsert({ bang = true })
+        ---@type lsp.CompletionItem
+        local completion_item = {
+            kind = 17,
+            label = "$/gtd/index:}",
+        }
+        local entry_context = {
+            bufnr = 1,
+            cursor = {
+                col = 2,
+                row = 1,
+            },
+            line = "{:",
+            line_before_cursor = "{:",
+            reason = 1,
+        }
+
+        complete(completion_item, entry_context)
+
+        local context = Context:new()
+        assert.is.equal("{:$/gtd/index:}", context.line)
+        assert.is.equal("{:$/gtd/index:}", context.line_before_cursor)
+        assert.is.equal(15, context.cursor.col)
     end)
 end)

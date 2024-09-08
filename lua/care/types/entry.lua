@@ -24,7 +24,7 @@
 --- This is the score obtained from filtering. It is used to sort which happens in the
 --- `care.sorter` module.
 ---@field score number
---- Essentially where entry insertion should happen (column)
+--- Essentially where entry insertion should happen (column, 0-based)
 ---@field get_offset fun(self: care.entry): integer
 --- Gets the range for inserting the entry (insert of InsertReplaceEdit)
 ---@field get_insert_range fun(self: care.entry): lsp.Range

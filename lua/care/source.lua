@@ -25,7 +25,7 @@ end
 
 function Source:get_offset(context)
     if not context then
-        return context.cursor.col
+        return -1
     end
     local source_offset, _ = vim.regex(self:get_keyword_pattern() .. "\\m$"):match_str(context.line_before_cursor)
 
