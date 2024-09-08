@@ -20,10 +20,11 @@ Use this function to create a new instance. It takes no arguments and should be
 called only once when the plugin is first set up.
 
 ## Complete
-`core:complete(reason: care.completionReason?): nil`
+`core:complete(reason: care.completionReason?, source_filter?: fun(name: string): boolean): nil`
 
 This function starts the completion. It goes through all the sources, triggers
 them (completion and sorting) and opens the menu with the result.
+You can also add an optional filter to only complete certain sources.
 
 ## On Change
 `core:on_change(): nil`

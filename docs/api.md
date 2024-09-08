@@ -29,7 +29,7 @@ Used to confirm the currently selected entry. Note that
 there is also `<Plug>(CareConfirm)` which should preferably be used in mappings.
 
 ## Complete
-`api.complete(): nil`
+`api.complete(source_filter?: fun(name: string): boolean): nil`
 
 This function is used to manually trigger completion
 
