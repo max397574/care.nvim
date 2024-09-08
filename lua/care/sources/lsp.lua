@@ -66,8 +66,8 @@ function lsp_source.new(client)
     end
     ---@type care.source
     local source = {
-        name = "nvim_lsp",
-        display_name = "nvim-lsp " .. client.name,
+        name = "lsp",
+        display_name = "lsp " .. client.name,
         ---@param context care.completion_context
         complete = function(context, callback)
             local params = vim.lsp.util.make_position_params(0, client.offset_encoding)

@@ -118,6 +118,7 @@ function Core:setup()
     Log.log("Setting up core")
     vim.api.nvim_create_autocmd("CursorMovedI", {
         callback = function()
+            -- TODO: doesn't work with manual completion because context doesn't get updated
             self:filter()
         end,
     })
