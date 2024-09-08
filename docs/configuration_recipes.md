@@ -97,6 +97,8 @@ vim.keymap.set("i", "<c-x><c-l>", function()
 end)
 ```
 
+### Spelling
+
 ```lua
 -- Source: "f3fora/cmp-spell" (requires "max397574/care-cmp")
 -- Limitations: Not tested enough to know

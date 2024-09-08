@@ -35,7 +35,7 @@ used for the `insert` selection behavior.
 ## Get Offset
 `entry:get_offset(): integer`
 
-Essentially where entry insertion should happen (column)
+Essentially where entry insertion should happen (column, 0-based)
 
 ## Get Insert Range
 `entry:get_insert_range(): lsp.Range`
