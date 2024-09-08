@@ -17,8 +17,9 @@ care.api = {
     confirm = function()
         care.core.menu:confirm()
     end,
-    complete = function()
-        care.core:complete(2)
+    complete = function(source_filter)
+        care.core.context = require("care.context").new(care.core.context)
+        care.core:complete(2, source_filter)
     end,
     close = function()
         care.core.menu:close()

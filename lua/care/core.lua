@@ -14,9 +14,16 @@ function Core.new()
     return self
 end
 
-function Core:complete(reason)
+function Core:complete(reason, source_filter)
     reason = reason or 2
     local sources = require("care.sources").get_sources()
+    if source_filter then
+        sources = vim.iter(sources)
+            :filter(function(source)
+                return source_filter(source.source.name)
+            end)
+            :totable()
+    end
     ---@type care.entry[]
     local entries = {}
     local remaining = #sources
@@ -62,6 +69,7 @@ function Core:complete(reason)
                 end
             end)
         else
+            vim.notify(":(")
             remaining = remaining - 1
         end
     end
@@ -109,14 +117,14 @@ end
 
 function Core:setup()
     Log.log("Setting up core")
-    if #require("care.config").options.completion_events == 0 then
-        return
-    end
     vim.api.nvim_create_autocmd("CursorMovedI", {
         callback = function()
             self:filter()
         end,
     })
+    if #require("care.config").options.completion_events == 0 then
+        return
+    end
     vim.api.nvim_create_autocmd(require("care.config").options.completion_events, {
         callback = function()
             self:on_change()

@@ -13,7 +13,7 @@
 --- there is also `<Plug>(CareConfirm)` which should preferably be used in mappings.
 ---@field confirm fun(): nil
 --- This function is used to manually trigger completion
----@field complete fun(): nil
+---@field complete fun(source_filter?: fun(name: string): boolean): nil
 --- Closes the completion menu and documentation view if it is open.
 --- For mappings `<Plug>(CareClose)` should be used.
 ---@field close fun(): nil

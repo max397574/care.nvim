@@ -6,7 +6,8 @@
 ---@field new fun(): care.core
 --- This function starts the completion. It goes through all the sources, triggers
 --- them (completion and sorting) and opens the menu with the result.
----@field complete fun(self: care.core, reason: care.completionReason?): nil
+--- You can also add an optional filter to only complete certain sources.
+---@field complete fun(self: care.core, reason: care.completionReason?, source_filter?: fun(name: string): boolean): nil
 --- This function is invoked on every text change (by default, see
 --- `completion_events` in config). It updates the context field and triggers
 --- completion if the context changed.
