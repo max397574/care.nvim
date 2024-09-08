@@ -53,6 +53,7 @@ care.api = {
     end,
 }
 
+---@param options care.config
 function care.setup(options)
     require("care.config").setup(options)
 end
@@ -60,7 +61,8 @@ end
 --- Sets up care
 function care.initialize(options)
     if options then
-        vim.notify("You should use `care.config` module to configure care", vim.log.levels.WARN)
+        vim.notify("You should use `care`.setup() module to configure care", vim.log.levels.WARN)
+        care.setup(options)
     end
     require("care.utils.log").log("Initial Setup")
     require("care.mappings").setup()
