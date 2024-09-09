@@ -40,6 +40,9 @@ care.api = {
         care.core.menu.index = index
         care.core.menu:select()
     end,
+    get_index = function()
+        return care.core.menu.index
+    end,
     ---@param index integer 1-based index of entry to select
     select_visible = function(index)
         local topline
