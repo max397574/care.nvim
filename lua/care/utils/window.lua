@@ -143,12 +143,12 @@ function Window:set_scroll(index, direction, reversed)
         self:draw_scrollbar()
         return
     elseif direction == 1 and selected_line > win_data.last_visible_line then
-        scroll_to_line(selected_line - win_data.visible_lines + 1)
-    elseif direction == 1 and selected_line < win_data.height_without_border then
+        scroll_to_line(selected_line - win_data.height_without_border + 1)
+    elseif direction == -1 and selected_line < win_data.first_visible_line then
         scroll_to_line(selected_line)
-    elseif direction == -1 and selected_line < win_data.height_without_border then
+    elseif direction == 1 and selected_line < win_data.first_visible_line then
         scroll_to_line(selected_line)
-    elseif direction == -1 and selected_line > win_data.height_without_border then
+    elseif direction == -1 and selected_line > win_data.last_visible_line then
         -- wrap around
         scroll_to_line(selected_line - win_data.height_without_border + 1)
     end

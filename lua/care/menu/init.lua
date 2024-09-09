@@ -186,7 +186,8 @@ function Menu:scroll_docs(delta)
     self.docs_window:scroll(delta)
 end
 
-function Menu:select()
+function Menu:select(direction)
+    direction = direction or 1
     if self.index ~= 0 then
         self:draw_docs(self:get_active_entry())
     end
@@ -198,7 +199,7 @@ function Menu:select()
     end
     vim.api.nvim_buf_set_lines(self.menu_window.buf, 0, -1, false, spaces)
 
-    self.menu_window:set_scroll(self.index, 1, self.reversed)
+    self.menu_window:set_scroll(self.index, direction, self.reversed)
     self:draw()
     self.ghost_text:show(self:get_active_entry(), vim.api.nvim_get_current_win())
 end
@@ -209,7 +210,7 @@ function Menu:select_next(count)
     if self.index > #self.entries then
         self.index = self.index - #self.entries - 1
     end
-    self:select()
+    self:select(1)
 end
 
 function Menu:select_prev(count)
@@ -218,7 +219,7 @@ function Menu:select_prev(count)
     if self.index < 0 then
         self.index = #self.entries + self.index + 1
     end
-    self:select()
+    self:select(-1)
 end
 
 function Menu:open(entries, offset)

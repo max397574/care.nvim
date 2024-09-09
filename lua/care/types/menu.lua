@@ -63,7 +63,8 @@
 ---@field scrollbar_buf integer
 --- This method is used for selection. It's called in `select_prev` and `select_next` and is responsible
 --- for redrawing the menu, opening documentation and inserting the selected entry if required.
----@field select fun(self: care.menu): nil
+--- Direction can either be 1 (down) or -1 (up)
+---@field select fun(self: care.menu, direction?: integer): nil
 --- Opens the documentation window for a selected entry
 ---@field draw_docs fun(self: care.menu, entry: care.entry?): nil
 --- Indicates if the menu is reversed (window above cursor and sorting_direction away from cursor)
