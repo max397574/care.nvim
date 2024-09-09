@@ -80,3 +80,9 @@ autocompletion when set to true.
 
 This variable is used to determine where a new completion window was opened for
 the last time. This is used to determine when to reopen the completion window.
+
+## Completing
+`core.completing boolean`
+
+Boolean to indicate if care is currently completing. This is used to avoid
+compmleting and sorting on the same keystroke.

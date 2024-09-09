@@ -93,6 +93,7 @@ config.defaults = {
         end
         return enabled
     end,
+    max_view_entries = 200,
     debug = false,
 }
 ```
@@ -203,6 +204,18 @@ This can either be top to bottom or so the best match is always next to the curs
 
 Whether debugging should be enabled or not. This will write a log to a `care.log` file
 in the current directory.
+
+## Max View Entries
+`config.max_view_entries? integer`
+
+The max entries to display in the menu. Note that this just affects
+the entries displayed at a time. So there are still more entries on which you
+can filter by continue typing. This limit just exists for performance reasons
+because there are some sources which return up to multiple thousand
+entries through which a user never will scroll.
+The default value is 200 which will open the menu instantly in most cases so there
+isn't much need for a lower value.
+Values of up to about 1000 should also not cause performance issue.
 
 # Ui Configuration
 This is used to configure the whole UI of care.
