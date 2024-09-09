@@ -11,6 +11,7 @@ function Core.new()
     self.menu = require("care.menu").new()
     self.blocked = false
     self.last_opened_at = -1
+    self.completing = false
     return self
 end
 
@@ -119,7 +120,12 @@ function Core:setup()
     vim.api.nvim_create_autocmd("CursorMovedI", {
         callback = function()
             -- TODO: doesn't work with manual completion because context doesn't get updated
-            self:filter()
+            vim.schedule(function()
+                if not self.changed then
+                    self:filter()
+                end
+                self.completing = false
+            end)
         end,
     })
     if #require("care.config").options.completion_events == 0 then
@@ -127,6 +133,7 @@ function Core:setup()
     end
     vim.api.nvim_create_autocmd(require("care.config").options.completion_events, {
         callback = function()
+            self.completing = true
             self:on_change()
         end,
         group = "care",

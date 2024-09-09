@@ -34,3 +34,6 @@
 --- This variable is used to determine where a new completion window was opened for
 --- the last time. This is used to determine when to reopen the completion window.
 ---@field last_opened_at integer
+--- Boolean to indicate if care is currently completing. This is used to avoid
+--- compmleting and sorting on the same keystroke.
+---@field completing boolean
