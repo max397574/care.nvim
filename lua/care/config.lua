@@ -90,7 +90,7 @@ config.defaults = {
     debug = false,
 }
 
----@param opts care.config
+---@param opts care.config?
 function config.setup(opts)
     if vim.tbl_isempty(config.options) then
         config.options = vim.tbl_deep_extend("force", config.defaults, opts or {})
