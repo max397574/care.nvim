@@ -11,16 +11,14 @@ config.defaults = {
             max_height = 10,
             border = "rounded",
             position = "auto",
-            format_entry = function(entry)
-                local deprecated = entry.completion_item.deprecated
-                    or vim.tbl_contains(entry.completion_item.tags or {}, 1)
+            format_entry = function(entry, data)
                 local completion_item = entry.completion_item
                 local type_icons = config.options.ui.type_icons or {}
                 -- TODO: remove since now can only be number, or also allow custom string kinds?
                 local entry_kind = type(completion_item.kind) == "string" and completion_item.kind
                     or require("care.utils.lsp").get_kind_name(completion_item.kind)
                 return {
-                    { { completion_item.label .. " ", deprecated and "Comment" or "@care.entry" } },
+                    { { completion_item.label .. " ", data.deprecated and "Comment" or "@care.entry" } },
                     {
                         {
                             " " .. (type_icons[entry_kind] or type_icons.Text) .. " ",

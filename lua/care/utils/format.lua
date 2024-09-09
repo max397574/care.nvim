@@ -10,6 +10,7 @@ function format_utils.get_width(entries)
     for i, entry in ipairs(entries) do
         local format_data = {
             index = i,
+            deprecated = entry.completion_item.deprecated or vim.tbl_contains(entry.completion_item.tags or {}, 1),
         }
         local formatted = config.ui.menu.format_entry(entry, format_data)
         local chunk_texts = {}
@@ -30,6 +31,7 @@ function format_utils.get_align_tables(entries)
     for i, entry in ipairs(entries) do
         local format_data = {
             index = i,
+            deprecated = entry.completion_item.deprecated or vim.tbl_contains(entry.completion_item.tags or {}, 1),
         }
         local formatted = config.ui.menu.format_entry(entry, format_data)
         for aligned_index, aligned_chunks in ipairs(formatted) do
