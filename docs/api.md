@@ -79,6 +79,17 @@ delta is provided the docs will be scrolled upwards.
 Allows the index which represents which entry is selected to be directly set.
 This allows to jump anywhere in the completion menu.
 
+## Get Index
+`api.get_index(): integer`
+
+Returns the index of the currently selected entry, 0 representing no selection.
+This is e.g. useful to determine if an entry is selected:
+```lua
+local has_selection = function()
+    return require("care").api.get_index() ~= 0
+end
+```
+
 ## Select Visible
 `api.select_visible(index: integer): nil`
 
