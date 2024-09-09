@@ -121,7 +121,7 @@ function Core:setup()
         callback = function()
             -- TODO: doesn't work with manual completion because context doesn't get updated
             vim.schedule(function()
-                if not self.changed then
+                if not self.completing then
                     self:filter()
                 end
                 self.completing = false
