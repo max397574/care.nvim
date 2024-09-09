@@ -88,6 +88,7 @@ config.defaults = {
         end
         return enabled
     end,
+    max_view_entries = 200,
     debug = false,
 }
 

@@ -59,7 +59,8 @@ function Core:complete(reason, source_filter)
                             -- TODO: source priority and max entries
                             local opened_at = offset
                             if opened_at == self.last_opened_at and self.menu:is_open() then
-                                self.menu.entries = entries
+                                self.menu.entries =
+                                    vim.iter(entries):take(require("care.config").options.max_view_entries):totable()
                                 self.menu:readjust_win(offset)
                             else
                                 self.menu:open(entries, offset)
@@ -111,7 +112,7 @@ function Core:filter()
         return
     end
 
-    self.menu.entries = entries
+    self.menu.entries = vim.iter(entries):take(require("care.config").options.max_view_entries):totable()
     self.menu:readjust_win(offset)
 end
 
