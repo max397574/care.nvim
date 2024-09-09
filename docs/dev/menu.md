@@ -98,10 +98,11 @@ Checks whether docs are visible or not
 Scroll up or down in the docs window by `delta` lines.
 
 ## Select
-`menu:select(): nil`
+`menu:select(direction?: integer): nil`
 
 This method is used for selection. It's called in `select_prev` and `select_next` and is responsible
 for redrawing the menu, opening documentation and inserting the selected entry if required.
+Direction can either be 1 (down) or -1 (up)
 
 ## Draw Docs
 `menu:draw_docs(entry: care.entry?): nil`
