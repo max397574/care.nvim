@@ -21,7 +21,7 @@ local function get_config_function()
     return new_contents
 end
 
-function FormatEditor.draw(entries, ns, buf, format_entry)
+function FormatEditor.draw(entries, ns, buf, format_entry, alignments)
     local function get_texts(aligned_sec)
         local texts = {}
         for _, aligned_chunks in ipairs(aligned_sec) do
@@ -78,7 +78,6 @@ function FormatEditor.draw(entries, ns, buf, format_entry)
         return aligned_table
     end
 
-    local alignments = require("care.config").options.ui.menu.alignments or {}
     local width, _ = get_width()
     local aligned_table = get_align_tables()
     local column = 0
@@ -127,7 +126,7 @@ function FormatEditor.draw(entries, ns, buf, format_entry)
     end
 end
 
-local function open_test_buf(contents)
+local function open_test_buf(contents, alignments)
     local ns = vim.api.nvim_create_namespace("care-format-editor")
     local buf = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_buf_set_lines(buf, 0, -1, false, { string.rep(" ", 100), string.rep(" ", 100) })
@@ -146,9 +145,8 @@ local function open_test_buf(contents)
         table.insert(new_contents, 1, entry)
         table.insert(new_contents, 1, data)
         table.insert(new_contents, "return format_entry(entry, data)")
-        print(table.concat(new_contents, "\n"))
         return loadstring(table.concat(new_contents, "\n"))()
-    end)
+    end, alignments)
     vim.api.nvim_open_win(buf, true, {
         relative = "editor",
         style = "minimal",
@@ -163,6 +161,10 @@ end
 function FormatEditor.start()
     local buf = vim.api.nvim_create_buf(false, true)
     local contents = get_config_function()
+    table.insert(
+        contents,
+        'local alignments = { "' .. table.concat(require("care.config").options.ui.menu.alignments, '", "') .. '" }'
+    )
     vim.api.nvim_buf_set_lines(buf, 0, -1, false, contents)
     vim.bo[buf].ft = "lua"
     vim.api.nvim_open_win(buf, true, {
@@ -175,7 +177,25 @@ function FormatEditor.start()
         border = "rounded",
     })
     vim.keymap.set("n", "<cr>", function()
-        open_test_buf(vim.api.nvim_buf_get_lines(buf, 0, -1, false))
+        open_test_buf(
+            vim.api.nvim_buf_get_lines(buf, 0, -2, false),
+            vim.iter(
+                vim.split(
+                    vim.api.nvim_buf_get_lines(0, -2, -1, false)[1]:gsub("local alignments.*=.*{.-(.*).-}", "%1"),
+                    ","
+                )
+            )
+                :map(function(alignment)
+                    alignment = vim.trim(alignment)
+                    alignment = alignment:gsub([=[['"](.*)[%'"]]=], "%1")
+                    if not vim.tbl_contains({ "left", "right", "center" }, alignment) then
+                        vim.notify("Ignoring unknow aligment: " .. alignment)
+                        alignment = "left"
+                    end
+                    return vim.trim(alignment)
+                end)
+                :totable()
+        )
     end, { buffer = buf })
 end
 FormatEditor.start()
