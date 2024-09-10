@@ -177,14 +177,11 @@ function FormatEditor.start()
         border = "rounded",
     })
     vim.keymap.set("n", "<cr>", function()
+        local alignment_table =
+            vim.api.nvim_buf_get_lines(0, -2, -1, false)[1]:gsub("local alignments.*=.*{.-(.*).-}", "%1")
         open_test_buf(
             vim.api.nvim_buf_get_lines(buf, 0, -2, false),
-            vim.iter(
-                vim.split(
-                    vim.api.nvim_buf_get_lines(0, -2, -1, false)[1]:gsub("local alignments.*=.*{.-(.*).-}", "%1"),
-                    ","
-                )
-            )
+            vim.iter(vim.split(alignment_table, ","))
                 :map(function(alignment)
                     alignment = vim.trim(alignment)
                     alignment = alignment:gsub([=[['"](.*)[%'"]]=], "%1")
