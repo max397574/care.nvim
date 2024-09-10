@@ -1,10 +1,11 @@
 ## Running tests locally
 
-You can run tests locally,
-if you have [`luarocks`](https://luarocks.org/) or `busted` installed[^1].
+You can run tests locally, if you have [`luarocks`](https://luarocks.org/) or
+`busted` installed[^1].
 
-[^1]: The test suite assumes that `nlua` has been installed
-      using luarocks into `~/.luarocks/bin/`.
+[^1]:
+    The test suite assumes that `nlua` has been installed using luarocks into
+    `~/.luarocks/bin/`.
 
 You can then run:
 
@@ -20,23 +21,36 @@ luarocks test spec/mytest_spec.lua --local
 busted spec/mytest_spec.lua
 ```
 
-If you see a `module 'busted.runner'` not found error you need to update your `LUA_PATH`:
+If you see a `module 'busted.runner'` not found error you need to update your
+`LUA_PATH`:
 
 ```bash
 eval $(luarocks path --no-bin)
 busted --lua nlua spec/mytest_spec.lua
 ```
 
+## Documentation
+
+Documentation is mostly generated from lua-ls annotation files in the
+`lua/care/types/` folder. So these should be updated to change type
+descriptions.
+
+If there are issues with the generated docs the script to generate them under
+`scripts/docs.lua` should be modified.
+
 ## Formatting
-For formatting stylua is used.
-If you have stylua installed you can use
+
+For formatting stylua is used. If you have stylua installed you can use
+
 ```bash
 make format
 ```
 
 ## Type annotations
-For type annotations it is recommended to use lazydev.nvim.
-It can be setup with the following options:
+
+For type annotations it is recommended to use lazydev.nvim. It can be setup with
+the following options:
+
 ```lua
 {
     "folke/lazydev.nvim",
@@ -62,12 +76,14 @@ It can be setup with the following options:
 For nix users, all of these tools are made available in a dev shell.
 
 Run
+
 ```bash
 nix develop
 ```
 
-You can test-drive a minimal Neovim package with only care.nvim and its dependencies
-installed by running
+You can test-drive a minimal Neovim package with only care.nvim and its
+dependencies installed by running
+
 ```bash
 nix run .#nvim
 ```

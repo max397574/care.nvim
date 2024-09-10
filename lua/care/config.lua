@@ -11,16 +11,14 @@ config.defaults = {
             max_height = 10,
             border = "rounded",
             position = "auto",
-            format_entry = function(entry)
-                local deprecated = entry.completion_item.deprecated
-                    or vim.tbl_contains(entry.completion_item.tags or {}, 1)
+            format_entry = function(entry, data)
                 local completion_item = entry.completion_item
-                local type_icons = config.options.ui.type_icons
+                local type_icons = config.options.ui.type_icons or {}
                 -- TODO: remove since now can only be number, or also allow custom string kinds?
                 local entry_kind = type(completion_item.kind) == "string" and completion_item.kind
                     or require("care.utils.lsp").get_kind_name(completion_item.kind)
                 return {
-                    { { completion_item.label .. " ", deprecated and "Comment" or "@care.entry" } },
+                    { { completion_item.label .. " ", data.deprecated and "Comment" or "@care.entry" } },
                     {
                         {
                             " " .. (type_icons[entry_kind] or type_icons.Text) .. " ",
@@ -30,13 +28,14 @@ config.defaults = {
                 }
             end,
             scrollbar = "█",
-            alignment = {},
+            alignments = {},
         },
         docs_view = {
             max_height = 8,
             max_width = 80,
             border = "rounded",
             scrollbar = "█",
+            position = "auto",
         },
         type_icons = {
             Class = "",
@@ -78,6 +77,7 @@ config.defaults = {
     keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
     sources = {},
     preselect = true,
+    sorting_direction = "top-down",
     completion_events = { "TextChangedI" },
     enabled = function()
         local enabled = true
@@ -86,8 +86,11 @@ config.defaults = {
         end
         return enabled
     end,
+    max_view_entries = 200,
+    debug = false,
 }
 
+---@param opts care.config?
 function config.setup(opts)
     if vim.tbl_isempty(config.options) then
         config.options = vim.tbl_deep_extend("force", config.defaults, opts or {})

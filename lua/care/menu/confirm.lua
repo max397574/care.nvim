@@ -10,18 +10,18 @@ local function normalize_entry(entry)
     return entry
 end
 
+local Log = require("care.utils.log")
+
 ---@param entry care.entry
 return function(entry)
     local config = require("care.config").options
-    if _G.care_debug then
-        print("Confirming Entry")
-        print("Completion item:")
-        vim.print(entry.completion_item)
-        print("------")
-        print("Entry context:")
-        vim.print(entry.context)
-        print("------")
-    end
+    Log.log("Confirming Entry")
+    Log.log("Completion item", function()
+        local item = vim.deepcopy(entry.completion_item)
+        item.documentation = "<documentation>"
+        return item
+    end)
+    Log.log("Entry context:", entry.context)
 
     local cur_ctx = require("care.context").new()
     local unblock = require("care").core:block()
@@ -47,11 +47,7 @@ return function(entry)
     local range = config.confirm_behavior == "insert" and entry:get_insert_range() or entry:get_replace_range()
     range["end"].character = cur_ctx.cursor.col + math.max(0, range["end"].character - entry.context.cursor.col)
 
-    if _G.care_debug then
-        print(config.confirm_behavior .. " Range (before adjustments):")
-        vim.print(range)
-        print("------")
-    end
+    Log.log("Range (before adjustments), behavior: " .. config.confirm_behavior, range)
 
     -- TODO: entry.insertTextMode
     local is_snippet = completion_item.insertTextFormat == 2
@@ -71,14 +67,8 @@ return function(entry)
         completion_item.textEdit.newText = ""
     end
 
-    if _G.care_debug then
-        print("Text Edit:")
-        vim.print(completion_item.textEdit)
-        print("------")
-        print("Snippet Text:")
-        vim.print(snippet_text)
-        print("------")
-    end
+    Log.log("Text Edit", completion_item.textEdit)
+    Log.log("Snippet Text", snippet_text)
 
     vim.lsp.util.apply_text_edits({ completion_item.textEdit }, cur_ctx.bufnr, "utf-16")
 
@@ -100,10 +90,13 @@ return function(entry)
         vim.lsp.util.apply_text_edits(completion_item.additionalTextEdits, cur_ctx.bufnr, "utf-16")
     end
 
-    unblock()
-
     if completion_item.command then
         ---@diagnostic disable-next-line: param-type-mismatch
         vim.lsp.buf.execute_command(completion_item.command)
     end
+
+    if entry.source.execute then
+        entry.source:execute(entry)
+    end
+    unblock()
 end

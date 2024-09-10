@@ -60,6 +60,15 @@ function Window:open_cursor_relative(width, wanted_height, offset, config)
         row = cursor[1] - 1,
         col = offset,
     }
+    local columns_left = vim.o.columns
+        - (offset + (has_border and 2 or 0))
+        - vim.fn.getwininfo(vim.api.nvim_get_current_win())[1].textoff
+        - 1
+
+    if columns_left < width then
+        self.opened_at.col = self.opened_at.col - (width - columns_left) + 1
+    end
+
     self.winnr = vim.api.nvim_open_win(self.buf, false, {
         relative = "cursor",
         height = height,
@@ -95,7 +104,6 @@ function Window:readjust(content_len, width, offset)
             math.min(self.max_height - (win_data.has_border and 2 or 0), content_len)
         )
     end
-    self:set_scroll(0, -1)
     self:open_scrollbar_win(width, math.min(win_data.height_without_border, content_len), offset)
 end
 
@@ -113,7 +121,7 @@ function Window:scroll(delta)
     self:draw_scrollbar()
 end
 
-function Window:set_scroll(index, direction)
+function Window:set_scroll(index, direction, reversed)
     --- Scrolls to a certain line in the window
     --- This line will be at the top of the window
     ---@param line integer
@@ -126,18 +134,25 @@ function Window:set_scroll(index, direction)
     local win_data = self:get_data()
     local selected_line = index
     if selected_line == 0 then
-        scroll_to_line(1)
-        return
+        if reversed then
+            scroll_to_line(win_data.total_lines - win_data.height_without_border + 1)
+        else
+            scroll_to_line(1)
+        end
     elseif selected_line >= win_data.first_visible_line and selected_line <= win_data.last_visible_line then
+        self:draw_scrollbar()
         return
     elseif direction == 1 and selected_line > win_data.last_visible_line then
-        scroll_to_line(selected_line - win_data.visible_lines + 1)
+        scroll_to_line(selected_line - win_data.height_without_border + 1)
     elseif direction == -1 and selected_line < win_data.first_visible_line then
+        scroll_to_line(selected_line)
+    elseif direction == 1 and selected_line < win_data.first_visible_line then
         scroll_to_line(selected_line)
     elseif direction == -1 and selected_line > win_data.last_visible_line then
         -- wrap around
-        scroll_to_line(selected_line - win_data.visible_lines + 1)
+        scroll_to_line(selected_line - win_data.height_without_border + 1)
     end
+    self:draw_scrollbar()
 end
 
 function Window:get_data()
@@ -171,13 +186,15 @@ function Window:open_scrollbar_win(width, height, offset)
         pcall(vim.api.nvim_win_close, self.scrollbar.win, true)
         self.scrollbar.win = nil
     end
+    local config = vim.api.nvim_win_get_config(self.winnr)
+    local has_border = config.border and config.border ~= "none"
     local cursor = vim.api.nvim_win_get_cursor(0)
     if self.config.ui.menu.scrollbar then
         self.scrollbar.win = vim.api.nvim_open_win(self.scrollbar.buf, false, {
             height = height,
             relative = "cursor",
             col = offset + width - cursor[2],
-            row = self.position == "below" and 2 or -(height + 2) + 1,
+            row = self.position == "below" and (has_border and 2 or 1) or -(height + 2) + 1,
             width = 1,
             style = "minimal",
             border = "none",

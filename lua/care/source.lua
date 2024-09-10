@@ -12,7 +12,7 @@ function Source.new(completion_source)
 end
 
 function Source:get_keyword_pattern()
-    local keyword_pattern = require("care.config").options.keyword_pattern
+    local keyword_pattern = require("care.config").options.keyword_pattern or ""
     if self.source.keyword_pattern then
         ---@type string
         keyword_pattern = self.source.keyword_pattern
@@ -25,7 +25,7 @@ end
 
 function Source:get_offset(context)
     if not context then
-        return context.cursor.col
+        return -1
     end
     local source_offset, _ = vim.regex(self:get_keyword_pattern() .. "\\m$"):match_str(context.line_before_cursor)
 
@@ -34,17 +34,6 @@ function Source:get_offset(context)
     end
 
     return context.cursor.col
-
-    -- -- Can add $ to keyword pattern because we just match on line to cursor
-    -- local word_boundary = vim.fn.match(line_to_cursor, keyword_pattern .. "$")
-    -- print(keyword_pattern)
-    -- print("match", word_boundary)
-    -- print("regex", vim.regex(keyword_pattern .. "\\m$"):match_str(line_to_cursor))
-    -- if word_boundary == -1 then
-    --     return 0
-    -- end
-    --
-    -- return context.cursor.col - word_boundary
 end
 
 function Source:get_trigger_characters()
@@ -66,6 +55,12 @@ function Source:is_enabled()
         return self.config.enabled()
     end
     return true
+end
+
+function Source:execute(entry)
+    if self.source.execute then
+        self.source:execute(entry)
+    end
 end
 
 return Source

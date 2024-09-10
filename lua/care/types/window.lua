@@ -1,3 +1,4 @@
+--- Utility class for working with windows in care
 ---@class care.window
 --- Creates a new instance of the menu window
 ---@field new fun(): care.window
@@ -22,7 +23,7 @@
 --- Closes the window and the scrollbar window and resets fields
 ---@field close fun(self: care.window): nil
 --- Sets the scroll of the window
----@field set_scroll fun(self: care.window, index: integer, direction: integer): nil
+---@field set_scroll fun(self: care.window, index: integer, direction: integer, reversed: boolean): nil
 --- Opens a new main window
 ---@field open_cursor_relative fun(self: care.window, width: integer, wanted_height: integer, offset: integer, config: care.config.ui.docs|care.config.ui.menu): nil
 --- Draw the scrollbar for the window if needed

@@ -22,7 +22,8 @@ body:
     attributes:
       label: "care.nvim setup"
       description: |
-        - Copy your entire `require("care").setup` function
+        - Copy your entire `require("care.config").setup` function
+        - Include additonal configuration e.g. for keymappings
     validations:
       required: true
   - type: textarea
@@ -57,6 +58,10 @@ body:
       required: true
   - type: textarea
     attributes:
+      label: "Log"
+      description: "All the `care.log` content with `debug` option set to `true`"
+  - type: textarea
+    attributes:
       label: "Other information"
       description: "Other information that could be helpful with debugging."
   - type: textarea
@@ -64,7 +69,23 @@ body:
       label: "Minimal config"
       description: "Minimal config with which the issue is reproducible. Save this as `minimal_init.lua. Add plugins and configs which are necessary at indicated location."
       render: Lua
-      placeholder: |
-        -- See minimal_init.lua in repository root
+      value: |
+        vim.env.LAZY_STDPATH = ".repro"
+        load(vim.fn.system("curl -s https://raw.githubusercontent.com/folke/lazy.nvim/main/bootstrap.lua"))()
+
+        require("lazy.minit").repro({
+          spec = {
+            {
+                "max397574/care.nvim",
+                dependencies = {
+                    -- or other sources
+                    "max397574/care-lsp"
+                },
+                config = function()
+                    -- keymappings, `require"care.config".setup(...)`
+                end
+            },
+          },
+        })
     validations:
       required: true

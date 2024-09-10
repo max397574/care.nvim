@@ -19,7 +19,7 @@ end
 ---@param buf integer
 ---@param ns integer
 ---@param column integer
-local function add_extmarks(aligned_sec, realign, buf, ns, column)
+local function add_extmarks(aligned_sec, realign, buf, ns, column, entries, reversed)
     for line, aligned_chunks in ipairs(aligned_sec) do
         local realigned_chunks = {}
         for _, chunk in ipairs(aligned_chunks) do
@@ -30,14 +30,38 @@ local function add_extmarks(aligned_sec, realign, buf, ns, column)
             virt_text_pos = "overlay",
             hl_mode = "combine",
         })
+
+        local index = reversed and #entries - line + 1 or line
+        local start = string.find(
+            table.concat(vim.iter(realigned_chunks)
+                :map(function(chunk)
+                    return chunk[1]
+                end)
+                :totable()),
+            entries[index].completion_item.label:sub(1, 5),
+            nil,
+            true
+        )
+        if start then
+            for _, idx in ipairs(entries[index].matches or {}) do
+                vim.api.nvim_buf_add_highlight(
+                    buf,
+                    ns,
+                    "@care.match",
+                    line - 1,
+                    column + idx + start - 2,
+                    column + idx + start - 1
+                )
+            end
+        end
     end
 end
 
 ---@param self care.menu
 return function(self)
-    local alignment = self.config.ui.menu.alignment
+    local alignments = self.config.ui.menu.alignments or {}
     local width, entry_texts = format_utils.get_width(self.entries)
-    local aligned_table = format_utils.get_align_tables(self.entries)
+    local aligned_table = format_utils.get_align_tables(self.reversed and vim.fn.reverse(self.entries) or self.entries)
     local column = 0
     vim.api.nvim_buf_clear_namespace(self.menu_window.buf, self.ns, 0, -1)
     local spaces = {}
@@ -56,7 +80,7 @@ return function(self)
         end
     end
     for i, aligned_sec in ipairs(aligned_table) do
-        if not alignment[i] or alignment[i] == "left" then
+        if not alignments[i] or alignments[i] == "left" then
             local texts = {}
             for line, aligned_chunks in ipairs(aligned_sec) do
                 local line_text = {}
@@ -70,27 +94,36 @@ return function(self)
                     virt_text_pos = "overlay",
                     hl_mode = "combine",
                 })
+                local index = self.reversed and #self.entries - line + 1 or line
+                local start = string.find(cur_line_text, self.entries[index].completion_item.label:sub(1, 5), nil, true)
+                if start then
+                    for _, idx in ipairs(self.entries[index].matches or {}) do
+                        vim.api.nvim_buf_add_highlight(
+                            self.menu_window.buf,
+                            self.ns,
+                            "@care.match",
+                            line - 1,
+                            column + idx + start - 2,
+                            column + idx + start - 1
+                        )
+                    end
+                end
             end
             column = column + utils.longest(texts)
-        elseif alignment[i] == "right" then
+        elseif alignments[i] == "right" then
             local texts = get_texts(aligned_sec)
             local length = utils.longest(texts)
             add_extmarks(aligned_sec, function(chunk)
                 return { string.rep(" ", length - #chunk[1]) .. chunk[1], chunk[2] }
-            end, self.menu_window.buf, self.ns, column)
+            end, self.menu_window.buf, self.ns, column, self.entries, self.reversed)
             column = column + length
-        elseif alignment[i] == "center" then
+        elseif alignments[i] == "center" then
             local texts = get_texts(aligned_sec)
             local length = utils.longest(texts)
             add_extmarks(aligned_sec, function(chunk)
                 return { string.rep(" ", math.floor((length - #chunk[1]) / 2)) .. chunk[1], chunk[2] }
-            end, self.menu_window.buf, self.ns, column)
+            end, self.menu_window.buf, self.ns, column, self.entries, self.reversed)
             column = column + length
-        end
-    end
-    for line, entry in ipairs(self.entries) do
-        for _, idx in ipairs(entry.matches or {}) do
-            vim.api.nvim_buf_add_highlight(self.menu_window.buf, self.ns, "@care.match", line - 1, idx - 1, idx)
         end
     end
 end

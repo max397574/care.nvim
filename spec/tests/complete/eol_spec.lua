@@ -1,13 +1,20 @@
 local Context = require("care.context")
 local Entry = require("care.entry")
+local InternalSource = require("care.source")
 
 local function complete(completion_item, context)
     ---@diagnostic disable-next-line: missing-fields
-    local entry = Entry.new(completion_item, {
-        get_keyword_pattern = function(_)
-            return [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]]
-        end,
-    }, context)
+    local entry = Entry.new(
+        completion_item,
+        InternalSource.new({
+            name = "test",
+            complete = function() end,
+            get_keyword_pattern = function(_)
+                return [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]]
+            end,
+        }),
+        context
+    )
     require("care.menu.confirm")(entry)
 end
 
