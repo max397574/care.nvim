@@ -21,6 +21,7 @@ body:
   - type: textarea
     attributes:
       label: "care.nvim setup"
+      render: Lua
       description: |
         - Copy your entire `require("care.config").setup` function
         - Include additonal configuration e.g. for keymappings
