@@ -6,7 +6,6 @@
 
 </div>
 
-This is a simple Completion and Recommendation Engine for [Neovim](https://neovim.io).
 
 This plugin is initialized automatically, which means there is no need to call the `setup()` function.
 
