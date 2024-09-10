@@ -54,25 +54,29 @@ function Core:complete(reason, source_filter)
                     end
 
                     vim.list_extend(entries, filtered_items:totable())
-                    vim.schedule(function()
-                        if remaining == 0 then
-                            -- TODO: source priority and max entries
-                            local opened_at = offset
-                            if
-                                opened_at == self.last_opened_at
-                                and self.menu:is_open()
-                                and self.context.cursor.row == self.context.previous.cursor.row
-                            then
-                                self.menu.entries =
-                                    vim.iter(entries):take(require("care.config").options.max_view_entries):totable()
-                                self.menu:readjust_win(offset)
-                            else
-                                self.menu:open(entries, offset)
-                            end
-                            self.last_opened_at = opened_at
-                        end
-                    end)
                 end
+                vim.schedule(function()
+                    if remaining == 0 then
+                        if #entries == 0 then
+                            self.last_opened_at = -1
+                            self.menu:close()
+                            return
+                        end
+                        local opened_at = offset
+                        if
+                            opened_at == self.last_opened_at
+                            and self.menu:is_open()
+                            and self.context.cursor.row == self.context.previous.cursor.row
+                        then
+                            self.menu.entries =
+                                vim.iter(entries):take(require("care.config").options.max_view_entries):totable()
+                            self.menu:readjust_win(offset)
+                        else
+                            self.menu:open(entries, offset)
+                        end
+                        self.last_opened_at = opened_at
+                    end
+                end)
             end)
         else
             remaining = remaining - 1
