@@ -58,7 +58,11 @@ function Core:complete(reason, source_filter)
                         if remaining == 0 then
                             -- TODO: source priority and max entries
                             local opened_at = offset
-                            if opened_at == self.last_opened_at and self.menu:is_open() then
+                            if
+                                opened_at == self.last_opened_at
+                                and self.menu:is_open()
+                                and self.context.cursor.row == self.context.previous.cursor.row
+                            then
                                 self.menu.entries =
                                     vim.iter(entries):take(require("care.config").options.max_view_entries):totable()
                                 self.menu:readjust_win(offset)
@@ -109,20 +113,26 @@ function Core:filter()
         end
     end
     if #entries == 0 then
+        self.menu:close()
         return
     end
 
     self.menu.entries = vim.iter(entries):take(require("care.config").options.max_view_entries):totable()
-    self.menu:readjust_win(offset)
+    if self.context.cursor.row == self.context.previous.cursor.row then
+        self.menu:readjust_win(offset)
+    else
+        self.menu:close()
+        self.menu:open(self.menu.entries, offset)
+    end
 end
 
 function Core:setup()
     Log.log("Setting up core")
     vim.api.nvim_create_autocmd("CursorMovedI", {
         callback = function()
-            -- TODO: doesn't work with manual completion because context doesn't get updated
             vim.schedule(function()
                 if not self.completing then
+                    self.context = require("care.context").new(self.context)
                     self:filter()
                 end
                 self.completing = false
@@ -156,6 +166,9 @@ function Core:on_change()
         return
     end
     self.context = require("care.context").new(self.context)
+    if self.context.cursor.row ~= self.context.previous.cursor.row then
+        self.menu:close()
+    end
     Log.log("Context", self.context.line_before_cursor)
     if not require("care.config").options.enabled() then
         Log.log("Core: care disabled")
