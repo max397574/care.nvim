@@ -37,15 +37,13 @@ function care_sources.complete(context, source, callback)
                 triggerCharacter = last_char,
             }
         elseif not source.incomplete then
-            local keyword_pattern = source:get_keyword_pattern()
-            -- Can add $ to keyword pattern because we just match on line to cursor
-            local word_boundary = vim.fn.match(context.line_before_cursor, keyword_pattern .. "$")
-            if word_boundary == -1 then
+            local source_offset = source:get_offset(context)
+            if source_offset == -1 then
                 callback(source.entries)
                 return
             end
 
-            local prefix = context.line:sub(word_boundary + 1, context.cursor.col)
+            local prefix = context.line:sub(source_offset + 1, context.cursor.col)
 
             callback(require("care.sorter").sort(source.entries, prefix))
             return
