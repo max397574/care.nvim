@@ -32,6 +32,7 @@ function care_sources.complete(context, source, callback)
             callback(source.entries)
             return
         elseif not source.entries or #source.entries == 0 then
+            -- TODO: perhaps different trigger kind because we're manually requesting completions here?
             completion_context = {
                 triggerKind = 2,
                 triggerCharacter = last_char,
@@ -44,6 +45,14 @@ function care_sources.complete(context, source, callback)
             end
 
             local prefix = context.line:sub(source_offset + 1, context.cursor.col)
+
+            if #prefix == 0 then
+                callback(source.entries)
+                return
+            elseif prefix:match("^%s+$") then
+                callback({})
+                return
+            end
 
             callback(require("care.sorter").sort(source.entries, prefix))
             return
@@ -73,8 +82,11 @@ function care_sources.complete(context, source, callback)
             end
 
             local prefix = context.line:sub(source_offset + 1, context.cursor.col)
-            if #prefix == 0 or prefix:match("^%s+$") then
+            if #prefix == 0 then
                 callback(items, is_incomplete)
+                return
+            elseif prefix:match("^%s+$") then
+                callback({}, is_incomplete)
                 return
             end
             callback(require("care.sorter").sort(items, prefix), is_incomplete)
