@@ -77,10 +77,9 @@ body:
           spec = {
             {
                 "max397574/care.nvim",
-                dependencies = {
-                    -- or other sources
-                    "max397574/care-lsp"
-                },
+                -- dependencies = {
+                --     -- sources
+                -- },
                 config = function()
                     -- keymappings, `require"care.config".setup(...)`
                 end
