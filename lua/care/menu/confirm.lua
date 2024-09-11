@@ -59,6 +59,7 @@ return function(entry)
             newText = completion_item.insertText,
         }
     end
+    completion_item.textEdit.newText = completion_item.textEdit.newText or completion_item.insertText
 
     completion_item.textEdit.range = range
 
