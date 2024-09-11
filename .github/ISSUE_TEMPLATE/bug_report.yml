@@ -8,7 +8,7 @@ body:
     attributes:
       label: Prerequisites
       options:
-        - label: I am using the latest stable neovim version
+        - label: I am using the latest stable or nightly neovim version
           required: true
         - label: I am using the latest version of the plugin
           required: true
