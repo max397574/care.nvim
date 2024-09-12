@@ -4,6 +4,7 @@ local config = require("care.config").options
 local utils = require("care.utils")
 
 --- Gets the width a window for displaying entries must have
+---@param entries care.entry[]
 ---@return number, string[]
 function format_utils.get_width(entries)
     local formatted_concat = {}
@@ -11,6 +12,7 @@ function format_utils.get_width(entries)
         local format_data = {
             index = i,
             deprecated = entry.completion_item.deprecated or vim.tbl_contains(entry.completion_item.tags or {}, 1),
+            source = entry.source.source.display_name or entry.source.source.name,
         }
         local formatted = config.ui.menu.format_entry(entry, format_data)
         local chunk_texts = {}
@@ -25,6 +27,7 @@ function format_utils.get_width(entries)
 end
 
 --- Gets a table with one table for each aligned chunk inside
+---@param entries care.entry[]
 ---@return table
 function format_utils.get_align_tables(entries)
     local aligned_table = {}
@@ -32,6 +35,7 @@ function format_utils.get_align_tables(entries)
         local format_data = {
             index = i,
             deprecated = entry.completion_item.deprecated or vim.tbl_contains(entry.completion_item.tags or {}, 1),
+            source = entry.source.source.display_name or entry.source.source.name,
         }
         local formatted = config.ui.menu.format_entry(entry, format_data)
         for aligned_index, aligned_chunks in ipairs(formatted) do

@@ -179,3 +179,5 @@
 ---@field index integer
 --- Whether the item is marked as deprecated by the source or not
 ---@field deprecated boolean
+--- The name of the source from which the entry was completed
+---@field source string

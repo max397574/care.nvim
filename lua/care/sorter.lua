@@ -29,6 +29,7 @@ function sorter.sort(entries, prefix)
             return entries
         end
     end
+
     -- Overwrite this because of api differences in different fzy versions
     -- Some set the first index of each result to the `line` and not the index `i`
     ---@diagnostic disable-next-line: duplicate-set-field
