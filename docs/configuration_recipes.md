@@ -7,6 +7,14 @@ description: Some common configuration recipes for care.nvim
 
 Here are some useful configurations for care.
 
+## Common fields
+
+This section lists some commonly uses fields in which users might be interested.
+
+-   `data.source`: You can access the name of the source form which the entry
+    was completed with the `source` field in the
+    [additional data](/config/#source) passed to the `format_entry` function.
+
 ## Labels and shortcuts
 
 This configuration will add labels to your items and allow to select them with
