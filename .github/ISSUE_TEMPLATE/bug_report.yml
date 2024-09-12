@@ -80,12 +80,16 @@ body:
                 "max397574/care.nvim",
                 -- dependencies = {
                 --     -- sources
+                    -- -- if you have issues with luarocks
+                    -- "romgrk/fzy-lua-native"
                 -- },
                 config = function()
                     -- keymappings, `require"care.config".setup(...)`
                 end
             },
           },
+          -- if you have issues with luarocks
+          -- pkg = { sources = { nil } },
         })
     validations:
       required: true
