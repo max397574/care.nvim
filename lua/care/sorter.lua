@@ -22,7 +22,27 @@ function sorter.sort(entries, prefix)
         table.insert(filter_texts, get_filter_text(entry))
     end
 
-    local fzy = require("fzy")
+    local ok, fzy = pcall(require, "fzy")
+    if not ok then
+        ok, fzy = pcall(require, "fzy-lua-native")
+        if not ok then
+            return entries
+        end
+    end
+    -- Overwrite this because of api differences in different fzy versions
+    -- Some set the first index of each result to the `line` and not the index `i`
+    ---@diagnostic disable-next-line: duplicate-set-field
+    fzy.filter = function(needle, haystacks, case_sensitive)
+        local result = {}
+        for i, line in ipairs(haystacks) do
+            if fzy.has_match(needle, line, case_sensitive) then
+                local p, s = fzy.positions(needle, line, case_sensitive)
+                table.insert(result, { i, p, s })
+            end
+        end
+
+        return result
+    end
 
     for _, res in ipairs(fzy.filter(prefix, filter_texts)) do
         -- res is a table like `{2, {1, 5,  9}, 2.63}` {<index>, {<matches>}, <score>}
