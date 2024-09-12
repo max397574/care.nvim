@@ -403,3 +403,8 @@ Index of the entry in the completion menu
 `format_data.deprecated boolean`
 
 Whether the item is marked as deprecated by the source or not
+
+## Source
+`format_data.source string`
+
+The name of the source from which the entry was completed
