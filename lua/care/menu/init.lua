@@ -167,12 +167,13 @@ end
 
 function Menu:readjust_win(offset)
     self.index = 0
-    local width, _ = format_utils.get_width(self.entries)
+    local width = format_utils.get_width(self.entries)
     if not self.entries or #self.entries < 1 then
         self:close()
         return
     end
     self.menu_window:readjust(#self.entries, width, offset)
+    self.reversed = self.config.sorting_direction == "away-from-cursor" and self.menu_window.position == "above"
     preselect(self)
     self:select()
 end
@@ -194,7 +195,7 @@ function Menu:select(direction)
         self:draw_docs(self:get_active_entry())
     end
 
-    local width, _ = format_utils.get_width(self.entries)
+    local width = format_utils.get_width(self.entries)
     local spaces = {}
     for _ = 1, #self.entries do
         table.insert(spaces, (" "):rep(width))
@@ -204,6 +205,8 @@ function Menu:select(direction)
     self.menu_window:set_scroll(self.index, direction, self.reversed)
     self:draw()
     self.ghost_text:show(self:get_active_entry(), vim.api.nvim_get_current_win())
+    self.menu_window:draw_scrollbar()
+    self.docs_window:draw_scrollbar()
 end
 
 function Menu:select_next(count)
@@ -235,7 +238,7 @@ function Menu:open(entries, offset)
     vim.api.nvim_exec_autocmds("User", { pattern = "CareMenuOpened" })
     self.index = 0
     preselect(self)
-    local width, _ = format_utils.get_width(self.entries)
+    local width = format_utils.get_width(self.entries)
     self.menu_window:open_cursor_relative(width, #self.entries, offset, self.config.ui.menu)
     self.reversed = self.config.sorting_direction == "away-from-cursor" and self.menu_window.position == "above"
     self:select()

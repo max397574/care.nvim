@@ -27,14 +27,14 @@ config.defaults = {
                     },
                 }
             end,
-            scrollbar = { enabled = true, character = "█", offset = 0 },
+            scrollbar = { enabled = true, character = "┃", offset = 0 },
             alignments = {},
         },
         docs_view = {
             max_height = 8,
             max_width = 80,
             border = "rounded",
-            scrollbar = { enabled = true, character = "█", offset = 0 },
+            scrollbar = { enabled = true, character = "┃", offset = 0 },
             position = "auto",
         },
         type_icons = {

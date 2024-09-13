@@ -112,8 +112,8 @@
 ---@field border? string|string[]|string[][]
 --- Configuration of the scrollbar
 ---@field scrollbar? care.config.scrollbar
---- If the menu should be displayed on top, bottom or automatically
----@field position? "auto"|"bottom"|"top"
+--- If the menu should be displayed on above, below or automatically
+---@field position? "auto"|"below"|"above"
 --- Another field is `format_entry`. This is a function which recieves an entry of
 --- the completion menu and determines how it's formatted. For that a table with
 --- text-highlight chunks like `:h nvim_buf_set_extmarks()` is used. You can create

@@ -60,7 +60,7 @@ end
 ---@param self care.menu
 return function(self)
     local alignments = self.config.ui.menu.alignments or {}
-    local width, entry_texts = format_utils.get_width(self.entries)
+    local width = format_utils.get_width(self.entries)
     local aligned_table = format_utils.get_align_tables(self.reversed and vim.fn.reverse(self.entries) or self.entries)
     local column = 0
     vim.api.nvim_buf_clear_namespace(self.menu_window.buf, self.ns, 0, -1)
