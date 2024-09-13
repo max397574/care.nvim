@@ -180,4 +180,7 @@
 --- Whether the item is marked as deprecated by the source or not
 ---@field deprecated boolean
 --- The name of the source from which the entry was completed
----@field source string
+---@field source_name string
+--- The display name of the source from which the entry was completed which
+--- is more detailed than the normal name
+---@field source_display_name string
