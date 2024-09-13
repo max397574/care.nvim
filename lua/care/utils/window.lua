@@ -123,6 +123,9 @@ function Window:scroll(delta)
 end
 
 function Window:set_scroll(index, direction, reversed)
+    if self:scrollbar_is_open() then
+        vim.api.nvim_win_set_config(self.scrollbar.win, { hide = true })
+    end
     --- Scrolls to a certain line in the window
     --- This line will be at the top of the window
     ---@param line integer
@@ -190,7 +193,8 @@ function Window:open_scrollbar_win(width, height, offset)
     local config = vim.api.nvim_win_get_config(self.winnr)
     local has_border = config.border and config.border ~= "none"
     local cursor = vim.api.nvim_win_get_cursor(0)
-    if self.config.ui.menu.scrollbar then
+    -- TODO: check correct config here, can also be docs_view
+    if self.config.ui.menu.scrollbar.enabled then
         self.scrollbar.win = vim.api.nvim_open_win(self.scrollbar.buf, false, {
             height = height,
             relative = "cursor",
@@ -230,7 +234,8 @@ function Window:draw_scrollbar()
 
     for i = 1, scrollbar_height do
         vim.api.nvim_buf_set_extmark(self.scrollbar.buf, self.ns, i - 1, 0, {
-            virt_text = { { self.config.ui.menu.scrollbar, "PmenuSbar" } },
+            -- TODO: check correct config here, can also be docs_view
+            virt_text = { { self.config.ui.menu.scrollbar.character, "@care.scrollbar.thumb" } },
             virt_text_pos = "overlay",
         })
     end
@@ -242,7 +247,8 @@ function Window:draw_scrollbar()
         width = 1,
         height = scrollbar_height,
         row = menu_pos[1] + scrollbar_offset,
-        col = menu_pos[2] + vim.api.nvim_win_get_width(self.winnr),
+        -- TODO: check correct config here, can also be docs_view
+        col = menu_pos[2] + vim.api.nvim_win_get_width(self.winnr) + self.config.ui.menu.scrollbar.offset + 1,
         hide = false,
     })
 end

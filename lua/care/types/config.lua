@@ -110,8 +110,8 @@
 ---@field max_height? integer
 --- The border of the completion menu
 ---@field border? string|string[]|string[][]
---- Character used for the scrollbar
----@field scrollbar? string
+--- Configuration of the scrollbar
+---@field scrollbar? care.config.scrollbar
 --- If the menu should be displayed on top, bottom or automatically
 ---@field position? "auto"|"bottom"|"top"
 --- Another field is `format_entry`. This is a function which recieves an entry of
@@ -167,8 +167,8 @@
 ---@field max_width? integer
 --- The border of the documentation view
 ---@field border? string|string[]|string[][]
---- Character used for the scrollbar
----@field scrollbar? string
+--- Configuration of the scrollbar
+---@field scrollbar? care.config.scrollbar
 --- Position of docs view.
 --- Auto will prefer right if there is enough space
 ---@field position? "auto"|"left"|"right"
@@ -184,3 +184,11 @@
 --- The display name of the source from which the entry was completed which
 --- is more detailed than the normal name
 ---@field source_display_name string
+
+---@class care.config.scrollbar
+--- The character used for drawing the scrollbar
+---@field character? string
+--- Whether the scrollbar is enabled or not
+---@field enabled? boolean
+--- Offset of the scrollbar. 0 is at the border of the window
+---@field offset? integer
