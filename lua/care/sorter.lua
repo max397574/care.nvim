@@ -52,18 +52,6 @@ function sorter.sort(entries, prefix)
             + (entries[res[1]].source.config.priority and (entries[res[1]].source.config.priority * 10) or 0)
         entries[res[1]].matches = res[2]
     end
-    entries = vim.iter(entries)
-        :map(function(entry)
-            if not entry.score then
-                entry.score = 0
-            end
-            return entry
-        end)
-        :totable()
-
-    table.sort(entries, function(a0, a1)
-        return a0.score > a1.score
-    end)
 
     return entries
 end
