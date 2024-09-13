@@ -18,20 +18,27 @@ end
 
 --- Gets the width a window for displaying entries must have
 ---@param entries care.entry[]
----@return number, string[]
+---@return number
 function format_utils.get_width(entries)
-    local formatted_concat = {}
+    local columns = {}
     for i, entry in ipairs(entries) do
         local formatted = config.ui.menu.format_entry(entry, get_format_data(entry, i))
-        local chunk_texts = {}
-        for _, aligned in ipairs(formatted) do
+        for j, aligned in ipairs(formatted) do
+            local chunk_texts = {}
             for _, chunk in ipairs(aligned) do
                 table.insert(chunk_texts, chunk[1])
             end
+            if not columns[j] then
+                columns[j] = {}
+            end
+            table.insert(columns[j], table.concat(chunk_texts, ""))
         end
-        table.insert(formatted_concat, table.concat(chunk_texts, ""))
     end
-    return utils.longest(formatted_concat), formatted_concat
+    local width = 0
+    vim.iter(columns):each(function(column)
+        width = width + utils.longest(column)
+    end)
+    return width
 end
 
 --- Gets a table with one table for each aligned chunk inside
