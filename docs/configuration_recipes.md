@@ -11,9 +11,12 @@ Here are some useful configurations for care.
 
 This section lists some commonly uses fields in which users might be interested.
 
--   `data.source`: You can access the name of the source form which the entry
-    was completed with the `source` field in the
-    [additional data](/config/#source) passed to the `format_entry` function.
+### Source name
+
+You can access the name of the source form which the entry was completed with
+the `source_name` or the `source_display_name` field in the additional data
+passed to the `format_entry` function. The display name will often be
+significantly longer so it's recommended to use `source_name`.
 
 ## Labels and shortcuts
 

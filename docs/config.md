@@ -404,7 +404,13 @@ Index of the entry in the completion menu
 
 Whether the item is marked as deprecated by the source or not
 
-## Source
-`format_data.source string`
+## Source Name
+`format_data.source_name string`
 
 The name of the source from which the entry was completed
+
+## Source Display Name
+`format_data.source_display_name string`
+
+The display name of the source from which the entry was completed which
+is more detailed than the normal name
