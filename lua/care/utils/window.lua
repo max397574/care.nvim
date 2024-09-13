@@ -56,6 +56,7 @@ function Window:open_cursor_relative(width, wanted_height, offset, config)
     self.max_height = position == "below" and space_below or space_above
     self.max_height = math.min(self.max_height, config.max_height)
     self.position = position
+
     self.opened_at = {
         row = cursor[1] - 1,
         col = offset,
@@ -70,14 +71,14 @@ function Window:open_cursor_relative(width, wanted_height, offset, config)
     end
 
     self.winnr = vim.api.nvim_open_win(self.buf, false, {
-        relative = "cursor",
+        relative = "editor",
         height = height,
         width = width,
         anchor = position == "below" and "NW" or "SW",
         style = "minimal",
         border = border,
-        row = position == "below" and 1 or 0,
-        col = offset - cursor[2],
+        row = screenpos.row + (position == "below" and 0 or -1),
+        col = screenpos.col - cursor[2] + offset - 1,
         zindex = 1000,
     })
     vim.wo[self.winnr][0].scrolloff = 0
@@ -198,6 +199,7 @@ function Window:open_scrollbar_win(width, height, offset)
             width = 1,
             style = "minimal",
             border = "none",
+            hide = true,
             zindex = 2000,
         })
     end
@@ -214,28 +216,35 @@ function Window:draw_scrollbar()
     if win_data.visible_lines >= win_data.total_lines then
         return
     end
-    local scrollbar_height = math.max(
-        math.min(
-            math.floor(win_data.visible_lines * (win_data.visible_lines / win_data.total_lines) + 0.5),
-            win_data.visible_lines
-        ),
-        1
-    )
-    vim.api.nvim_buf_set_lines(
-        self.scrollbar.buf,
-        0,
-        -1,
-        false,
-        vim.split(string.rep(" ", win_data.visible_lines + 1), "")
-    )
-    local scrollbar_offset =
-        math.max(math.floor(win_data.visible_lines * (win_data.first_visible_line / win_data.total_lines)), 1)
-    for i = scrollbar_offset, scrollbar_offset + scrollbar_height do
+
+    local view = vim.api.nvim_win_call(self.winnr, vim.fn.winsaveview)
+
+    local scrollbar_height = math.floor(win_data.visible_lines * win_data.visible_lines / win_data.total_lines + 0.5)
+    scrollbar_height = math.max(1, scrollbar_height)
+
+    local pct = math.min(view.topline / (win_data.total_lines - win_data.visible_lines + 1), 1)
+
+    local scrollbar_offset = math.floor(pct * (win_data.visible_lines - scrollbar_height) + 0.5) + 1
+
+    vim.api.nvim_buf_set_lines(self.scrollbar.buf, 0, -1, false, vim.split(string.rep(" ", scrollbar_height), ""))
+
+    for i = 1, scrollbar_height do
         vim.api.nvim_buf_set_extmark(self.scrollbar.buf, self.ns, i - 1, 0, {
             virt_text = { { self.config.ui.menu.scrollbar, "PmenuSbar" } },
             virt_text_pos = "overlay",
         })
     end
+
+    local menu_pos = vim.api.nvim_win_get_position(self.winnr)
+
+    vim.api.nvim_win_set_config(self.scrollbar.win, {
+        relative = "editor",
+        width = 1,
+        height = scrollbar_height,
+        row = menu_pos[1] + scrollbar_offset,
+        col = menu_pos[2] + vim.api.nvim_win_get_width(self.winnr),
+        hide = false,
+    })
 end
 
 function Window:is_open()
