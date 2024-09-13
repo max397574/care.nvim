@@ -4,10 +4,10 @@ local utils = {}
 ---@param lines table<string>
 ---@return number
 function utils.longest(lines)
-    local longest = #(lines[1] or "")
+    local longest = vim.fn.strdisplaywidth(lines[1] or "")
     for _, line in ipairs(lines) do
-        if #line > longest then
-            longest = #line
+        if vim.fn.strdisplaywidth(line) > longest then
+            longest = vim.fn.strdisplaywidth(line)
         end
     end
     return longest
