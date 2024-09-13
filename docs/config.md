@@ -32,14 +32,14 @@ config.defaults = {
                     },
                 }
             end,
-            scrollbar = "█",
+            scrollbar = { enabled = true, character = "█", offset = 0 },
             alignments = {},
         },
         docs_view = {
             max_height = 8,
             max_width = 80,
             border = "rounded",
-            scrollbar = "█",
+            scrollbar = { enabled = true, character = "█", offset = 0 },
             position = "auto",
         },
         type_icons = {
@@ -315,9 +315,9 @@ Maximum height of the menu
 The border of the completion menu
 
 ## Scrollbar
-`config.ui.menu.scrollbar? string`
+`config.ui.menu.scrollbar? care.config.scrollbar`
 
-Character used for the scrollbar
+Configuration of the scrollbar
 
 ## Position
 `config.ui.menu.position? "auto"|"bottom"|"top"`
@@ -379,9 +379,9 @@ Maximum width of the documentation view
 The border of the documentation view
 
 ## Scrollbar
-`config.ui.docs.scrollbar? string`
+`config.ui.docs.scrollbar? care.config.scrollbar`
 
-Character used for the scrollbar
+Configuration of the scrollbar
 
 ## Position
 `config.ui.docs.position? "auto"|"left"|"right"`
@@ -414,3 +414,23 @@ The name of the source from which the entry was completed
 
 The display name of the source from which the entry was completed which
 is more detailed than the normal name
+
+
+# `care.config.scrollbar`
+
+# Fields
+
+## Character
+`config.scrollbar.character? string`
+
+The character used for drawing the scrollbar
+
+## Enabled
+`config.scrollbar.enabled? boolean`
+
+Whether the scrollbar is enabled or not
+
+## Offset
+`config.scrollbar.offset? integer`
+
+Offset of the scrollbar. 0 is at the border of the window
