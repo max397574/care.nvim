@@ -25,6 +25,7 @@ function Menu:close()
     self.docs_window:close()
     self.ghost_text:hide()
     self.reversed = false
+    self.index = 0
     vim.cmd.redraw({ bang = true })
     vim.api.nvim_exec_autocmds("User", { pattern = "CareMenuClosed" })
     local sources = require("care.sources").get_sources()
