@@ -62,6 +62,19 @@ function Core:complete(reason, source_filter)
                             self.menu:close()
                             return
                         end
+
+                        table.sort(entries, function(a0, a1)
+                            if not (a0.score and a1.score) then
+                                return true
+                            end
+                            if not a0.score then
+                                return false
+                            elseif not a1.score then
+                                return true
+                            end
+                            return a0.score > a1.score
+                        end)
+
                         local opened_at = offset
                         if
                             opened_at == self.last_opened_at
