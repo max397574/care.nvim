@@ -84,4 +84,4 @@ completion menu with `@care.match`.
 `entry.score number`
 
 This is the score obtained from filtering. It is used to sort which happens in the
-`care.sorter` module.
+`care.matcher` module.
