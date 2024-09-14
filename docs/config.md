@@ -32,14 +32,14 @@ config.defaults = {
                     },
                 }
             end,
-            scrollbar = { enabled = true, character = "█", offset = 0 },
+            scrollbar = { enabled = true, character = "┃", offset = 0 },
             alignments = {},
         },
         docs_view = {
             max_height = 8,
             max_width = 80,
             border = "rounded",
-            scrollbar = { enabled = true, character = "█", offset = 0 },
+            scrollbar = { enabled = true, character = "┃", offset = 0 },
             position = "auto",
         },
         type_icons = {
@@ -320,9 +320,9 @@ The border of the completion menu
 Configuration of the scrollbar
 
 ## Position
-`config.ui.menu.position? "auto"|"bottom"|"top"`
+`config.ui.menu.position? "auto"|"below"|"above"`
 
-If the menu should be displayed on top, bottom or automatically
+If the menu should be displayed on above, below or automatically
 
 ## Alignments
 `config.ui.menu.alignments? ("left"|"center"|"right")[]`
