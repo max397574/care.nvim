@@ -53,6 +53,15 @@ function sorter.sort(entries, prefix)
         entries[res[1]].matches = res[2]
     end
 
+    entries = vim.iter(entries)
+        :map(function(entry)
+            if not entry.score then
+                entry.score = 0
+            end
+            return entry
+        end)
+        :totable()
+
     return entries
 end
 
