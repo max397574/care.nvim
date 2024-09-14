@@ -54,7 +54,7 @@ function care_sources.complete(context, source, callback)
                 return
             end
 
-            callback(require("care.sorter").sort(source.entries, prefix))
+            callback(require("care.matcher").match(source.entries, prefix))
             return
         end
     else
@@ -89,7 +89,7 @@ function care_sources.complete(context, source, callback)
                 callback({}, is_incomplete)
                 return
             end
-            callback(require("care.sorter").sort(items, prefix), is_incomplete)
+            callback(require("care.matcher").match(items, prefix), is_incomplete)
         end
     )
 end

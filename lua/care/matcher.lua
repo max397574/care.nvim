@@ -1,12 +1,12 @@
---- Used for filtering and sorting entries. This uses fzy-lua under the hood.
-local sorter = {}
+--- Used for filtering and matching entries. This uses fzy-lua under the hood.
+local Matcher = {}
 
---- Filters and sorts entries by a prefix using fzy algorithm
+--- Filters and matches entries by a prefix using fzy algorithm
 --- Sets `score` and `matches` field of remaining entries
 ---@param entries care.entry[]
 ---@param prefix string
 ---@return care.entry[]
-function sorter.sort(entries, prefix)
+function Matcher.match(entries, prefix)
     ---@param entry care.entry
     local function get_filter_text(entry)
         -- TODO: makes more sense like this because label is what user sees?
@@ -65,4 +65,4 @@ function sorter.sort(entries, prefix)
     return entries
 end
 
-return sorter
+return Matcher

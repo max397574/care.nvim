@@ -106,7 +106,7 @@ function Core:filter()
             end
 
             local prefix = context.line_before_cursor:sub(source_offset + 1)
-            local items = require("care.sorter").sort(source.entries, prefix)
+            local items = require("care.matcher").match(source.entries, prefix)
             require("care.sources").sources[i].entries = items
             local filtered_items = vim.iter(items):filter(function(entry)
                 return not entry.score or entry.score > 0

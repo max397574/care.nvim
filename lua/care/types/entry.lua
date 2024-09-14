@@ -22,7 +22,7 @@
 --- completion menu with `@care.match`.
 ---@field matches integer[]
 --- This is the score obtained from filtering. It is used to sort which happens in the
---- `care.sorter` module.
+--- `care.matcher` module.
 ---@field score number
 --- Essentially where entry insertion should happen (column, 0-based)
 ---@field get_offset fun(self: care.entry): integer
