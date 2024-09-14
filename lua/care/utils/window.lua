@@ -119,7 +119,6 @@ function Window:scroll(delta)
             vim.fn.winrestview({ topline = self.current_scroll, lnum = self.current_scroll })
         end)
     end)
-    self:draw_scrollbar()
 end
 
 function Window:set_scroll(index, direction, reversed)
@@ -144,7 +143,6 @@ function Window:set_scroll(index, direction, reversed)
             scroll_to_line(1)
         end
     elseif selected_line >= win_data.first_visible_line and selected_line <= win_data.last_visible_line then
-        self:draw_scrollbar()
         return
     elseif direction == 1 and selected_line > win_data.last_visible_line then
         scroll_to_line(selected_line - win_data.height_without_border + 1)
@@ -156,7 +154,6 @@ function Window:set_scroll(index, direction, reversed)
         -- wrap around
         scroll_to_line(selected_line - win_data.height_without_border + 1)
     end
-    self:draw_scrollbar()
 end
 
 function Window:get_data()
@@ -207,7 +204,6 @@ function Window:open_scrollbar_win(width, height, offset)
             zindex = 2000,
         })
     end
-    self:draw_scrollbar()
 end
 
 function Window:draw_scrollbar()
