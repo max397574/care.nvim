@@ -19,11 +19,20 @@ config.defaults = {
             format_entry = function(entry, data)
                 local completion_item = entry.completion_item
                 local type_icons = config.options.ui.type_icons or {}
+                local color = require("care.presets.utils").GetColor(entry)
                 -- TODO: remove since now can only be number, or also allow custom string kinds?
                 local entry_kind = type(completion_item.kind) == "string" and completion_item.kind
                     or require("care.utils.lsp").get_kind_name(completion_item.kind)
                 return {
-                    { { completion_item.label .. " ", data.deprecated and "Comment" or "@care.entry" } },
+                    {
+                        { completion_item.label .. " ", data.deprecated and "Comment" or "@care.entry" },
+                        color
+                                and {
+                                    " ",
+                                    require("care.presets.utils").GetHighlightForHex(color) or "@care.entry",
+                                }
+                            or nil,
+                    },
                     {
                         {
                             " " .. (type_icons[entry_kind] or type_icons.Text) .. " ",
@@ -43,31 +52,32 @@ config.defaults = {
             position = "auto",
         },
         type_icons = {
-            Class = "",
-            Color = "",
-            Constant = "",
-            Constructor = "",
-            Enum = "",
+            Class = "󰠱",
+            Color = "󰏘",
+            Constant = "󰏿",
+            Constructor = "",
+            Enum = "",
             EnumMember = "",
             Event = "",
             Field = "󰜢",
-            File = "",
-            Folder = "",
-            Function = "",
+            File = "󰈚",
+            Folder = "󰉋",
+            Function = "󰆧",
             Interface = "",
-            Keyword = "",
-            Method = "ƒ",
+            Keyword = "󰌋",
+            Method = "󰆧",
             Module = "",
+            Namespace = "󰌗",
             Operator = "󰆕",
-            Property = "",
-            Reference = "",
+            Property = "󰜢",
+            Reference = "󰈇",
             Snippet = "",
-            Struct = "",
-            Text = "",
-            TypeParameter = "",
+            Struct = "󰙅",
+            Text = "󰉿",
+            TypeParameter = "󰊄",
             Unit = "󰑭",
             Value = "󰎠",
-            Variable = "󰫧",
+            Variable = "󰀫",
         },
         ghost_text = {
             enabled = true,
