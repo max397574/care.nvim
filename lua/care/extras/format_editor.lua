@@ -6,6 +6,12 @@ local function get_config_function()
         :skip(info.linedefined - 1)
         :take(info.lastlinedefined - info.linedefined + 1)
         :totable()
+    lines = vim.iter(lines)
+        :map(function(line)
+            local new = line:gsub("config%.options", 'require("care.config").options')
+            return new
+        end)
+        :totable()
     local min_spaces = 10000
     local new_contents = {}
     for _, line in ipairs(lines) do
@@ -50,18 +56,25 @@ function FormatEditor.draw(entries, ns, buf, format_entry, alignments)
     local utils = require("care.utils")
 
     local function get_width()
-        local formatted_concat = {}
+        local columns = {}
         for _, entry in ipairs(entries) do
             local formatted = format_entry(entry.entry, entry.data)
-            local chunk_texts = {}
-            for _, aligned in ipairs(formatted) do
+            for j, aligned in ipairs(formatted) do
+                local chunk_texts = {}
                 for _, chunk in ipairs(aligned) do
                     table.insert(chunk_texts, chunk[1])
                 end
+                if not columns[j] then
+                    columns[j] = {}
+                end
+                table.insert(columns[j], table.concat(chunk_texts, ""))
             end
-            table.insert(formatted_concat, table.concat(chunk_texts, ""))
         end
-        return utils.longest(formatted_concat), formatted_concat
+        local width = 0
+        vim.iter(columns):each(function(column)
+            width = width + utils.longest(column)
+        end)
+        return width
     end
 
     local function get_align_tables()
@@ -78,7 +91,7 @@ function FormatEditor.draw(entries, ns, buf, format_entry, alignments)
         return aligned_table
     end
 
-    local width, _ = get_width()
+    local width = get_width()
     local aligned_table = get_align_tables()
     local column = 0
     vim.api.nvim_buf_clear_namespace(buf, ns, 0, -1)
@@ -133,13 +146,22 @@ local function open_test_buf(contents, alignments)
     local entries = {
         {
             entry = [[local entry = { completion_item = { label = "Test", kind = 1, }, }]],
-            data = [[local data = { index = 1, deprecated = true }]],
+            data = [[local data = { index = 1, deprecated = true, source_name="Test" }]],
         },
         {
             entry = [[local entry = { completion_item = { label = "nvim_exec_lua()", kind = 7, }, }]],
-            data = [[local data = { index = 1, deprecated = false }]],
+            data = [[local data = { index = 1, deprecated = true, source_name="Test" }]],
         },
     }
+    local add_all_kinds = true
+    if add_all_kinds then
+        for i = 1, 25 do
+            table.insert(entries, {
+                entry = [[local entry = { completion_item = { label = "Test", kind = ]] .. i .. [[, }, }]],
+                data = [[local data = { index = 1, deprecated = false, source_name="Test" }]],
+            })
+        end
+    end
     FormatEditor.draw(entries, ns, buf, function(entry, data)
         local new_contents = vim.deepcopy(contents)
         table.insert(new_contents, 1, entry)
@@ -151,7 +173,7 @@ local function open_test_buf(contents, alignments)
         relative = "editor",
         style = "minimal",
         width = #vim.api.nvim_buf_get_lines(buf, 0, -1, false)[1],
-        height = 5,
+        height = math.min(#entries + 2, 40),
         row = 15,
         col = 100,
         border = "rounded",
