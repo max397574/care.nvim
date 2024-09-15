@@ -47,7 +47,7 @@ function Window:open_cursor_relative(width, wanted_height, offset, config)
     elseif config_position == "below" then
         position = "below"
         height = math.min(wanted_height, space_below - border_space)
-    elseif config_position == "top" then
+    elseif config_position == "above" then
         position = "above"
         height = math.min(wanted_height, space_above - border_space)
     end
