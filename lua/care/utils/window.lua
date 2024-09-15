@@ -29,8 +29,12 @@ function Window:open_cursor_relative(width, wanted_height, offset, config)
 
     local cursor = vim.api.nvim_win_get_cursor(0)
     local screenpos = vim.fn.screenpos(0, cursor[1], cursor[2] + 1)
+
+    local row = screenpos.row
+    local col = screenpos.col - cursor[2] + offset - 1
+
     local space_below = vim.o.lines - screenpos.row - vim.o.cmdheight - 1
-    local space_above = vim.fn.line(".") - vim.fn.line("w0")
+    local space_above = screenpos.row
 
     local needed_space = math.min(needed_height, self.config.ui.menu.max_height)
     local position = "below"
@@ -77,8 +81,8 @@ function Window:open_cursor_relative(width, wanted_height, offset, config)
         anchor = position == "below" and "NW" or "SW",
         style = "minimal",
         border = config.border,
-        row = screenpos.row - (position == "below" and 0 or 1),
-        col = screenpos.col - cursor[2] + offset - 1,
+        row = row - (position == "below" and 0 or 1),
+        col = col,
         zindex = 1000,
     })
     vim.wo[self.winnr][0].scrolloff = 0
