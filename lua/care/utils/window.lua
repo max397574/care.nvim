@@ -36,9 +36,9 @@ function Window:open_cursor_relative(width, wanted_height, offset, config)
     local space_below = vim.o.lines - screenpos.row - vim.o.cmdheight - 1
     local space_above = screenpos.row - 1
 
-    local needed_space = math.min(needed_height, self.config.ui.menu.max_height)
+    local needed_space = math.min(needed_height, config.max_height)
     local position = "below"
-    local config_position = self.config.ui.menu.position
+    local config_position = config.position
     local height
     if config_position == "auto" then
         if space_below < needed_space then
@@ -65,13 +65,11 @@ function Window:open_cursor_relative(width, wanted_height, offset, config)
         col = offset,
     }
 
-    local columns_left = vim.o.columns
-        - (offset + border_space)
-        - vim.fn.getwininfo(vim.api.nvim_get_current_win())[1].textoff
-        - 1
+    local columns_left = vim.o.columns - col
 
     if columns_left < width then
         self.opened_at.col = self.opened_at.col - (width - columns_left) + 1
+        col = vim.o.columns - width - 2
     end
 
     self.winnr = vim.api.nvim_open_win(self.buf, false, {

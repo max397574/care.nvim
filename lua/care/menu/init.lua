@@ -111,21 +111,21 @@ function Menu:draw_docs(entry)
         end
         width = math.min(width, require("care.utils").longest(contents) + (has_border and 2 or 0))
 
+        local win_offset
         if position == "right" then
-            self.docs_window:open_cursor_relative(
-                width,
-                math.min(height, self.menu_window.max_height),
-                offset + (menu_has_border and 2 or 0),
-                self.config.ui.docs_view
-            )
+            win_offset = offset + (menu_has_border and 2 or 0)
         else
-            self.docs_window:open_cursor_relative(
-                width,
-                math.min(height, self.menu_window.max_height),
-                self.menu_window.opened_at.col - width - 2,
-                self.config.ui.docs_view
-            )
+            win_offset = self.menu_window.opened_at.col - width - 2
         end
+
+        local docs_view_conf = self.config.ui.docs_view or {}
+
+        self.docs_window:open_cursor_relative(width, math.min(height, self.menu_window.max_height), win_offset, {
+            border = docs_view_conf.border,
+            position = self.menu_window.position,
+            max_height = docs_view_conf.max_height,
+        })
+
         self.docs_window:set_scroll(1, 1, false)
         self.docs_window:draw_scrollbar()
 
