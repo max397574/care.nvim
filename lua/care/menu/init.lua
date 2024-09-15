@@ -42,7 +42,7 @@ function Menu:draw_docs(entry)
         return
     end
 
-    local function open_docs_window(doc_entry, offset)
+    local function open_docs_window(doc_entry)
         local config = self.config.ui.docs_view or {}
         if not doc_entry.completion_item.documentation then
             return
@@ -63,9 +63,8 @@ function Menu:draw_docs(entry)
         local TODO = 100000
         local right_width = math.min(
             vim.o.columns
-                - (offset + (menu_has_border and 2 or 0))
-                - vim.fn.getwininfo(vim.api.nvim_get_current_win())[1].textoff
-                - 2,
+                - (self.menu_window.opened_at.col + 1 + vim.api.nvim_win_get_width(self.menu_window.winnr) + (menu_has_border and 2 or 0))
+                - 1,
             config.max_width
         )
         local left_width = self.menu_window.opened_at.col
@@ -113,10 +112,13 @@ function Menu:draw_docs(entry)
 
         local win_offset
         if position == "right" then
-            win_offset = offset + (menu_has_border and 2 or 0)
+            win_offset = self.menu_window.opened_at.col
+                + vim.api.nvim_win_get_width(self.menu_window.winnr)
+                + (menu_has_border and 2 or 0)
         else
             win_offset = self.menu_window.opened_at.col - width - 2
         end
+        -- vim.fn.screenpos(0,0,vim.api.nvim_win_get_cursor(0)[2]).col
 
         local docs_view_conf = self.config.ui.docs_view or {}
 
@@ -140,16 +142,10 @@ function Menu:draw_docs(entry)
             if not self.menu_window:is_open() then
                 return
             end
-            open_docs_window(entry, self.menu_window.opened_at.col + vim.api.nvim_win_get_width(self.menu_window.winnr))
+            open_docs_window(entry)
         end)
     else
-        open_docs_window(
-            entry,
-            self.menu_window.opened_at.col
-                + vim.api.nvim_win_get_width(self.menu_window.winnr)
-                - (vim.api.nvim_win_get_cursor(0)[2] - 1)
-                + 1
-        )
+        open_docs_window(entry)
     end
 end
 
@@ -187,6 +183,7 @@ function Menu:scroll_docs(delta)
         return
     end
     self.docs_window:scroll(delta)
+    self.docs_window:draw_scrollbar()
 end
 
 function Menu:select(direction)
@@ -239,7 +236,13 @@ function Menu:open(entries, offset)
     self.index = 0
     preselect(self)
     local width = format_utils.get_width(self.entries)
-    self.menu_window:open_cursor_relative(width, #self.entries, offset, self.config.ui.menu)
+    -- local win_offset = vim.fn.screenpos(0, 0, offset + 1).col
+    local win_offset = vim.fn.getwininfo(vim.api.nvim_get_current_win())[1].wincol
+        + vim.fn.getwininfo(vim.api.nvim_get_current_win())[1].textoff
+        + offset
+        - 1
+
+    self.menu_window:open_cursor_relative(width, #self.entries, win_offset, self.config.ui.menu)
     self.reversed = self.config.sorting_direction == "away-from-cursor" and self.menu_window.position == "above"
     self:select()
 end

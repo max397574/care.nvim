@@ -31,7 +31,7 @@ function Window:open_cursor_relative(width, wanted_height, offset, config)
     local screenpos = vim.fn.screenpos(0, cursor[1], cursor[2] + 1)
 
     local row = screenpos.row
-    local col = screenpos.col - cursor[2] + offset - 1
+    local col = offset
 
     local space_below = vim.o.lines - screenpos.row - vim.o.cmdheight - 1
     local space_above = screenpos.row - 1
@@ -60,17 +60,16 @@ function Window:open_cursor_relative(width, wanted_height, offset, config)
     self.max_height = math.min(self.max_height, config.max_height)
     self.position = position
 
-    self.opened_at = {
-        row = cursor[1] - 1,
-        col = offset,
-    }
-
     local columns_left = vim.o.columns - col
 
     if columns_left < width then
-        self.opened_at.col = self.opened_at.col - (width - columns_left) + 1
         col = vim.o.columns - width - 2
     end
+
+    self.opened_at = {
+        row = row,
+        col = col,
+    }
 
     self.winnr = vim.api.nvim_open_win(self.buf, false, {
         relative = "editor",
@@ -185,19 +184,18 @@ function Window:close()
     self.position = nil
 end
 
-function Window:open_scrollbar_win(width, height, offset)
+function Window:open_scrollbar_win(width, height)
     if self.scrollbar.win then
         pcall(vim.api.nvim_win_close, self.scrollbar.win, true)
         self.scrollbar.win = nil
     end
-    local cursor = vim.api.nvim_win_get_cursor(0)
     local menu_pos = vim.api.nvim_win_get_position(self.winnr)
     -- TODO: check correct config here, can also be docs_view
     if self.config.ui.menu.scrollbar.enabled then
         self.scrollbar.win = vim.api.nvim_open_win(self.scrollbar.buf, false, {
             height = height,
             relative = "cursor",
-            col = offset + width - cursor[2],
+            col = self.opened_at.col + width,
             row = menu_pos[1],
             width = 1,
             style = "minimal",
@@ -239,23 +237,20 @@ function Window:draw_scrollbar()
         })
     end
 
-    local cursor = vim.api.nvim_win_get_cursor(0)
-    local screenpos = vim.fn.screenpos(0, cursor[1], cursor[2] + 1)
     local menu_pos_NE = {
-        screenpos.row
+        self.opened_at.row
             - (self.position == "below" and 0 or 1)
             - (self.position == "above" and win_data.height_with_border or 0),
-        screenpos.col - cursor[2] + self.opened_at.col - 1,
+        self.opened_at.col + win_data.width_with_border - 2,
     }
 
     vim.api.nvim_win_set_config(self.scrollbar.win, {
         relative = "editor",
         width = 1,
         height = scrollbar_height,
-        -- row = menu_pos[1] + scrollbar_offset - (self.position == "above" and win_data.height_with_border or 0),
         row = menu_pos_NE[1] + scrollbar_offset + (win_data.has_border and 1 or 0),
         -- TODO: check correct config here, can also be docs_view
-        col = menu_pos_NE[2] + vim.api.nvim_win_get_width(self.winnr) + self.config.ui.menu.scrollbar.offset + 1,
+        col = menu_pos_NE[2] + self.config.ui.menu.scrollbar.offset + 1,
         hide = false,
     })
 end
