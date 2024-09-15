@@ -34,7 +34,7 @@ function Window:open_cursor_relative(width, wanted_height, offset, config)
     local col = screenpos.col - cursor[2] + offset - 1
 
     local space_below = vim.o.lines - screenpos.row - vim.o.cmdheight - 1
-    local space_above = screenpos.row
+    local space_above = screenpos.row - 1
 
     local needed_space = math.min(needed_height, self.config.ui.menu.max_height)
     local position = "below"
