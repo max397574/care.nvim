@@ -19,7 +19,12 @@ function Health.check_format(format_function)
                     display_name = "test name",
                 },
             },
-        }, { index = 3 })
+        }, {
+            index = 3,
+            deprecated = false,
+            source_name = "test",
+            -- source_display_name = "test 2",
+        })
         if type(formatted) ~= "table" then
             table.insert(errors, "Format entry doesn't return a table")
             format_entry_is_correct = false
