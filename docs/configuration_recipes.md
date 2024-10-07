@@ -145,3 +145,21 @@ vim.keymap.set("i", "<c-p>", function()
     end
 end)
 ```
+
+## Use with nvim-autopairs
+
+```lua
+"windwp/nvim-autopairs",
+lazy = false,
+config = function()
+    local npairs = require("nvim-autopairs")
+    npairs.setup({ map_cr = false })
+    vim.keymap.set("i", "<cr>", function()
+        if require("care").api.is_open() then
+            require("care").api.confirm()
+        else
+            vim.fn.feedkeys(require("nvim-autopairs").autopairs_cr(), "in")
+        end
+    end)
+end,
+```
