@@ -55,8 +55,8 @@ function Core:complete(reason, source_filter)
 
                     vim.list_extend(entries, filtered_items:totable())
                 end
-                vim.schedule(function()
-                    if remaining == 0 then
+                if remaining == 0 then
+                    vim.schedule(function()
                         if #entries == 0 then
                             self.last_opened_at = -1
                             self.menu:close()
@@ -80,8 +80,8 @@ function Core:complete(reason, source_filter)
                             self.menu:open(entries, offset)
                         end
                         self.last_opened_at = opened_at
-                    end
-                end)
+                    end)
+                end
             end)
         else
             remaining = remaining - 1
