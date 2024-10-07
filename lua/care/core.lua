@@ -63,6 +63,10 @@ function Core:complete(reason, source_filter)
                             return
                         end
 
+                        if vim.api.nvim_get_mode().mode ~= "i" then
+                            return
+                        end
+
                         table.sort(entries, function(a0, a1)
                             return (a0.score or 0) > (a1.score or 0)
                         end)
