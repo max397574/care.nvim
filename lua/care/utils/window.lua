@@ -83,6 +83,7 @@ function Window:open_cursor_relative(width, wanted_height, offset, config)
         zindex = 1000,
     })
     vim.wo[self.winnr][0].scrolloff = 0
+    vim.wo[self.winnr][0].winhighlight = "Normal:@care.menu,FloatBorder:@care.border"
     self:open_scrollbar_win(width, height, offset)
 end
 
