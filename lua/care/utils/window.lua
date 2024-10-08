@@ -115,10 +115,9 @@ function Window:scroll(delta)
     self.current_scroll = self.current_scroll + delta
     local win_data = self:get_data()
     self.current_scroll = math.max(self.current_scroll, 2)
-    self.current_scroll = math.min(self.current_scroll, win_data.total_lines - win_data.height_without_border + 1)
+    self.current_scroll = math.min(self.current_scroll, win_data.total_lines - win_data.height_without_border + 2)
 
     vim.api.nvim_win_call(self.winnr, function()
-        vim.fn.winrestview({ topline = self.current_scroll, lnum = self.current_scroll })
         vim.cmd("normal! gg0")
         vim.cmd("normal! " .. vim.keycode(string.rep("<c-e>", (self.current_scroll - 1))))
     end)
@@ -251,7 +250,8 @@ function Window:draw_scrollbar()
     local menu_pos_NE = {
         self.opened_at.row
             - (self.position == "below" and 0 or 1)
-            - (self.position == "above" and win_data.height_with_border or 0),
+            - (self.position == "above" and win_data.height_with_border or 0)
+            - (win_data.has_border and 1 or 0),
         self.opened_at.col + win_data.width_with_border - 2,
     }
 
