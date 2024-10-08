@@ -4,18 +4,39 @@
 
 # care.nvim
 
+[Documentation Website](https://max397574.github.io/care.nvim/)
+
 </div>
 
-initialized automatically
+# ✨ Features
 
-use require"care.config".setup({...}) to configure
+-   Fully configurable menu
+-   Api for keybindings and various utilities
+-   Components for easy configuration of menu
+-   Compability with nvim-cmp sources with
+    [care-cmp](https://github.com/max397574/care-cmp)
+
+# 🚀 Getting started
+
+You can simply install care.nvim with your preferred plugin manager. There are
+builtin sources for lsp and more comming soon.
+
+Care is initialized automatically and lazy-loaded internally so there is no need
+for lazy-loading nor calling setup.
+
+You can find more detailed installation instructions on the website
+[here](https://max397574.github.io/care.nvim/getting_started).
 
 ## Credits
 
-mariasolos for work in core and core in general
+-   [MariaSolOs](https://github.com/MariaSolOs) for work in core and core in
+    general
 
-nvim-cmp was a big inspiration for this
+-   [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) was a big inspiration for
+    this
 
-mfussenegger for helping me out with my beginner questions
+-   [mfussenegger](https://github.com/mfussenegger) for helping me out with my
+    beginner questions
 
-mrcjkb for helping me out with test infrastructure and luarocks setup
+-   [mrcjkb](https://github.com/mrcjkb) for helping me out with test
+    infrastructure and luarocks setup
