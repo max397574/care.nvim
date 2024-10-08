@@ -1,0 +1,8 @@
+--- In this module some presets for the format_entry function are available.
+---@class care.presets
+--- The default preset. Just includes the label and a simple icon.
+---@field Default fun(entry: care.entry, data: care.format_data): { [1]: string, [2]: string }[][]
+--- The atom preset is an atom-like configuration. It displays the kind icon with a blended colored background and
+--- the labelatom preset is an atom-like configuration. It displays the kind icon with a blended colored background
+--- and the label.
+---@field Atom fun(entry: care.entry, data: care.format_data): { [1]: string, [2]: string }[][]

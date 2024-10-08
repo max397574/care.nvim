@@ -29,7 +29,7 @@ local labels = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
 -- Add this to formatting
 
 { {
-    " " .. require("care.presets.utils").LabelEntries(labels)(entry, data) .. " ",
+    " " .. require("care.presets.utils").label_entries(labels)(entry, data) .. " ",
     "Comment",
 }, },
 

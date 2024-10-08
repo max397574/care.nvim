@@ -1,0 +1,15 @@
+--- This module contains lower level utilities for the presets and the preset components.
+---@class care.preset_utils
+--- This function can be used to get a function to label the entries with shortscuts as [described
+--- here](/configuration_recipes#labels-and-shortcuts).
+---@field label_entries fun(labels: string[]): fun(_,data: care.format_data): string
+--- With this function you can get a color if the entry is a color and the hex color code is available in the
+--- completion item.
+---@field get_color fun(entry: care.entry): string?
+--- This function allows to get a highlight group for a certain hex color code. This is useful because like that the
+--- user doesn't have to constantly create new highlight groups to apply a hex value to a certain thing. The
+--- highlight group will have the hex value as foregroung color.
+---@field get_highlight_for_hex fun(hex: string): string
+--- With this function you can get the kind highlight group for a specific entry. The style can either be foreground
+--- or blended.
+---@field kind_highlight fun(entry: care.entry, style: "fg"|"blended")

@@ -1,7 +1,9 @@
+---@type care.preset_utils
+---@diagnostic disable-next-line: missing-fields
 local PresetUtils = {}
 
 ---@param labels string[]
-function PresetUtils.LabelEntries(labels)
+function PresetUtils.label_entries(labels)
     local placeholder = string.rep(" ", require("care.utils").longest(labels))
     return function(_, data)
         return require("care").core.menu.menu_window.winnr
@@ -20,11 +22,7 @@ function PresetUtils.LabelEntries(labels)
     end
 end
 
---- Gets color of entry if it is a color and has a hex color code
---- in completion item
----@param entry care.entry
----@return string?
-function PresetUtils.GetColor(entry)
+function PresetUtils.get_color(entry)
     if entry.completion_item.kind ~= 16 then
         return nil
     end
@@ -41,13 +39,23 @@ end
 
 ---@param hex string
 ---@return string
-function PresetUtils.GetHighlightForHex(hex)
+function PresetUtils.get_highlight_for_hex(hex)
     -- Adapted from nvchad
     local hl = "hex-" .. hex:sub(2)
     if #vim.api.nvim_get_hl(0, { name = hl }) == 0 then
         vim.api.nvim_set_hl(0, hl, { fg = hex })
     end
     return hl
+end
+
+---@param style? "blended"|"fg"
+function PresetUtils.kind_highlight(entry, style)
+    local completion_item = entry.completion_item
+    local entry_kind = type(completion_item.kind) == "string" and completion_item.kind
+        or require("care.utils.lsp").get_kind_name(completion_item.kind)
+
+    style = style or "fg"
+    return style == "fg" and ("@care.type.fg.%s"):format(entry_kind) or ("@care.type.blended.%s"):format(entry_kind)
 end
 
 return PresetUtils

@@ -7,6 +7,26 @@
 
 -- TODO: move into function?
 
+--- Gets red, green and blue values for color
+---@param color string @#RRGGBB
+---@return table
+local function get_color_values(color)
+    local red = tonumber(color:sub(2, 3), 16)
+    local green = tonumber(color:sub(4, 5), 16)
+    local blue = tonumber(color:sub(6, 7), 16)
+    return { red, green, blue }
+end
+
+local function blend_colors(top, bottom, alpha)
+    local top_rgb = get_color_values(top)
+    local bottom_rgb = get_color_values(bottom)
+    local function blend(c)
+        c = (alpha * top_rgb[c] + ((1 - alpha) * bottom_rgb[c]))
+        return math.floor(math.min(math.max(0, c), 255) + 0.5)
+    end
+    return ("#%02X%02X%02X"):format(blend(1), blend(2), blend(3))
+end
+
 local hl = function(...)
     vim.api.nvim_set_hl(0, ...)
 end
@@ -40,7 +60,16 @@ local kinds = {
 }
 
 for name, group in pairs(kinds) do
+    local highlights = vim.api.nvim_get_hl(0, { name = group, link = false })
+    local normal_float = vim.api.nvim_get_hl(0, { name = "NormalFloat" })
+    local normal = vim.api.nvim_get_hl(0, { name = "Normal" })
+    local fg = string.format("#%06x", highlights.fg or normal_float.fg or normal.fg)
     hl(string.format("@care.type.%s", name), { link = group, default = true })
+    hl(string.format("@care.type.fg.%s", name), { fg = fg, default = true })
+    hl(
+        string.format("@care.type.blended.%s", name),
+        { fg = fg, bg = blend_colors(fg, string.format("#%06x", normal_float.bg or normal.bg), 0.15), default = true }
+    )
 end
 
 hl("@care", { link = "Normal", default = true })
