@@ -167,7 +167,7 @@ function Window:get_data()
     data.visible_lines = data.last_visible_line - data.first_visible_line + 1
     data.height_without_border = vim.api.nvim_win_get_height(self.winnr)
     data.width_without_border = vim.api.nvim_win_get_width(self.winnr)
-    data.border = vim.api.nvim_win_get_config(self.winnr)
+    data.border = vim.api.nvim_win_get_config(self.winnr).border
     data.has_border = data.border and data.border ~= "none"
     data.width_with_border = data.width_without_border + (data.has_border and 2 or 0)
     data.height_with_border = data.height_without_border + (data.has_border and 2 or 0)
@@ -247,11 +247,11 @@ function Window:draw_scrollbar()
         })
     end
 
+    print(win_data.has_border)
     local menu_pos_NE = {
         self.opened_at.row
             - (self.position == "below" and 0 or 1)
-            - (self.position == "above" and win_data.height_with_border or 0)
-            - (win_data.has_border and 1 or 0),
+            - (self.position == "above" and win_data.height_with_border or 0),
         self.opened_at.col + win_data.width_with_border - 2,
     }
 
