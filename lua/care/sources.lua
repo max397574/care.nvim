@@ -29,6 +29,10 @@ function care_sources.complete(context, source, callback)
                 triggerCharacter = last_char,
             }
         elseif (context.cursor.col - source:get_offset(context)) < 1 then
+            local prefix = context.line:sub(source:get_offset(context) + 1, context.cursor.col)
+            if prefix == "" then
+                callback({})
+            end
             callback(source.entries)
             return
         elseif not source.entries or #source.entries == 0 then
