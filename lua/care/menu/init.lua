@@ -130,8 +130,6 @@ function Menu:draw_docs(entry)
 
         self.docs_window:set_scroll(1, 1, false)
         self.docs_window:draw_scrollbar()
-
-        vim.api.nvim_set_option_value("scrolloff", 0, { win = self.docs_window.winnr })
     end
 
     if entry.source.source.resolve_item then

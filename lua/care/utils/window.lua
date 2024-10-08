@@ -83,6 +83,7 @@ function Window:open_cursor_relative(width, wanted_height, offset, config)
         zindex = 1000,
     })
     vim.wo[self.winnr][0].scrolloff = 0
+    vim.wo[self.winnr][0].smoothscroll = true
     vim.wo[self.winnr][0].winhighlight = "Normal:@care.menu,FloatBorder:@care.border"
     self:open_scrollbar_win(width, height, offset)
 end
@@ -114,12 +115,12 @@ function Window:scroll(delta)
     self.current_scroll = self.current_scroll + delta
     local win_data = self:get_data()
     self.current_scroll = math.max(self.current_scroll, 1)
-    self.current_scroll =
-        math.min(self.current_scroll, #vim.api.nvim_buf_get_lines(self.buf, 0, -1, false) - win_data.visible_lines + 1)
+    self.current_scroll = math.min(self.current_scroll, win_data.total_lines - win_data.visible_lines + 1)
+
     vim.api.nvim_win_call(self.winnr, function()
-        vim.api.nvim_win_call(self.winnr, function()
-            vim.fn.winrestview({ topline = self.current_scroll, lnum = self.current_scroll })
-        end)
+        vim.fn.winrestview({ topline = self.current_scroll, lnum = self.current_scroll })
+        vim.cmd("normal! gg0")
+        vim.cmd("normal! " .. string.rep(vim.keycode("<c-e>"), (self.current_scroll - 1)))
     end)
 end
 
@@ -127,6 +128,9 @@ function Window:set_scroll(index, direction, reversed)
     if self:scrollbar_is_open() then
         vim.api.nvim_win_set_config(self.scrollbar.win, { hide = true })
     end
+
+    local win_data = self:get_data()
+
     --- Scrolls to a certain line in the window
     --- This line will be at the top of the window
     ---@param line integer
@@ -136,7 +140,6 @@ function Window:set_scroll(index, direction, reversed)
         end)
         self.current_scroll = line
     end
-    local win_data = self:get_data()
     local selected_line = index
     if selected_line == 0 then
         if reversed then
@@ -163,14 +166,21 @@ function Window:get_data()
     data.first_visible_line = vim.fn.line("w0", self.winnr)
     data.last_visible_line = vim.fn.line("w$", self.winnr)
     data.visible_lines = data.last_visible_line - data.first_visible_line + 1
-    data.visible_lines = data.last_visible_line - data.first_visible_line + 1
     data.height_without_border = vim.api.nvim_win_get_height(self.winnr)
     data.width_without_border = vim.api.nvim_win_get_width(self.winnr)
     data.border = vim.api.nvim_win_get_config(self.winnr)
     data.has_border = data.border and data.border ~= "none"
     data.width_with_border = data.width_without_border + (data.has_border and 2 or 0)
     data.height_with_border = data.height_without_border + (data.has_border and 2 or 0)
-    data.total_lines = vim.api.nvim_buf_line_count(self.buf)
+    if not vim.api.nvim_get_option_value("wrap", { win = self.winnr }) then
+        data.total_lines = vim.api.nvim_buf_line_count(self.buf)
+    else
+        local height = 0
+        for _, line in ipairs(vim.api.nvim_buf_get_lines(self.buf, 0, -1, false)) do
+            height = height + math.max(1, math.ceil(vim.fn.strdisplaywidth(line) / data.width_without_border))
+        end
+        data.total_lines = height
+    end
     return data
 end
 
