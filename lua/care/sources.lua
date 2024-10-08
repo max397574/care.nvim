@@ -29,11 +29,11 @@ function care_sources.complete(context, source, callback)
                 triggerCharacter = last_char,
             }
         elseif (context.cursor.col - source:get_offset(context)) < 1 then
-            local prefix = context.line:sub(source:get_offset(context) + 1, context.cursor.col)
-            if prefix == "" then
+            if context.line_before_cursor:match("%s+$") then
                 callback({})
+            else
+                callback(source.entries)
             end
-            callback(source.entries)
             return
         elseif not source.entries or #source.entries == 0 then
             -- TODO: perhaps different trigger kind because we're manually requesting completions here?
