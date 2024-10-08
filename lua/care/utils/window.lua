@@ -247,7 +247,6 @@ function Window:draw_scrollbar()
         })
     end
 
-    print(win_data.has_border)
     local menu_pos_NE = {
         self.opened_at.row
             - (self.position == "below" and 0 or 1)
