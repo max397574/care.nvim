@@ -72,6 +72,13 @@ local docs_files = {
         title = "Internal Source",
     },
     { type_file = "lua/care/types/context.lua", doc_file = "docs/dev/context.md", title = "Context" },
+    { type_file = "lua/care/types/presets.lua", doc_file = "docs/presets.md", title = "Presets" },
+    { type_file = "lua/care/types/preset_utils.lua", doc_file = "docs/preset_utils.md", title = "Preset Utils" },
+    {
+        type_file = "lua/care/types/preset_components.lua",
+        doc_file = "docs/preset_components.md",
+        title = "Preset Components",
+    },
 }
 
 local link_list = {
