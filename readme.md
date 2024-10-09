@@ -6,16 +6,18 @@
 
 </div>
 
-initialized automatically
 
-use require"care.config".setup({...}) to configure
+This plugin is initialized automatically, which means there is no need to call the `setup()` function.
+
+## Getting started 🚀
+Refer to the [getting started page](https://max397574.github.io/care.nvim/getting_started) on the `care.nvim` website
 
 ## Credits
 
-mariasolos for work in core and core in general
+- [MariaSolOs](https://github.com/MariaSolOs) for work in core and core in general
 
-nvim-cmp was a big inspiration for this
+- [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) was a big inspiration for this
 
-mfussenegger for helping me out with my beginner questions
+- [mfussenegger](https://github.com/mfussenegger) for helping me out with my beginner questions
 
-mrcjkb for helping me out with test infrastructure and luarocks setup
+- [mrcjkb](https://github.com/mrcjkb) for helping me out with test infrastructure and luarocks setup
