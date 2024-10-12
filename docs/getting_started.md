@@ -95,6 +95,14 @@ If you don't have rockspec support you need to install `fzy` as a dependency.
 
 ### Rocks.nvim
 
+<details>
+<summary>Installation instructions for rocks.nvim</summary>
+
+You can simply run `:Rocks install care.nvim` and then add the keymapping
+snippet to your config.
+
+</details>
+
 ## Development
 
 See the [devloper documentation](./dev) for more information about the code and
