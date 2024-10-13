@@ -29,7 +29,7 @@ function Ghost_text.new()
         end,
         on_line = function()
             if self.extmark_id then
-                vim.api.nvim_buf_del_extmark(vim.api.nvim_get_current_buf(), self.ns, self.extmark_id)
+                vim.api.nvim_buf_del_extmark(vim.api.nvim_win_get_buf(self.win), self.ns, self.extmark_id)
                 self.extmark_id = nil
             end
             if (not self.config.enabled) or not self.entry then
@@ -40,18 +40,28 @@ function Ghost_text.new()
             local cursor = vim.api.nvim_win_get_cursor(self.win)
             local text_after_filter = word:sub(cursor[2] - offset + 1)
             if self.config.position == "inline" then
-                self.extmark_id =
-                    vim.api.nvim_buf_set_extmark(vim.api.nvim_get_current_buf(), self.ns, cursor[1] - 1, cursor[2], {
+                self.extmark_id = vim.api.nvim_buf_set_extmark(
+                    vim.api.nvim_win_get_buf(self.win),
+                    self.ns,
+                    cursor[1] - 1,
+                    cursor[2],
+                    {
                         virt_text = { { text_after_filter, "@care.ghost_text" } },
                         virt_text_pos = "inline",
-                    })
+                    }
+                )
             elseif self.config.position == "overlay" then
-                self.extmark_id =
-                    vim.api.nvim_buf_set_extmark(vim.api.nvim_get_current_buf(), self.ns, cursor[1] - 1, cursor[2], {
+                self.extmark_id = vim.api.nvim_buf_set_extmark(
+                    vim.api.nvim_win_get_buf(self.win),
+                    self.ns,
+                    cursor[1] - 1,
+                    cursor[2],
+                    {
                         virt_text = { { text_after_filter, "@care.ghost_text" } },
                         virt_text_pos = "overlay",
                         ephemeral = true,
-                    })
+                    }
+                )
             end
         end,
     })
