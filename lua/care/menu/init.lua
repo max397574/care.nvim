@@ -48,7 +48,6 @@ function Menu:draw_docs(entry)
         local documentation = completion_item.documentation
         local documentation_text =
             vim.trim(type(documentation) == "table" and documentation.value or documentation or "")
-        documentation_text = ""
         if (documentation_text):match("^%s*$") and (completion_item.detail or ""):match("^%s*$") then
             self.docs_window:close()
             return
