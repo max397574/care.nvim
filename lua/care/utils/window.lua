@@ -125,12 +125,14 @@ end
 function Window:scroll(delta)
     self.current_scroll = self.current_scroll + delta
     local win_data = self:get_data()
-    self.current_scroll = math.max(self.current_scroll, 2)
-    self.current_scroll = math.min(self.current_scroll, win_data.total_lines - win_data.height_without_border + 2)
+    self.current_scroll = math.max(self.current_scroll, 1)
+    self.current_scroll = math.min(self.current_scroll, win_data.total_lines - win_data.height_without_border + 1)
 
     vim.api.nvim_win_call(self.winnr, function()
         vim.cmd("normal! gg0")
-        vim.cmd("normal! " .. vim.keycode(string.rep("<c-e>", (self.current_scroll - 1))))
+        if self.current_scroll > 1 then
+            vim.cmd("normal! " .. vim.keycode(string.rep("<c-e>", (self.current_scroll - 1))))
+        end
     end)
 end
 
