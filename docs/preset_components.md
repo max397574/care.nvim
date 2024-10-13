@@ -1,0 +1,42 @@
+---
+title: Preset Components
+description: Type description of care.preset_components
+---
+
+# Preset Components
+
+This module contains some high-level components for easily creating `format_entry` functions.
+# `care.preset_components`
+
+# Methods
+
+## ShortcutLabel
+`preset_components.ShortcutLabel(labels: string[], entry: care.entry, data: care.format_data, highlight_group?: string): { [1]: string, [2]: string }[]`
+
+See [care.entry](/dev/entry)
+
+This adds a label for shortcuts [described here](/configuration_recipes#labels-and-shortcuts). By default this will
+use the `Comment` highlight group. This can be overridden though.
+
+## KindIcon
+`preset_components.KindIcon(entry: care.entry, style?: "blended"|"fg"): { [1]: string, [2]: string }[]`
+
+See [care.entry](/dev/entry)
+
+This components displays a kind icon. You can choose between the blended and foreground style.
+
+## Label
+`preset_components.Label(entry: care.entry, data: care.format_data, display_colored_block?: boolean): { [1]: string, [2]: string }[]`
+
+See [care.entry](/dev/entry)
+
+This adds a completion item label to be displayed. Optionally this can also include a colored block if the items
+is a color and we know the value of the color.
+
+## ColoredBlock
+`preset_components.ColoredBlock(entry: care.entry, character?: string): { [1]: string, [2]: string }[]`
+
+See [care.entry](/dev/entry)
+
+This component adds a colored block for the item if it is a color. The character used for the block can
+optionally be configured.
