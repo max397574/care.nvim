@@ -19,17 +19,19 @@ end
 ---@param buf integer
 ---@param ns integer
 ---@param column integer
-local function add_extmarks(aligned_sec, realign, buf, ns, column, entries, reversed)
+local function add_extmarks(aligned_sec, realign, buf, ns, column, entries, reversed, should_draw)
     for line, aligned_chunks in ipairs(aligned_sec) do
         local realigned_chunks = {}
         for _, chunk in ipairs(aligned_chunks) do
             table.insert(realigned_chunks, realign(chunk))
         end
-        vim.api.nvim_buf_set_extmark(buf, ns, line - 1, column, {
-            virt_text = realigned_chunks,
-            virt_text_pos = "overlay",
-            hl_mode = "combine",
-        })
+        if should_draw(line) then
+            vim.api.nvim_buf_set_extmark(buf, ns, line - 1, column, {
+                virt_text = realigned_chunks,
+                virt_text_pos = "overlay",
+                hl_mode = "combine",
+            })
+        end
 
         local index = reversed and #entries - line + 1 or line
         local start = string.find(
@@ -63,6 +65,10 @@ return function(self)
     local width = format_utils.get_width(self.entries)
     local aligned_table = format_utils.get_align_tables(self.reversed and vim.fn.reverse(self.entries) or self.entries)
     local column = 0
+    local windata = self.menu_window:get_data()
+    local function should_draw(line)
+        return line >= (windata.first_visible_line - 1) and line <= (windata.last_visible_line + 1)
+    end
     vim.api.nvim_buf_clear_namespace(self.menu_window.buf, self.ns, 0, -1)
     local spaces = {}
     for _ = 1, #self.entries do
@@ -89,11 +95,13 @@ return function(self)
                 end
                 local cur_line_text = table.concat(line_text, "")
                 table.insert(texts, cur_line_text)
-                vim.api.nvim_buf_set_extmark(self.menu_window.buf, self.ns, line - 1, column, {
-                    virt_text = aligned_chunks,
-                    virt_text_pos = "overlay",
-                    hl_mode = "combine",
-                })
+                if should_draw(line) then
+                    vim.api.nvim_buf_set_extmark(self.menu_window.buf, self.ns, line - 1, column, {
+                        virt_text = aligned_chunks,
+                        virt_text_pos = "overlay",
+                        hl_mode = "combine",
+                    })
+                end
                 local index = self.reversed and #self.entries - line + 1 or line
                 local start = string.find(cur_line_text, self.entries[index].completion_item.label:sub(1, 5), nil, true)
                 if start then
@@ -115,14 +123,14 @@ return function(self)
             local length = utils.longest(texts)
             add_extmarks(aligned_sec, function(chunk)
                 return { string.rep(" ", length - #chunk[1]) .. chunk[1], chunk[2] }
-            end, self.menu_window.buf, self.ns, column, self.entries, self.reversed)
+            end, self.menu_window.buf, self.ns, column, self.entries, self.reversed, should_draw)
             column = column + length
         elseif alignments[i] == "center" then
             local texts = get_texts(aligned_sec)
             local length = utils.longest(texts)
             add_extmarks(aligned_sec, function(chunk)
                 return { string.rep(" ", math.floor((length - #chunk[1]) / 2)) .. chunk[1], chunk[2] }
-            end, self.menu_window.buf, self.ns, column, self.entries, self.reversed)
+            end, self.menu_window.buf, self.ns, column, self.entries, self.reversed, should_draw)
             column = column + length
         end
     end
