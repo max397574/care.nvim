@@ -186,23 +186,7 @@ function Window:get_data()
     data.has_border = data.border and data.border ~= "none"
     data.width_with_border = data.width_without_border + (data.has_border and 2 or 0)
     data.height_with_border = data.height_without_border + (data.has_border and 2 or 0)
-    if not vim.api.nvim_get_option_value("wrap", { win = self.winnr }) then
-        data.total_lines = vim.api.nvim_buf_line_count(self.buf)
-    else
-        local height = 0
-        for _, line in ipairs(vim.api.nvim_buf_get_lines(self.buf, 0, -1, false)) do
-            local wrapped_width = vim.fn.strdisplaywidth(line) - data.width_without_border
-            height = height + 1
-            if wrapped_width > 0 then
-                height = height
-                    + math.max(
-                        1,
-                        math.ceil(wrapped_width / (data.width_without_border - vim.fn.strdisplaywidth(vim.o.showbreak)))
-                    )
-            end
-        end
-        data.total_lines = height
-    end
+    data.total_lines = vim.api.nvim_win_text_height(self.winnr, {}).all
     return data
 end
 
