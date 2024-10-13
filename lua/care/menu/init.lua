@@ -48,6 +48,7 @@ function Menu:draw_docs(entry)
         local documentation = completion_item.documentation
         local documentation_text =
             vim.trim(type(documentation) == "table" and documentation.value or documentation or "")
+        documentation_text = ""
         if (documentation_text):match("^%s*$") and (completion_item.detail or ""):match("^%s*$") then
             self.docs_window:close()
             return
@@ -113,7 +114,7 @@ function Menu:draw_docs(entry)
         if do_stylize then
             contents = vim.lsp.util._normalize_markdown(
                 vim.split(table.concat(contents, "\n"), "\n", { trimempty = true }),
-                { width = width - (has_border and 2 or 0) }
+                { width = width }
             )
             vim.bo[self.docs_window.buf].filetype = "markdown"
             vim.treesitter.start(self.docs_window.buf)
@@ -127,7 +128,7 @@ function Menu:draw_docs(entry)
             end
             vim.api.nvim_buf_set_lines(self.docs_window.buf, 0, -1, true, contents)
         end
-        width = math.min(width, require("care.utils").longest(contents) + (has_border and 2 or 0))
+        width = math.min(width, require("care.utils").longest(contents))
 
         local win_offset
         if position == "right" then
