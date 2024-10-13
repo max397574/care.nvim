@@ -3,20 +3,30 @@ local lsp_source = {}
 lsp_source.clients = {}
 
 function lsp_source.setup()
+    local function setup_client(client)
+        if not lsp_source.clients[client.id] and not client.is_stopped() then
+            local source = lsp_source.new(client)
+            if not source then
+                return
+            end
+            lsp_source.clients[client.id] = source
+            require("care.sources").register_source(source)
+        end
+    end
+    local buf_clients = vim.lsp.get_clients({
+        bufnr = vim.api.nvim_get_current_buf(),
+        method = vim.lsp.protocol.Methods.textDocument_completion,
+    })
+    for _, client in ipairs(buf_clients) do
+        setup_client(client)
+    end
     vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
             local client = vim.lsp.get_client_by_id(args.data.client_id)
             if client == nil then
                 return
             end
-            if not lsp_source.clients[client.id] and not client.is_stopped() then
-                local source = lsp_source.new(client)
-                if not source then
-                    return
-                end
-                lsp_source.clients[client.id] = source
-                require("care.sources").register_source(source)
-            end
+            setup_client(client)
         end,
     })
 end
