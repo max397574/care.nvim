@@ -19,6 +19,10 @@
     configuration of menu
 -   Compability with nvim-cmp sources with
     [care-cmp](https://github.com/max397574/care-cmp)
+-   Really fast performance (can draw thousands of items per keystroke without
+    problems)
+-   Well documented source code
+    ([devloper documentation](https://max397574.github.io/care.nvim/dev/))
 
 # 🚀 Getting started
 
