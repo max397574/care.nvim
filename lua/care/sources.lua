@@ -29,7 +29,7 @@ function care_sources.complete(context, source, callback)
                 triggerCharacter = last_char,
             }
         elseif (context.cursor.col - source:get_offset(context)) < 1 then
-            if context.line_before_cursor:match("%s+$") then
+            if context.line_before_cursor:match("%s+$") or context.line_before_cursor == "" then
                 callback({})
             else
                 callback(source.entries)
