@@ -103,8 +103,7 @@ configuration of the completion behaviors of care.
 # Methods
 
 ## Snippet Expansion
-`config.snippet_expansion?(body: string): nil`
-
+`config.snippet_expansion?`
 With this field a function for expanding snippets is defined. By default this is the
 builtin `vim.snippet.expand()`. You can also use a plugin like luasnip for this:
 ```lua
@@ -114,38 +113,31 @@ end
 ```
 
 ## Enabled
-`config.enabled?(): boolean`
-
+`config.enabled?`
 This function can be used to disable care in certain contexts. By default this
 disables care in prompts.
 # Fields
 
 ## Ui
-`config.ui? care.config.ui`
-
+`config.ui?`
 The [UI Configuration](#Ui-Configuration) is used to configure the whole UI of care.
 One of the main goals of this is to be as extensible as possible. This is especially important
 for the completion entries. Read more about that under
 [Configuration of item display](/design/#configuration-of-item-display).
 
 ## Selection Behavior
-`config.selection_behavior? "select"|"insert"`
-
+`config.selection_behavior?`
 With the selection behavior the user can determine what happens when selecting
 an entry. This can either be `"select"` or `"insert"`. Selecting will just
 select the entry and do nothing else. Insert will actually insert the text of
 the entry (this is not necessarily the whole text).
 
 ## Confirm Behavior
-`config.confirm_behavior? "insert"|"replace"`
-
+`config.confirm_behavior?`
 This field controls the behavior when confirming an entry.
 
 ## Sources
-`config.sources? table<string, care.config.source>`
-
-See [care.config.source](/config/#source-configuration)
-
+`config.sources?`
 This field is used to configure the sources for care.nvim.
 Use a table where the fields is the source name and the value is the configuration
 ```lua
@@ -160,40 +152,34 @@ sources = {
 ```
 
 ## Completion Events
-`config.completion_events? string[]`
-
+`config.completion_events?`
 The `completion_events` table is used to set events for autocompletion. By default
 it just contains `"TextChangedI"`. You can set it to an empty table (`{}`) to
 disable autocompletion.
 
 ## Keyword Pattern
-`config.keyword_pattern? string`
-
+`config.keyword_pattern?`
 The keyword pattern is used to determine keywords. These are used to determine what
 to use for filtering and what to remove if insert text is used.
 It should essentially just describe the entries of a source.
 
 ## Preselect
-`config.preselect? boolean`
-
+`config.preselect?`
 Whether items should be preselected or not. Which items are preselected is determined
 by the source.
 
 ## Sorting Direction
-`config.sorting_direction? "top-down"|"away-from-cursor"`
-
+`config.sorting_direction?`
 How to sort the entries in the completion menu.
 This can either be top to bottom or so the best match is always next to the cursor.
 
 ## Debug
-`config.debug? boolean`
-
+`config.debug?`
 Whether debugging should be enabled or not. This will write a log to a `care.log` file
 in the current directory.
 
 ## Max View Entries
-`config.max_view_entries? integer`
-
+`config.max_view_entries?`
 The max entries to display in the menu. Note that this just affects
 the entries displayed at a time. So there are still more entries on which you
 can filter by continue typing. This limit just exists for performance reasons
@@ -210,25 +196,21 @@ This is used to configure the whole UI of care.
 # Fields
 
 ## Menu
-`config.ui.menu? care.config.ui.menu`
-
+`config.ui.menu?`
 Configuration of the completion menu of care.nvim
 
 ## Docs View
-`config.ui.docs_view? care.config.ui.docs`
-
+`config.ui.docs_view?`
 This configuration allows you to configure the documentation view. It consists
 of some basic window properties like the border and the maximum height of the
 window. It also has a field to define the character used for the scrollbar.
 
 ## Type Icons
-`config.ui.type_icons? care.config.ui.type_icons`
-
+`config.ui.type_icons?`
 This is a table which defines the different icons.
 
 ## Ghost Text
-`config.ui.ghost_text? care.config.ui.ghost_text`
-
+`config.ui.ghost_text?`
 Configuration of ghost text.
 
 With this field the user can control how ghost text is displayed.
@@ -237,14 +219,12 @@ With this field the user can control how ghost text is displayed.
 # Fields
 
 ## Enabled
-`config.ui.ghost_text.enabled? boolean`
-
+`config.ui.ghost_text.enabled?`
 You can use the `enabled` field to determine whether the ghost text should be
 enabled or not.
 
 ## Position
-`config.ui.ghost_text.position? "inline"|"overlay"`
-
+`config.ui.ghost_text.position?`
 The `position` can either be `"inline"` or `"overlay"`. Inline
 will add the text inline right where the cursor is. With the overlay position
 the text will overlap with existing text after the cursor.
@@ -260,10 +240,7 @@ scrollbar. Set `scrollbar` to `nil` value to disable the scrollbar.
 # Methods
 
 ## Format Entry
-`config.ui.menu.format_entry?(entry: care.entry, data: care.format_data): { [1]: string, [2]: string }[][]`
-
-See [care.entry](/dev/entry)
-
+`config.ui.menu.format_entry?`
 Another field is `format_entry`. This is a function which recieves an entry of
 the completion menu and determines how it's formatted. For that a table with
 text-highlight chunks like `:h nvim_buf_set_extmarks()` is used. You can create
@@ -293,28 +270,23 @@ added in between the two.
 # Fields
 
 ## Max Height
-`config.ui.menu.max_height? integer`
-
+`config.ui.menu.max_height?`
 Maximum height of the menu
 
 ## Border
-`config.ui.menu.border? string|string[]|string[][]`
-
+`config.ui.menu.border?`
 The border of the completion menu
 
 ## Scrollbar
-`config.ui.menu.scrollbar? care.config.scrollbar`
-
+`config.ui.menu.scrollbar?`
 Configuration of the scrollbar
 
 ## Position
-`config.ui.menu.position? "auto"|"below"|"above"`
-
+`config.ui.menu.position?`
 If the menu should be displayed on above, below or automatically
 
 ## Alignments
-`config.ui.menu.alignments? ("left"|"center"|"right")[]`
-
+`config.ui.menu.alignments?`
 How the sections in the menu should be aligned
 
 ## Source configuration
@@ -324,26 +296,20 @@ Configuration for the sources of care.nvim
 # Methods
 
 ## Enabled
-`config.source.enabled? boolean|fun():boolean`
-
+`config.source.enabled?`
 Whether the source is enabled (default true)
 
 ## Filter
-`config.source.filter?(entry: care.entry): boolean`
-
-See [care.entry](/dev/entry)
-
+`config.source.filter?`
 Filter function for entries by the source
 # Fields
 
 ## Max Entries
-`config.source.max_entries? integer`
-
+`config.source.max_entries?`
 The maximum amount? of entries which can be displayed by this source
 
 ## Priority
-`config.source.priority? integer`
-
+`config.source.priority?`
 The priority of this source. Is more important than matching score
 
 Configuration of the completion menu of care.nvim
@@ -352,28 +318,23 @@ Configuration of the completion menu of care.nvim
 # Fields
 
 ## Max Height
-`config.ui.docs.max_height? integer`
-
+`config.ui.docs.max_height?`
 Maximum height of the documentation view
 
 ## Max Width
-`config.ui.docs.max_width? integer`
-
+`config.ui.docs.max_width?`
 Maximum width of the documentation view
 
 ## Border
-`config.ui.docs.border? string|string[]|string[][]`
-
+`config.ui.docs.border?`
 The border of the documentation view
 
 ## Scrollbar
-`config.ui.docs.scrollbar? care.config.scrollbar`
-
+`config.ui.docs.scrollbar?`
 Configuration of the scrollbar
 
 ## Position
-`config.ui.docs.position? "auto"|"left"|"right"`
-
+`config.ui.docs.position?`
 Position of docs view.
 Auto will prefer right if there is enough space
 
@@ -383,23 +344,19 @@ Additional data passed to format function to allow more advanced formatting
 # Fields
 
 ## Index
-`format_data.index integer`
-
+`format_data.index`
 Index of the entry in the completion menu
 
 ## Deprecated
-`format_data.deprecated boolean`
-
+`format_data.deprecated`
 Whether the item is marked as deprecated by the source or not
 
 ## Source Name
-`format_data.source_name string`
-
+`format_data.source_name`
 The name of the source from which the entry was completed
 
 ## Source Display Name
-`format_data.source_display_name string`
-
+`format_data.source_display_name`
 The display name of the source from which the entry was completed which
 is more detailed than the normal name
 
@@ -409,16 +366,13 @@ is more detailed than the normal name
 # Fields
 
 ## Character
-`config.scrollbar.character? string`
-
+`config.scrollbar.character?`
 The character used for drawing the scrollbar
 
 ## Enabled
-`config.scrollbar.enabled? boolean`
-
+`config.scrollbar.enabled?`
 Whether the scrollbar is enabled or not
 
 ## Offset
-`config.scrollbar.offset? integer`
-
+`config.scrollbar.offset?`
 Offset of the scrollbar. 0 is at the border of the window
