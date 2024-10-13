@@ -33,6 +33,17 @@ function Window:open_cursor_relative(width, wanted_height, offset, config)
     local row = screenpos.row
     local col = offset
 
+    if screenpos.row ~= cursor[1] then
+        -- on a wrapped line
+        local delta = cursor[2]
+            - offset
+            + vim.fn.getwininfo(vim.api.nvim_get_current_win())[1].wincol
+            + vim.fn.getwininfo(vim.api.nvim_get_current_win())[1].textoff
+            - 1
+
+        col = screenpos.col - delta
+    end
+
     local space_below = vim.o.lines - screenpos.row - vim.o.cmdheight - 1
     local space_above = screenpos.row - 1
 
