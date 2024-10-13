@@ -12,7 +12,11 @@
 
 -   Fully configurable menu
 -   Api for keybindings and various utilities
--   Components for easy configuration of menu
+-   [Different presets](https://max397574.github.io/care.nvim/presets) for the
+    menu
+-   [Components](https://max397574.github.io/care.nvim/preset_components) and
+    [utilities](https://max397574.github.io/care.nvim/preset_utils) for easy
+    configuration of menu
 -   Compability with nvim-cmp sources with
     [care-cmp](https://github.com/max397574/care-cmp)
 
@@ -27,7 +31,13 @@ for lazy-loading nor calling setup.
 You can find more detailed installation instructions on the website
 [here](https://max397574.github.io/care.nvim/getting_started).
 
-## Credits
+# Support
+
+If you like the projects I do and they help you in your programming you can
+support my work with [github sponsors](https://github.com/sponsors/max397574).
+Every support motivates me to continue working on my open source projects.
+
+# Credits
 
 -   [MariaSolOs](https://github.com/MariaSolOs) for work in core and core in
     general
