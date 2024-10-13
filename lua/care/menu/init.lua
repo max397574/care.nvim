@@ -45,6 +45,7 @@ function Menu:draw_docs(entry)
     local function open_docs_window(doc_entry)
         local config = self.config.ui.docs_view or {}
         if not doc_entry.completion_item.documentation then
+            self.docs_window:close()
             return
         end
         local documentation = doc_entry.completion_item.documentation
@@ -188,6 +189,8 @@ function Menu:select(direction)
     direction = direction or 1
     if self.index ~= 0 then
         self:draw_docs(self:get_active_entry())
+    else
+        self.docs_window:close()
     end
 
     local width = format_utils.get_width(self.entries)
