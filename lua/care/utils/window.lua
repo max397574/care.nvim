@@ -2,7 +2,7 @@
 ---@diagnostic disable-next-line: missing-fields
 local Window = {}
 
-function Window.new()
+function Window.new(config)
     ---@type care.window
     local self = setmetatable({}, { __index = Window })
     self.winnr = nil
@@ -15,6 +15,7 @@ function Window.new()
     self.scrollbar.win = nil
     self.max_height = nil
     self.current_scroll = 1
+    self.scrollbar_config = config.scrollbar
     self.scrollbar.buf = vim.api.nvim_create_buf(false, true)
     return self
 end
@@ -49,9 +50,9 @@ function Window:open_cursor_relative(width, wanted_height, offset, config)
 
     local needed_space = math.min(needed_height, config.max_height)
     local position = "below"
-    local config_position = config.position
+    local config_pos = config.position
     local height
-    if config_position == "auto" then
+    if config_pos == "auto" then
         if space_below < needed_space then
             position = "above"
             if space_above < needed_space then
@@ -59,10 +60,10 @@ function Window:open_cursor_relative(width, wanted_height, offset, config)
             end
         end
         height = math.min(wanted_height, (position == "below" and space_below or space_above) - border_space)
-    elseif config_position == "below" then
+    elseif config_pos == "below" then
         position = "below"
         height = math.min(wanted_height, space_below - border_space)
-    elseif config_position == "above" then
+    elseif config_pos == "above" then
         position = "above"
         height = math.min(wanted_height, space_above - border_space)
     end
@@ -207,8 +208,7 @@ function Window:open_scrollbar_win(width, height)
         self.scrollbar.win = nil
     end
     local menu_pos = vim.api.nvim_win_get_position(self.winnr)
-    -- TODO: check correct config here, can also be docs_view
-    if self.config.ui.menu.scrollbar.enabled then
+    if self.scrollbar_config.enabled then
         self.scrollbar.win = vim.api.nvim_open_win(self.scrollbar.buf, false, {
             height = height,
             relative = "cursor",
@@ -248,8 +248,7 @@ function Window:draw_scrollbar()
 
     for i = 1, scrollbar_height do
         vim.api.nvim_buf_set_extmark(self.scrollbar.buf, self.ns, i - 1, 0, {
-            -- TODO: check correct config here, can also be docs_view
-            virt_text = { { self.config.ui.menu.scrollbar.character, "@care.scrollbar.thumb" } },
+            virt_text = { { self.scrollbar_config.character, "@care.scrollbar.thumb" } },
             virt_text_pos = "overlay",
         })
     end
@@ -266,8 +265,7 @@ function Window:draw_scrollbar()
         width = 1,
         height = scrollbar_height,
         row = menu_pos_NE[1] + scrollbar_offset + (win_data.has_border and 1 or 0),
-        -- TODO: check correct config here, can also be docs_view
-        col = menu_pos_NE[2] + self.config.ui.menu.scrollbar.offset + 1,
+        col = menu_pos_NE[2] + self.scrollbar_config.offset + 1,
         hide = false,
     })
 end

@@ -11,8 +11,8 @@ function Menu.new()
     self.ns = vim.api.nvim_create_namespace("care")
     self.config = require("care.config").options
     self.index = 0
-    self.menu_window = require("care.utils.window").new()
-    self.docs_window = require("care.utils.window").new()
+    self.menu_window = require("care.utils.window").new({ scrollbar = self.config.ui.menu.scrollbar })
+    self.docs_window = require("care.utils.window").new({ scrollbar = self.config.ui.docs_view.scrollbar })
     self.ghost_text = require("care.ghost_text").new()
     self.reversed = false
     return self

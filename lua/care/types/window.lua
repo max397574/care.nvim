@@ -1,13 +1,15 @@
 --- Utility class for working with windows in care
 ---@class care.window
 --- Creates a new instance of the menu window
----@field new fun(): care.window
+---@field new fun(config: care.window.config): care.window
 ---@field winnr? integer
 --- Instance of the care config
 ---@field config care.config
 ---@field buf integer
 --- Whether the window is currently opened above or below the cursor
 ---@field position? "above"|"below"
+--- Configuration for the scrollbar of the window
+---@field scrollbar_config care.config.scrollbar
 --- Data for the scrollbar of the window
 ---@field scrollbar {win: integer, buf: integer}
 --- The maximum available height where the window is currently open
@@ -49,3 +51,6 @@
 ---@field width_with_border integer
 ---@field height_with_border integer
 ---@field total_lines integer
+
+---@class care.window.config
+---@field scrollbar care.config.scrollbar
