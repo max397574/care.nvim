@@ -71,14 +71,15 @@ function Core:complete(reason, source_filter)
                             return (a0.score or 0) > (a1.score or 0)
                         end)
 
+                        entries = vim.iter(entries):take(require("care.config").options.max_view_entries):totable()
+
                         local opened_at = offset
                         if
                             opened_at == self.last_opened_at
                             and self.menu:is_open()
                             and self.context.cursor.row == self.context.previous.cursor.row
                         then
-                            self.menu.entries =
-                                vim.iter(entries):take(require("care.config").options.max_view_entries):totable()
+                            self.menu.entries = entries
                             self.menu:readjust_win(offset)
                         else
                             self.menu:open(entries, offset)
