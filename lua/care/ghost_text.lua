@@ -45,7 +45,10 @@ function Ghost_text.new()
 
             if self.entry.completion_item.insertTextFormat == 2 then
                 -- TODO: replace with stable api once available
-                text = tostring(vim.lsp._snippet_grammar.parse(text))
+                local ok, parsed = pcall(vim.lsp._snippet_grammar.parse, text)
+                if ok then
+                    text = tostring(parsed)
+                end
             end
 
             local offset = self.entry:get_offset()
