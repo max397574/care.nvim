@@ -21,7 +21,6 @@ local function read_classes(path)
     for i, class_string in ipairs(class_strings) do
         local class_desc =
             table.concat(vim.split(class_string:match("%-%-%- (.-)\n%-%-%-@class") or "", "\n%-%-%- "), "\n")
-        print(class_desc)
         local class_name = class_string:match("%-%-%-@class (.-)\n")
         local fields_string = class_string:match(".-%-%-%-@class .-\n(.*)")
         local fields = { { descriptions = {} } }
@@ -142,7 +141,6 @@ local function get_class_docs(path, title, desc, mark_optionals, write_types)
     if write_types == nil then
         write_types = true
     end
-    print(write_types)
     mark_optionals = mark_optionals or false
     local classes = read_classes(path)
     local contents = {
