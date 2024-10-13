@@ -59,7 +59,9 @@ function Menu:draw_docs(entry)
             format = "plaintext"
             contents = vim.split(documentation.value or "", "\n", { trimempty = true })
         else
-            contents = vim.lsp.util.convert_input_to_markdown_lines(documentation --[[@as string]])
+            contents = vim.lsp.util.convert_input_to_markdown_lines(
+                (type(documentation) == "table" and (documentation.value or "")) or (documentation or "") --[[@as string]]
+            )
         end
 
         if completion_item.detail and completion_item.detail ~= "" then
