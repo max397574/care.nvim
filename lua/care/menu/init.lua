@@ -47,7 +47,7 @@ function Menu:draw_docs(entry)
         local completion_item = doc_entry.completion_item
         local documentation = completion_item.documentation
         if
-            (documentation.value or documentation or ""):match("^%s*$")
+            ((type(documentation) == "table" and documentation.value) or documentation or ""):match("^%s*$")
             and (completion_item.detail or ""):match("^%s*$")
         then
             self.docs_window:close()
