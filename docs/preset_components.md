@@ -54,3 +54,19 @@ See [care.entry](/dev/entry)
 This component adds a colored block for the item if it is a color. The character used for the block can
 optionally be configured.
 ![image](https://github.com/user-attachments/assets/e6bf8620-92af-4ffa-8973-635cab7beec4)
+
+## Padding
+`preset_components.Padding(size: integer): { [1]: string, [2]: string }[]`
+
+This function is used to add padding. Use the parameter to determine the width.
+
+## KindName
+`preset_components.KindName(entry: care.entry, use_kind_color: boolean, highlight_group: string?): { [1]: string, [2]: string }[]`
+
+See [care.entry](/dev/entry)
+
+This component allows to display the kind of the completion item as a string. You can use the second parameter
+to choose whether the string should be highlighted with the color of the kind or if it should just use a given
+highlight group which can be given with the 3rd parameter.
+![image](https://github.com/user-attachments/assets/4ceb2b54-50af-4459-96af-d485bba6ba3a)
+![image](https://github.com/user-attachments/assets/fb5ecb19-1009-4249-af6f-6a2ccb7873fc)
