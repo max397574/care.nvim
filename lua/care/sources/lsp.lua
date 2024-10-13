@@ -106,6 +106,11 @@ function lsp_source.new(client)
                 end
             end)
         end or nil,
+        execute = (client.server_capabilities.executeCommandProvider and function(_, entry)
+            if entry.completion_item.command then
+                vim.lsp.buf.execute_command(entry.completion_item.command)
+            end
+        end or nil),
     }
     return source
 end
