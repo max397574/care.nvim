@@ -8,7 +8,7 @@ description: Type description of care.presets
 In this module some presets for the format_entry function are available. They can be accessed like this
 ```lua
 format_entry = function(entry, data)
-return require("care.presets").<preset_name>(entry, data)
+    return require("care.presets").<preset_name>(entry, data)
 end
 ```
 # `care.presets`
