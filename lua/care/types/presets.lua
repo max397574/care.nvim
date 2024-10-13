@@ -4,11 +4,17 @@
 ---     return require("care.presets").<preset_name>(entry, data)
 --- end
 --- ```
+--- You could also just use the shorter form
+--- ```lua
+--- format_entry = require("care.presets").<preset_name>
+--- ```
 ---@class care.presets
 --- The default preset. Just includes the label and a simple icon.
---- ![image](https://github.com/user-attachments/assets/d3d7d338-db32-471f-ae20-89ea7703cb55)
+---
+--- ![image](https://github.com/user-attachments/assets/962a3bc3-72d8-413b-9b02-90e43e7bced8)
 ---@field Default fun(entry: care.entry, data: care.format_data): { [1]: string, [2]: string }[][]
 --- The atom preset is an atom-like configuration. It displays the kind icon with a blended colored background and
 --- the label.
---- ![image](https://github.com/user-attachments/assets/f8715fa7-1a0e-4be9-85ae-14b85cc2b7fd)
+---
+--- ![image](https://github.com/user-attachments/assets/cb653979-ca57-49c8-ae23-510be1496a5c)
 ---@field Atom fun(entry: care.entry, data: care.format_data): { [1]: string, [2]: string }[][]

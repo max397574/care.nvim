@@ -51,4 +51,20 @@ function components.ColoredBlock(entry, character)
     }
 end
 
+function components.Padding(size)
+    return { { string.rep(" ", size or 1), "@care.entry" } }
+end
+
+function components.KindName(entry, use_kind_color, highlight_group)
+    local completion_item = entry.completion_item
+    local entry_kind = type(completion_item.kind) == "string" and completion_item.kind
+        or require("care.utils.lsp").get_kind_name(completion_item.kind)
+    local preset_utils = require("care.presets.utils") or require("care.utils.lsp").get_kind_name(completion_item.kind)
+    print(use_kind_color and preset_utils.kind_highlight(entry, "fg") or highlight_group or "@care.entry")
+    print(entry_kind)
+    return {
+        { entry_kind, use_kind_color and preset_utils.kind_highlight(entry, "fg") or highlight_group or "@care.entry" },
+    }
+end
+
 return components
