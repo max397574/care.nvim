@@ -45,10 +45,7 @@ function Menu:draw_docs(entry)
     local function open_docs_window(doc_entry)
         local config = self.config.ui.docs_view or {}
         local completion_item = doc_entry.completion_item
-        if
-            not completion_item.documentation and not completion_item.detail
-            or (completion_item.documentation:match("^%s*$") and completion_item.detail:match("^%s*$"))
-        then
+        if (completion_item.documentation or ""):match("^%s*$") and (completion_item.detail or ""):match("^%s*$") then
             self.docs_window:close()
             return
         end
