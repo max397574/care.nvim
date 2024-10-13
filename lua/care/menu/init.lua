@@ -44,11 +44,15 @@ function Menu:draw_docs(entry)
 
     local function open_docs_window(doc_entry)
         local config = self.config.ui.docs_view or {}
-        if not doc_entry.completion_item.documentation then
+        local completion_item = doc_entry.completion_item
+        if
+            not completion_item.documentation and not completion_item.detail
+            or (completion_item.documentation:match("^%s*$") and completion_item.detail:match("^%s*$"))
+        then
             self.docs_window:close()
             return
         end
-        local documentation = doc_entry.completion_item.documentation
+        local documentation = completion_item.documentation
         local format = "markdown"
         local contents
         if type(documentation) == "table" and documentation.kind == "plaintext" then
@@ -56,6 +60,10 @@ function Menu:draw_docs(entry)
             contents = vim.split(documentation.value or "", "\n", { trimempty = true })
         else
             contents = vim.lsp.util.convert_input_to_markdown_lines(documentation --[[@as string]])
+        end
+
+        if completion_item.detail and completion_item.detail ~= "" then
+            table.insert(contents, 1, completion_item.detail .. "\n---")
         end
 
         local menu_border = self.config.ui.menu.border
