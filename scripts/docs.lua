@@ -72,8 +72,17 @@ local docs_files = {
         title = "Internal Source",
     },
     { type_file = "lua/care/types/context.lua", doc_file = "docs/dev/context.md", title = "Context" },
-    { type_file = "lua/care/types/presets.lua", doc_file = "docs/presets.md", title = "Presets" },
-    { type_file = "lua/care/types/preset_utils.lua", doc_file = "docs/preset_utils.md", title = "Preset Utils" },
+    {
+        type_file = "lua/care/types/presets.lua",
+        doc_file = "docs/presets.md",
+        title = "Presets",
+        types = false,
+    },
+    {
+        type_file = "lua/care/types/preset_utils.lua",
+        doc_file = "docs/preset_utils.md",
+        title = "Preset Utils",
+    },
     {
         type_file = "lua/care/types/preset_components.lua",
         doc_file = "docs/preset_components.md",
@@ -128,7 +137,7 @@ local function cleanup_annotation(short_class_name, annotation)
     end
 end
 
-local function get_class_docs(path, title, desc, mark_optionals)
+local function get_class_docs(path, title, desc, mark_optionals, write_types)
     mark_optionals = mark_optionals or false
     local classes = read_classes(path)
     local contents = {
@@ -157,19 +166,23 @@ local function get_class_docs(path, title, desc, mark_optionals)
         else
             table.insert(contents, "## " .. gen_title(field.name))
         end
-        local annotation = cleanup_annotation(short_class_name, field.annotation)
-        table.insert(contents, "`" .. annotation .. "`")
-        local links = {}
-        for _, type_link in ipairs(link_list) do
-            if annotation:find(type_link[1]) then
-                table.insert(links, type_link[2])
+        if write_types then
+            local annotation = cleanup_annotation(short_class_name, field.annotation)
+            table.insert(contents, "`" .. annotation .. "`")
+            local links = {}
+            for _, type_link in ipairs(link_list) do
+                if annotation:find(type_link[1]) then
+                    table.insert(links, type_link[2])
+                end
             end
-        end
-        if #links > 0 then
+            if #links > 0 then
+                table.insert(contents, "")
+                table.insert(contents, "See " .. table.concat(links, ", "))
+            end
             table.insert(contents, "")
-            table.insert(contents, "See " .. table.concat(links, ", "))
+        else
+            table.insert(contents, "`" .. short_class_name .. "." .. field.name .. "`")
         end
-        table.insert(contents, "")
         table.insert(contents, table.concat(field.descriptions, "\n"))
     end
     for _, class in ipairs(classes) do
@@ -195,7 +208,7 @@ end
 
 local function write_class_docs()
     for _, docs in ipairs(docs_files) do
-        local contents = get_class_docs(docs.type_file, docs.title, docs.desc or nil)
+        local contents = get_class_docs(docs.type_file, docs.title, docs.desc or nil, docs.types or true)
         write_file(docs.doc_file, table.concat(contents, "\n"))
     end
 end

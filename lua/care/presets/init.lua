@@ -14,6 +14,7 @@ function Presets.Atom(entry, data)
     local components = require("care.presets.components")
     return {
         components.KindIcon(entry, "blended"),
+        { { " ", "@care.menu" } },
         components.Label(entry, data, true),
     }
 end
