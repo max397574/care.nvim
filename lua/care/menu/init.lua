@@ -65,7 +65,7 @@ function Menu:draw_docs(entry)
         end
 
         if completion_item.detail and completion_item.detail ~= "" then
-            table.insert(contents, 1, completion_item.detail .. "\n---")
+            table.insert(contents, 1, completion_item.detail .. (documentation and "\n---" or ""))
         end
 
         local menu_border = self.config.ui.menu.border
