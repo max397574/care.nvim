@@ -35,34 +35,37 @@ function Ghost_text.new()
             if (not self.config.enabled) or not self.entry then
                 return
             end
-            local word = self.entry:get_insert_word()
+            local completion_item = self.entry.completion_item
+            local text
+            if completion_item.textEdit and completion_item.textEdit.newText then
+                text = vim.trim(completion_item.textEdit.newText)
+            else
+                text = vim.trim(completion_item.insertText or completion_item.label)
+            end
+
+            if self.entry.completion_item.insertTextFormat == 2 then
+                -- TODO: replace with stable api once available
+                text = tostring(vim.lsp._snippet_grammar.parse(text))
+            end
+
             local offset = self.entry:get_offset()
             local cursor = vim.api.nvim_win_get_cursor(self.win)
-            local text_after_filter = word:sub(cursor[2] - offset + 1)
-            if self.config.position == "inline" then
-                self.extmark_id = vim.api.nvim_buf_set_extmark(
-                    vim.api.nvim_win_get_buf(self.win),
-                    self.ns,
-                    cursor[1] - 1,
-                    cursor[2],
-                    {
-                        virt_text = { { text_after_filter, "@care.ghost_text" } },
-                        virt_text_pos = "inline",
-                    }
-                )
-            elseif self.config.position == "overlay" then
-                self.extmark_id = vim.api.nvim_buf_set_extmark(
-                    vim.api.nvim_win_get_buf(self.win),
-                    self.ns,
-                    cursor[1] - 1,
-                    cursor[2],
-                    {
-                        virt_text = { { text_after_filter, "@care.ghost_text" } },
-                        virt_text_pos = "overlay",
-                        ephemeral = true,
-                    }
-                )
-            end
+            local text_after_filter = text:sub(cursor[2] - offset + 1)
+            local lines = vim.split(text_after_filter, "\n")
+            local virt_text = { { lines[1], "@care.ghost_text" } }
+            local virt_lines = vim.iter(lines)
+                :skip(1)
+                :map(function(line)
+                    return { { line, "@care.ghost_text" } }
+                end)
+                :totable()
+            self.extmark_id =
+                vim.api.nvim_buf_set_extmark(vim.api.nvim_win_get_buf(self.win), self.ns, cursor[1] - 1, cursor[2], {
+                    virt_text = virt_text,
+                    virt_text_pos = self.config.position,
+                    virt_lines = virt_lines,
+                    ephemeral = false,
+                })
         end,
     })
     return self
