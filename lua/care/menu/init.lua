@@ -103,8 +103,13 @@ function Menu:draw_docs(entry)
 
         local do_stylize = format == "markdown" and vim.g.syntax_on ~= nil
 
+        width = width - (has_border and 2 or 0)
+
         if do_stylize then
-            contents = vim.lsp.util._normalize_markdown(contents, { width = width - (has_border and 2 or 0) })
+            contents = vim.lsp.util._normalize_markdown(
+                vim.split(table.concat(contents, "\n"), "\n", { trimempty = true }),
+                { width = width - (has_border and 2 or 0) }
+            )
             vim.bo[self.docs_window.buf].filetype = "markdown"
             vim.treesitter.start(self.docs_window.buf)
             vim.api.nvim_buf_set_lines(self.docs_window.buf, 0, -1, false, contents)
@@ -134,8 +139,6 @@ function Menu:draw_docs(entry)
         end
 
         local height = math.min(content_height, config.max_height)
-
-        -- vim.fn.screenpos(0,0,vim.api.nvim_win_get_cursor(0)[2]).col
 
         local docs_view_conf = self.config.ui.docs_view or {}
 

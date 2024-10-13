@@ -93,9 +93,11 @@ function Window:open_cursor_relative(width, wanted_height, offset, config)
         col = col,
         zindex = 1000,
     })
+    vim.wo[self.winnr][0].showbreak = ""
     vim.wo[self.winnr][0].scrolloff = 0
     vim.wo[self.winnr][0].smoothscroll = true
     vim.wo[self.winnr][0].winhighlight = "Normal:@care.menu,FloatBorder:@care.border"
+    vim.wo[self.winnr][0].breakindent = false
     self:open_scrollbar_win(width, height, offset)
 end
 
@@ -189,7 +191,15 @@ function Window:get_data()
     else
         local height = 0
         for _, line in ipairs(vim.api.nvim_buf_get_lines(self.buf, 0, -1, false)) do
-            height = height + math.max(1, math.ceil(vim.fn.strdisplaywidth(line) / data.width_without_border))
+            local wrapped_width = vim.fn.strdisplaywidth(line) - data.width_without_border
+            height = height + 1
+            if wrapped_width > 0 then
+                height = height
+                    + math.max(
+                        1,
+                        math.ceil(wrapped_width / (data.width_without_border - vim.fn.strdisplaywidth(vim.o.showbreak)))
+                    )
+            end
         end
         data.total_lines = height
     end
