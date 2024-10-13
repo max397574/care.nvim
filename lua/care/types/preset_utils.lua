@@ -12,4 +12,4 @@
 ---@field get_highlight_for_hex fun(hex: string): string
 --- With this function you can get the kind highlight group for a specific entry. The style can either be foreground
 --- or blended.
----@field kind_highlight fun(entry: care.entry, style: "fg"|"blended")
+---@field kind_highlight fun(entry: care.entry, style: "fg"|"blended"): string

@@ -48,7 +48,6 @@ function PresetUtils.get_highlight_for_hex(hex)
     return hl
 end
 
----@param style? "blended"|"fg"
 function PresetUtils.kind_highlight(entry, style)
     local completion_item = entry.completion_item
     local entry_kind = type(completion_item.kind) == "string" and completion_item.kind

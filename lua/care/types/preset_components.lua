@@ -1,4 +1,13 @@
 --- This module contains some high-level components for easily creating `format_entry` functions.
+--- ```lua
+--- format_entry = function(entry, data)
+---     local preset_components = require("care.presets.components")
+---     return {
+---         preset_components.<component_name>(<component_parameters>),
+---         preset_components.<component_name>(<component_parameters>),
+---     }
+--- end
+--- ```
 ---@class care.preset_components
 --- This adds a label for shortcuts [described here](/configuration_recipes#labels-and-shortcuts). By default this will
 --- use the `Comment` highlight group. This can be overridden though.
