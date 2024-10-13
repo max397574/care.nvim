@@ -45,11 +45,14 @@ function Menu:draw_docs(entry)
     local function open_docs_window(doc_entry)
         local config = self.config.ui.docs_view or {}
         local completion_item = doc_entry.completion_item
-        if (completion_item.documentation or ""):match("^%s*$") and (completion_item.detail or ""):match("^%s*$") then
+        local documentation = completion_item.documentation
+        if
+            (documentation.value or documentation or ""):match("^%s*$")
+            and (completion_item.detail or ""):match("^%s*$")
+        then
             self.docs_window:close()
             return
         end
-        local documentation = completion_item.documentation
         local format = "markdown"
         local contents
         if type(documentation) == "table" and documentation.kind == "plaintext" then
