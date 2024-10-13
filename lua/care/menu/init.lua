@@ -46,7 +46,8 @@ function Menu:draw_docs(entry)
         local config = self.config.ui.docs_view or {}
         local completion_item = doc_entry.completion_item
         local documentation = completion_item.documentation
-        local documentation_text = type(documentation) == "table" and documentation.value or documentation or ""
+        local documentation_text =
+            vim.trim(type(documentation) == "table" and documentation.value or documentation or "")
         if (documentation_text):match("^%s*$") and (completion_item.detail or ""):match("^%s*$") then
             self.docs_window:close()
             return
@@ -66,7 +67,7 @@ function Menu:draw_docs(entry)
             if not contents then
                 contents = {}
             end
-            table.insert(contents, 1, completion_item.detail)
+            table.insert(contents, 1, vim.trim(completion_item.detail))
             if documentation_text ~= "" then
                 table.insert(contents, 2, "---")
             end
