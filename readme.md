@@ -35,6 +35,12 @@ for lazy-loading nor calling setup.
 You can find more detailed installation instructions on the website
 [here](https://max397574.github.io/care.nvim/getting_started).
 
+# 📆 Planned features
+
+-   More integrations with existing ecosystem (e.g. mini.icons and lspkind)
+-   UI for configuration and overview e.g. over sources
+-   Cmdline Completion (relatively low priority)
+
 # Support
 
 If you like the projects I do and they help you in your programming you can
