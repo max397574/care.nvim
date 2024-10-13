@@ -1,0 +1,45 @@
+name: Minimal Bug Report
+description: If you're sure your problem is simple and not for a specific configuration report here
+title: "bug: "
+labels: [bug]
+body:
+  - type: checkboxes
+    id: faq-prerequisite
+    attributes:
+      label: Prerequisites
+      options:
+        - label: I am using the latest stable or nightly neovim version
+          required: true
+        - label: I am using the latest version of the plugin
+          required: true
+  - type: input
+    attributes:
+      label: "Neovim Version"
+      description: "`nvim --version`:"
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Actual behavior"
+      description: "A description of actual behavior. May optionally include images or videos."
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Expected behavior"
+      description: "A description of the behavior you expected."
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Healthcheck"
+      description: "Output of `:checkhealth care`"
+      render: markdown
+      placeholder: |
+        care: require("care.health").check()
+        ========================================================================
+        ## care.nvim
+  - type: textarea
+    attributes:
+      label: "Other information"
+      description: "Other information that could be helpful with debugging."
