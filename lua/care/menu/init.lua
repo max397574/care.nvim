@@ -61,7 +61,6 @@ function Menu:draw_docs(entry)
         local menu_border = self.config.ui.menu.border
         local menu_has_border = menu_border and menu_border ~= "none"
 
-        local TODO = 100000
         local right_width = math.min(
             vim.o.columns
                 - (self.menu_window.opened_at.col + 1 + vim.api.nvim_win_get_width(self.menu_window.winnr) + (menu_has_border and 2 or 0))
@@ -88,7 +87,6 @@ function Menu:draw_docs(entry)
         if not width or width < 1 then
             return
         end
-        local height = math.min(TODO, config.max_height)
 
         local border = self.config.ui.docs_view.border
         local has_border = border and border ~= "none"
@@ -119,11 +117,19 @@ function Menu:draw_docs(entry)
         else
             win_offset = self.menu_window.opened_at.col - width - 2
         end
+
+        local content_height = 0
+        for _, line in ipairs(vim.api.nvim_buf_get_lines(self.docs_window.buf, 0, -1, false)) do
+            content_height = content_height + math.max(1, math.ceil(vim.fn.strdisplaywidth(line) / width))
+        end
+
+        local height = math.min(content_height, config.max_height)
+
         -- vim.fn.screenpos(0,0,vim.api.nvim_win_get_cursor(0)[2]).col
 
         local docs_view_conf = self.config.ui.docs_view or {}
 
-        self.docs_window:open_cursor_relative(width, math.min(height, self.menu_window.max_height), win_offset, {
+        self.docs_window:open_cursor_relative(width, height, win_offset, {
             border = docs_view_conf.border,
             position = self.menu_window.position,
             max_height = docs_view_conf.max_height,
