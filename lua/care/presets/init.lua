@@ -16,7 +16,6 @@ end
 function Presets.Atom(entry, data)
     local components = require("care.presets.components")
     return {
-        components.Padding(1),
         components.KindIcon(entry, "blended"),
         components.Padding(1),
         components.Label(entry, data, true),

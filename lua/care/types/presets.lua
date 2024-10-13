@@ -16,5 +16,5 @@
 --- The atom preset is an atom-like configuration. It displays the kind icon with a blended colored background and
 --- the label.
 ---
---- ![image](https://github.com/user-attachments/assets/cb653979-ca57-49c8-ae23-510be1496a5c)
+--- ![image](https://github.com/user-attachments/assets/dcbc5e92-96e7-49f4-83d1-797a9c54d42a)
 ---@field Atom fun(entry: care.entry, data: care.format_data): { [1]: string, [2]: string }[][]
