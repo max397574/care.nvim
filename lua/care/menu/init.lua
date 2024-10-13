@@ -46,26 +46,30 @@ function Menu:draw_docs(entry)
         local config = self.config.ui.docs_view or {}
         local completion_item = doc_entry.completion_item
         local documentation = completion_item.documentation
-        if
-            ((type(documentation) == "table" and documentation.value) or documentation or ""):match("^%s*$")
-            and (completion_item.detail or ""):match("^%s*$")
-        then
+        local documentation_text = type(documentation) == "table" and documentation.value or documentation or ""
+        if (documentation_text):match("^%s*$") and (completion_item.detail or ""):match("^%s*$") then
             self.docs_window:close()
             return
         end
         local format = "markdown"
         local contents
-        if type(documentation) == "table" and documentation.kind == "plaintext" then
-            format = "plaintext"
-            contents = vim.split(documentation.value or "", "\n", { trimempty = true })
-        else
-            contents = vim.lsp.util.convert_input_to_markdown_lines(
-                (type(documentation) == "table" and (documentation.value or "")) or (documentation or "") --[[@as string]]
-            )
+        if documentation_text ~= "" then
+            if type(documentation) == "table" and documentation.kind == "plaintext" then
+                format = "plaintext"
+                contents = vim.split(documentation.value or "", "\n", { trimempty = true })
+            else
+                contents = vim.lsp.util.convert_input_to_markdown_lines(documentation_text)
+            end
         end
 
         if completion_item.detail and completion_item.detail ~= "" then
-            table.insert(contents, 1, completion_item.detail .. (documentation and "\n---" or ""))
+            if not contents then
+                contents = {}
+            end
+            table.insert(contents, 1, completion_item.detail)
+            if documentation_text ~= "" then
+                table.insert(contents, 2, "---")
+            end
         end
 
         local menu_border = self.config.ui.menu.border
