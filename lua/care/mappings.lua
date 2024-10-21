@@ -21,7 +21,6 @@ local function map(plug, callback)
 end
 
 function mappings.setup()
-    -- TODO: perhaps add more
     map("<Plug>(CareConfirm)", function()
         require("care").api.confirm()
     end)

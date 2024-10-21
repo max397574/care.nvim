@@ -2,8 +2,6 @@
 ---@return lsp.CompletionItem
 local function normalize_entry(entry)
     entry.insertTextFormat = entry.insertTextFormat or 1
-    -- TODO: make this earlier because the sorting won't happen here
-    -- TODO: perhaps remove? are these fields even relevant to complete?
     entry.filterText = entry.filterText or entry.label
     entry.sortText = entry.sortText or entry.label
     entry.insertText = entry.insertText or entry.label
@@ -78,7 +76,6 @@ return function(entry)
         vim.api.nvim_win_set_cursor(0, { start.line + 1, start.character })
         config.snippet_expansion(snippet_text)
     else
-        -- TODO: revert when https://github.com/neovim/neovim/issues/29811 if fixed
         local text_edit_lines = vim.split(completion_item.textEdit.newText, "\n")
         vim.api.nvim_win_set_cursor(0, {
             start.line + #text_edit_lines,

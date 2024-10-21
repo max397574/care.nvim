@@ -2,9 +2,9 @@
 title: Design
 description: Design of care.nvim
 author:
-  - max397574
+    - max397574
 categories:
-  - docs
+    - docs
 ---
 
 # General
@@ -23,16 +23,16 @@ completions which are then displayed in the [Completion Menu](#completion-menu)
 The completion menu displays the current completions. Features that it should
 have:
 
-- Completely customizable display for every entry (with **text-highlight
-  chunks** like extmark-api)
-- Customizable scrollbar
-- Customizable window properties
-  - Border
-  - Max height
-- Docview
-  - Customizable
-  - Try to get nicely concealed like in core or noice.nvim
-  - Allow to send to e.g. quickfix or copy
+-   Completely customizable display for every entry (with **text-highlight
+    chunks** like extmark-api)
+-   Customizable scrollbar
+-   Customizable window properties
+    -   Border
+    -   Max height
+-   Docview
+    -   Customizable
+    -   Try to get nicely concealed like in core or noice.nvim
+    -   Allow to send to e.g. quickfix or copy
 
 # Terms
 
@@ -43,8 +43,6 @@ beginning of the line.
 
 # Architecture
 
-TODO: fancy ascii diagramms
-
 autocompletion:
 
 1. `TextChangedI` or `CursorMovedI`
@@ -53,26 +51,26 @@ autocompletion:
 4. Check if character was a trigger character or completion was triggered
    manually
 5. Depending on ^^ decide what to do _for every source_:
-   - Get new completions
-     1. get completions from source based on context
-   - sort completions
-     1. Use characters found with `keyword_pattern` to fuzzy match and sort
-        completions
+    - Get new completions
+        1. get completions from source based on context
+    - sort completions
+        1. Use characters found with `keyword_pattern` to fuzzy match and sort
+           completions
 6. Collect all the completions
 7. Open menu to display thing
-   1. if there is a selected one:
-      - highlight selected one
-      - show preview of selected completion
-      - show docs
+    1. if there is a selected one:
+        - highlight selected one
+        - show preview of selected completion
+        - show docs
 
 When completing (e.g. `<cr>`):
 
 1. check if menu is open
 2. check if anything is selected (or autoselect option)
 3. complete
-   1. insert text
-   2. additional text edits (check core functions)
-   3. snippet expansion (core or luasnip)
+    1. insert text
+    2. additional text edits (check core functions)
+    3. snippet expansion (core or luasnip)
 4. close menu
 
 # Motivation

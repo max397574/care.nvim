@@ -9,8 +9,6 @@ local Matcher = {}
 function Matcher.match(entries, prefix)
     ---@param entry care.entry
     local function get_filter_text(entry)
-        -- TODO: makes more sense like this because label is what user sees?
-        -- return entry.filterText or entry.label
         return entry.completion_item.label
     end
 

@@ -5,8 +5,6 @@
 @care.match: Matched part of entries
 --]]
 
--- TODO: move into function?
-
 --- Gets red, green and blue values for color
 ---@param color string @#RRGGBB
 ---@return table

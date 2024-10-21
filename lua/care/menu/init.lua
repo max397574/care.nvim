@@ -276,7 +276,6 @@ function Menu:get_active_entry()
     if not self.entries then
         return nil
     end
-    -- TODO: make 0->1 configurable (cmpts "autoselect")
     if self.reversed then
         if self.index == 0 then
             return self.entries[1]

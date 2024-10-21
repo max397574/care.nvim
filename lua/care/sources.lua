@@ -36,7 +36,6 @@ function care_sources.complete(context, source, callback)
             end
             return
         elseif not source.entries or #source.entries == 0 then
-            -- TODO: perhaps different trigger kind because we're manually requesting completions here?
             completion_context = {
                 triggerKind = 2,
                 triggerCharacter = last_char,
