@@ -1,6 +1,6 @@
 ---
 title: Window Util
-description: Type description of care.window, care.window.data
+description: Type description of care.window, care.window.data, care.window.config
 ---
 
 # Window Util
@@ -11,7 +11,7 @@ Utility class for working with windows in care
 # Methods
 
 ## New
-`Window.new(): care.window`
+`Window.new(config: care.window.config): care.window`
 
 See [care.window](/dev/window)
 
@@ -90,6 +90,11 @@ Instance of the care config
 
 Whether the window is currently opened above or below the cursor
 
+## Scrollbar Config
+`window.scrollbar_config care.config.scrollbar`
+
+Configuration for the scrollbar of the window
+
 ## Scrollbar
 `window.scrollbar {win: integer, buf: integer}`
 
@@ -167,4 +172,14 @@ Current scroll of the window
 
 ## Total Lines
 `window.data.total_lines integer`
+
+
+
+
+# `care.window.config`
+
+# Fields
+
+## Scrollbar
+`window.config.scrollbar care.config.scrollbar`
 
