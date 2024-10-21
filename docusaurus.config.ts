@@ -50,6 +50,16 @@ const config: Config = {
       } satisfies Preset.Options,
     ],
   ],
+   themes: [
+    [
+      require.resolve("@easyops-cn/docusaurus-search-local"),
+      /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
+      ({
+        indexBlog: false,
+        hashed: true,
+      }),
+    ],
+  ],
 
   themeConfig: {
     // Replace with your project's social card
