@@ -50,16 +50,21 @@ const config: Config = {
       } satisfies Preset.Options,
     ],
   ],
-   themes: [
+
+  plugins: [
     [
-      require.resolve("@easyops-cn/docusaurus-search-local"),
-      /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
-      ({
-        indexBlog: false,
+      "@easyops-cn/docusaurus-search-local",
+      {
         hashed: true,
-      }),
+        indexDocs: true,
+        indexBlog: false,
+        indexPages: false,
+        docsRouteBasePath: "/",
+        searchBarShortcutHint: false,
+      },
     ],
   ],
+
 
   themeConfig: {
     // Replace with your project's social card
