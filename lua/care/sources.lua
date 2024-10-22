@@ -61,8 +61,6 @@ function care_sources.complete(context, source, callback)
             return
         end
     elseif context.reason == 3 then
-        print(last_char)
-        vim.print(source:get_trigger_characters())
         if vim.tbl_contains(source:get_trigger_characters(), last_char) then
             completion_context = {
                 triggerKind = 2,
