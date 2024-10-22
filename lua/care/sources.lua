@@ -60,12 +60,24 @@ function care_sources.complete(context, source, callback)
             callback(require("care.matcher").match(source.entries, prefix))
             return
         end
+    elseif context.reason == 3 then
+        print(last_char)
+        vim.print(source:get_trigger_characters())
+        if vim.tbl_contains(source:get_trigger_characters(), last_char) then
+            completion_context = {
+                triggerKind = 2,
+                triggerCharacter = last_char,
+            }
+        else
+            callback({})
+            return
+        end
     else
         completion_context = {
             triggerKind = 1,
         }
     end
-    if source.incomplete then
+    if source.incomplete and not context.reason == 3 then
         completion_context = {
             triggerKind = 3,
         }
