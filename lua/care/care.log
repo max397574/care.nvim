@@ -1,0 +1,265 @@
+On Insert Enter
+Setting up core
+Core: on_change
+Context:     
+Core: Context not changed
+Core: on_change
+Context:     i
+Core: on_change
+Context:     if
+Confirming Entry
+Completion item: { data = { auto = false, filetype = "lua", show_condition = <function 1>, snip_id = 15 }, documentation = "<documentation>", kind = 15, label = "if", word = "if" }
+Entry context:: bufnr: 1, cursor: { col = 5, row = 68 }, reason: 1, line_before_cursor:     i, line:     i
+Core blocked
+Range (before adjustments), behavior: insert: start: { character = 4, line = 67 }, end: { character = 5, line = 67 }
+Text Edit: newText: if, range: { ["end"] = { character = 5, line = 67 }, start = { character = 4, line = 67 } }
+Snippet Text
+Core unblocked
+Core: on_change
+Context:     if s
+Core: on_change
+Context:     if 
+Core: on_change
+Context:     if i
+Core: on_change
+Context:     if is
+Core: on_change
+Context:     if is_
+Core: on_change
+Context:     if is_m
+Core: on_change
+Context:     if is_me
+Core: on_change
+Context:     if is_met
+Core: on_change
+Context:     if is_meth
+Core: on_change
+Context:     if is_metho
+Core: on_change
+Context:     if is_method
+Core: on_change
+Context:     if is_method 
+Core: on_change
+Context:     if is_method o
+Core: on_change
+Context:     if is_method or
+Core: on_change
+Context:     if is_method or 
+Core: on_change
+Context:     if is_method or i
+Core: on_change
+Context:     if is_method or is
+Core: on_change
+Context:     if is_method or is_
+Core: on_change
+Context:     if is_method or is_f
+Core: on_change
+Context:     if is_method or is_fu
+Core: on_change
+Context:     if is_method or is_fun
+Core: on_change
+Context:     if is_method or is_func
+Core: on_change
+Context:     if is_method or is_funct
+Core: on_change
+Context:     if is_method or is_functi
+Core: on_change
+Context:     if is_method or is_functio
+Core: on_change
+Context:     if is_method or is_function
+Core: filtering
+Core: on_change
+Context:         -
+Core: on_change
+Context:         --
+Core: on_change
+Context:         -- 
+Core: on_change
+Context:         -- s
+Core: on_change
+Context:         -- so
+Core: on_change
+Context:         -- som
+Core: on_change
+Context:         -- some
+Core: on_change
+Context:         -- some 
+Core: on_change
+Context:         -- some c
+Core: on_change
+Context:         -- some co
+Core: on_change
+Context:         -- some cod
+Core: on_change
+Context:         -- some code
+Core: on_change
+Context:         -- some code 
+Core: on_change
+Context:         -- some code h
+Core: on_change
+Context:         -- some code he
+Core: on_change
+Context:         -- some code her
+Core: on_change
+Context:         -- some code here
+Core: on_change
+Context:         -- some code here 
+Core: on_change
+Context:     
+Core: on_change
+Context:     
+Core: on_change
+Context:     =
+Core: on_change
+Context:     ==
+Core: on_change
+Context:     =
+Core: on_change
+Context:     
+Core: on_change
+Context:     -
+Core: on_change
+Context:     --
+Core: on_change
+Context:     -- 
+Core: on_change
+Context:     -- c
+Core: on_change
+Context:     -- co
+Core: on_change
+Context:     -- c
+Core: on_change
+Context:     -- 
+Core: on_change
+Context:     -- s
+Core: on_change
+Context:     -- so
+Core: on_change
+Context:     -- som
+Core: on_change
+Context:     -- some
+Core: on_change
+Context:     -- some 
+Core: on_change
+Context:     -- some c
+Core: on_change
+Context:     -- some co
+Core: on_change
+Context:     -- some code
+Core: on_change
+Context:     -- some code 
+Core: on_change
+Context:     -- some code w
+Core: on_change
+Context:     -- some code wi
+Core: on_change
+Context:     -- some code wil
+Core: on_change
+Context:     -- some code will
+Core: on_change
+Context:     -- some code will 
+Core: on_change
+Context:     -- some code will b
+Core: on_change
+Context:     -- some code will be
+Core: on_change
+Context:     -- some code will be 
+Core: on_change
+Context:     -- some code will be a
+Core: on_change
+Context:     -- some code will be ad
+Core: on_change
+Context:     -- some code will be add
+Core: on_change
+Context:     -- some code will be addd
+Core: on_change
+Context:     -- some code will be add
+Core: on_change
+Context:     -- some code will be added
+Core: on_change
+Context:     -- some code will be added 
+Core: on_change
+Context:     -- some code will be added h
+Core: on_change
+Context:     -- some code will be added he
+Core: on_change
+Context:     -- some code will be added her
+Core: on_change
+Context:     -- some code will be added here
+Core: on_change
+Context:     -- some code will be added here 
+Core: on_change
+Context:     -- some code will be added here t
+Core: on_change
+Context:     -- some code will be added here to
+Core: on_change
+Context:     -- some code will be added here to 
+Core: on_change
+Context:     -- some code will be added here to i
+Core: on_change
+Context:     -- some code will be added here to in
+Core: on_change
+Context:     -- some code will be added here to ine
+Core: on_change
+Context:     -- some code will be added here to ineg
+Core: on_change
+Context:     -- some code will be added here to ine
+Core: on_change
+Context:     -- some code will be added here to in
+Core: on_change
+Context:     -- some code will be added here to int
+Core: on_change
+Context:     -- some code will be added here to inte
+Core: on_change
+Context:     -- some code will be added here to integ
+Core: on_change
+Context:     -- some code will be added here to integr
+Core: on_change
+Context:     -- some code will be added here to integra
+Core: on_change
+Context:     -- some code will be added here to integrat
+Core: on_change
+Context:     -- some code will be added here to integrate
+Core: on_change
+Context:     -- some code will be added here to integrate 
+Core: on_change
+Context:     -- some code will be added here to integrate c
+Core: on_change
+Context:     -- some code will be added here to integrate ca
+Core: on_change
+Context:     -- some code will be added here to integrate car
+Core: on_change
+Context:     -- some code will be added here to integrate care
+Core: on_change
+Context:     -- some code will be added here to integrate care 
+Core: on_change
+Context:     -- some code will be added here to integrate care w
+Core: on_change
+Context:     -- some code will be added here to integrate care wi
+Core: on_change
+Context:     -- some code will be added here to integrate care wit
+Core: on_change
+Context:     -- some code will be added here to integrate care with
+Core: on_change
+Context:     -- some code will be added here to integrate care with 
+Core: on_change
+Context:     -- some code will be added here to integrate care with a
+Core: on_change
+Context:     -- some code will be added here to integrate care with au
+Core: on_change
+Context:     -- some code will be added here to integrate care with aut
+Core: on_change
+Context:     -- some code will be added here to integrate care with auto
+Core: on_change
+Context:     -- some code will be added here to integrate care with autop
+Core: on_change
+Context:     -- some code will be added here to integrate care with autopa
+Confirming Entry
+Completion item: { documentation = "<documentation>", insertTextFormat = 2, kind = 1, label = "autopairs", sortText = "0001" }
+Entry context:: bufnr: 1, cursor: { col = 64, row = 15 }, reason: 1, line_before_cursor:     -- some code will be added here to integrate care with autop, line:     -- some code will be added here to integrate care with autop
+Core blocked
+Range (before adjustments), behavior: insert: start: { character = 59, line = 14 }, end: { character = 64, line = 14 }
+Text Edit: newText: , range: { ["end"] = { character = 64, line = 14 }, start = { character = 59, line = 14 } }
+Snippet Text: autopairs
+Core: on_change
+Core unblocked

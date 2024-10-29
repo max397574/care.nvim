@@ -12,6 +12,7 @@ local Log = require("care.utils.log")
 
 ---@param entry care.entry
 return function(entry)
+    -- some code will be added here to integrate care with autopairs
     local config = require("care.config").options
     Log.log("Confirming Entry")
     Log.log("Completion item", function()
