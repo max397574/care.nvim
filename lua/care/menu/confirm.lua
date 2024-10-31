@@ -8,21 +8,11 @@ local function normalize_entry(entry)
     return entry
 end
 
-local autopairs_ok, autopairs = pcall(require, "nvim-autopairs")
-if not autopairs_ok then
-    return ""
-end
-
-local handlers_ok, handlers = pcall(require, "nvim-autopairs.completion.handlers")
-if not handlers_ok then
-    return ""
-end
 local Log = require("care.utils.log")
 
 ---@param entry care.entry
 return function(entry)
     local config = require("care.config").options
-    local rules = autopairs.get_rules("(")
     Log.log("Confirming Entry")
     Log.log("Completion item", function()
         local item = vim.deepcopy(entry.completion_item)
@@ -61,19 +51,25 @@ return function(entry)
     local is_snippet = completion_item.insertTextFormat == 2
     local snippet_text
 
-    local is_function, is_method = completion_item.kind == 3, completion_item.kind == 2
-    local lisp_filetypes = { clojure = true, clojurescript = true, fennel = true, janet = true }
-    local is_lisp = lisp_filetypes[vim.bo.ft] == true
-    local is_python = vim.bo.ft == "python"
-    local buf = vim.api.nvim_get_current_buf()
+    -- Integrates nvim-autopairs with care.nvim
+    if config.integration.autopairs then
+        local autopairs = require("nvim-autopairs")
+        local rules = autopairs.get_rules("(")
+        local handlers = require("nvim-autopairs.completion.handlers")
+        local is_function, is_method = completion_item.kind == 3, completion_item.kind == 2
+        local lisp_filetypes = { clojure = true, clojurescript = true, fennel = true, janet = true }
+        local is_lisp = lisp_filetypes[vim.bo.ft] == true
+        local is_python = vim.bo.ft == "python"
+        local buf = vim.api.nvim_get_current_buf()
 
-    if is_function or is_method then
-        if is_lisp then
-            handlers.lisp("(", completion_item, buf)
-        elseif is_python then
-            handlers.python("(", completion_item, buf, rules)
-        else
-            handlers["*"]("(", completion_item, buf, rules)
+        if is_function or is_method then
+            if is_lisp then
+                handlers.lisp("(", completion_item, buf)
+            elseif is_python then
+                handlers.python("(", completion_item, buf, rules)
+            else
+                handlers["*"]("(", completion_item, buf, rules)
+            end
         end
     end
 
