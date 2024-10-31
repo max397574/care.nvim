@@ -22,7 +22,7 @@
 -   Really fast performance (can draw thousands of items per keystroke without
     problems)
 -   Well documented source code
-    ([devloper documentation](https://max397574.github.io/care.nvim/dev/))
+    ([developer documentation](https://max397574.github.io/care.nvim/dev/))
 
 # 🚀 Getting started
 
