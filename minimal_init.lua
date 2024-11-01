@@ -33,7 +33,7 @@ require("lazy.minit").repro({
                     if require("care").api.doc_is_open() then
                         require("care").api.scroll_docs(-4)
                     else
-                        vim.api.nvim_feedkeys(vim.keycode("<c-f>"), "n", false)
+                        vim.api.nvim_feedkeys(vim.keycode("<c-d>"), "n", false)
                     end
                 end)
             end,
