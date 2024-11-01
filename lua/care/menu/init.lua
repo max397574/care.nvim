@@ -233,19 +233,15 @@ end
 
 function Menu:select_next(count)
     count = count or 1
-    self.index = self.index + count
-    if self.index > #self.entries then
-        self.index = self.index - #self.entries - 1
-    end
+    self.index = (self.index + count) % (#self.entries + 1)
+
     self:select(1)
 end
 
 function Menu:select_prev(count)
     count = count or 1
-    self.index = self.index - count
-    if self.index < 0 then
-        self.index = #self.entries + self.index + 1
-    end
+    self.index = (self.index - count) % (#self.entries + 1)
+
     self:select(-1)
 end
 
