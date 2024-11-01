@@ -93,7 +93,8 @@ return function(entry)
     end
     unblock()
     vim.schedule(function()
-        require("care").core.context = require("care.context").new(require("care").core.context)
+        require("care").core.context =
+            require("care.context").new(require("care").core and require("care").core.context or nil)
         require("care").core:complete(3)
     end)
 end
