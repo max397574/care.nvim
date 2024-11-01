@@ -79,7 +79,7 @@ function care_sources.complete(context, source, callback)
             triggerKind = 1,
         }
     end
-    if source.incomplete and not context.reason == 3 then
+    if source.incomplete and context.reason ~= 3 then
         completion_context = {
             triggerKind = 3,
         }

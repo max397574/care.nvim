@@ -69,7 +69,7 @@ end
 
 local function get_candidates(dirname, options, callback)
     local fs, err = vim.uv.fs_scandir(dirname)
-    if err then
+    if err or not fs then
         return callback(err, nil)
     end
 
