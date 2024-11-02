@@ -100,6 +100,7 @@ function Menu:draw_docs(entry)
             end
         end
         if not width or width < 1 then
+            self.docs_window:close()
             return
         end
 
@@ -126,6 +127,10 @@ function Menu:draw_docs(entry)
                 vim.bo[self.docs_window.buf].syntax = format
             end
             vim.api.nvim_buf_set_lines(self.docs_window.buf, 0, -1, true, contents)
+        end
+        if #contents == 0 then
+            self.docs_window:close()
+            return
         end
         width = math.min(width, require("care.utils").longest(contents))
 
