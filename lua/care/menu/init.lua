@@ -147,11 +147,15 @@ function Menu:draw_docs(entry)
 
         local docs_view_conf = self.config.ui.docs_view or {}
 
-        self.docs_window:open_cursor_relative(width, height, win_offset, {
-            border = docs_view_conf.border,
-            position = self.menu_window.position,
-            max_height = docs_view_conf.max_height,
-        })
+        if self.docs_window:is_open() then
+            self.docs_window:readjust(height, width, win_offset)
+        else
+            self.docs_window:open_cursor_relative(width, height, win_offset, {
+                border = docs_view_conf.border,
+                position = self.menu_window.position,
+                max_height = docs_view_conf.max_height,
+            })
+        end
 
         self.docs_window:set_scroll(1, 1, false)
         self.docs_window:draw_scrollbar()
