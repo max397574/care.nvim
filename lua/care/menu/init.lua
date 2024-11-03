@@ -203,6 +203,7 @@ function Menu:readjust_win(offset)
     self.menu_window:readjust(#self.entries, width, offset)
     self.reversed = self.config.sorting_direction == "away-from-cursor" and self.menu_window.position == "above"
     preselect(self)
+    self.docs_window:close()
     self:select()
 end
 
