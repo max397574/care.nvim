@@ -13,7 +13,7 @@ description: Configuration for care.nvim
 config.defaults = {
     ui = {
         menu = {
-            max_height = 10,
+            max_height = vim.o.pumheight ~= 0 and vim.o.pumheight or 10,
             border = "rounded",
             position = "auto",
             format_entry = function(entry, data)
