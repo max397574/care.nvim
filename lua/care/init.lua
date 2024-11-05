@@ -60,6 +60,7 @@ care.api = {
 ---@param options? care.config
 function care.setup(options)
     require("care.config").setup(options)
+    require("care.sources").update_configs()
 end
 
 --- Sets up care

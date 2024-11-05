@@ -15,6 +15,13 @@ function care_sources.get_sources()
     return vim.deepcopy(care_sources.sources)
 end
 
+function care_sources.update_configs()
+    local source_configs = require("care.config").options.sources or {}
+    for _, source in ipairs(care_sources.sources) do
+        source.config = source_configs[source.source.name] or {}
+    end
+end
+
 ---@param context care.context
 ---@param source care.internal_source
 ---@param callback fun(items: care.entry[], is_incomplete?: boolean)

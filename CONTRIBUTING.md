@@ -87,3 +87,7 @@ dependencies installed by running
 ```bash
 nix run .#nvim
 ```
+
+# Debugging tricks
+Print out source configurations:
+`:lua =vim.iter(require"care.sources".sources):map(function(source) return source.config end):totable()`
