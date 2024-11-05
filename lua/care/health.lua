@@ -74,17 +74,17 @@ function Health.check()
             vim.health.error(error)
         end
     end
-    vim.health.info("Aligments:")
-    local wrong_aligments = false
+    vim.health.info("Alignments:")
+    local wrong_alignments = false
     for i, alignment in ipairs(require("care.config").options.ui.menu.alignments) do
         if not vim.tbl_contains({ nil, "left", "right", "center" }, alignment) then
             vim.health.error(
-                "Field number " .. i .. ' in the aligments table is an invalid aligment ("' .. alignment .. '")'
+                "Field number " .. i .. ' in the alignments table is an invalid alignment ("' .. alignment .. '")'
             )
-            wrong_aligments = true
+            wrong_alignments = true
         end
     end
-    if not wrong_aligments then
+    if not wrong_alignments then
         vim.health.info("All alignments are correct")
     end
     vim.health.info("")

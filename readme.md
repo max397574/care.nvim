@@ -11,13 +11,13 @@
 # ✨ Features
 
 -   Fully configurable menu
--   Api for keybindings and various utilities
+-   API for keybindings and various utilities
 -   [Different presets](https://max397574.github.io/care.nvim/presets) for the
     menu
 -   [Components](https://max397574.github.io/care.nvim/preset_components) and
     [utilities](https://max397574.github.io/care.nvim/preset_utils) for easy
     configuration of menu
--   Compability with nvim-cmp sources with
+-   Compatibility with nvim-cmp sources with
     [care-cmp](https://github.com/max397574/care-cmp)
 -   Really fast performance (can draw thousands of items per keystroke without
     problems)
@@ -27,7 +27,7 @@
 # 🚀 Getting started
 
 You can simply install care.nvim with your preferred plugin manager. There are
-builtin sources for lsp and more comming soon.
+builtin sources for lsp and more coming soon.
 
 Care is initialized automatically and lazy-loaded internally so there is no need
 for lazy-loading nor calling setup.
