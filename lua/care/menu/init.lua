@@ -42,36 +42,9 @@ function Menu:draw_docs(entry)
         return
     end
 
+    ---@param doc_entry care.entry
     local function open_docs_window(doc_entry)
         local config = self.config.ui.docs_view or {}
-        local completion_item = doc_entry.completion_item
-        local documentation = completion_item.documentation
-        local documentation_text =
-            vim.trim(type(documentation) == "table" and documentation.value or documentation or "")
-        if (documentation_text):match("^%s*$") and (completion_item.detail or ""):match("^%s*$") then
-            self.docs_window:close()
-            return
-        end
-        local format = "markdown"
-        local contents
-        if documentation_text ~= "" then
-            if type(documentation) == "table" and documentation.kind == "plaintext" then
-                format = "plaintext"
-                contents = vim.split(documentation.value or "", "\n", { trimempty = true })
-            else
-                contents = vim.lsp.util.convert_input_to_markdown_lines(documentation_text)
-            end
-        end
-
-        if completion_item.detail and completion_item.detail ~= "" then
-            if not contents then
-                contents = {}
-            end
-            table.insert(contents, 1, vim.trim(completion_item.detail))
-            if documentation_text ~= "" then
-                table.insert(contents, 2, "---")
-            end
-        end
 
         local menu_border = self.config.ui.menu.border
         local menu_has_border = menu_border and menu_border ~= "none"
@@ -107,10 +80,16 @@ function Menu:draw_docs(entry)
         local border = self.config.ui.docs_view.border
         local has_border = border and border ~= "none"
 
-        local do_stylize = format == "markdown" and vim.g.syntax_on ~= nil
-
         width = width - (has_border and 2 or 0)
 
+        local contents, format = doc_entry:get_documentation()
+
+        if contents == nil then
+            self.docs_window:close()
+            return
+        end
+
+        local do_stylize = format == "markdown" and vim.g.syntax_on ~= nil
         if do_stylize then
             contents = vim.lsp.util._normalize_markdown(
                 vim.split(table.concat(contents, "\n"), "\n", { trimempty = true }),

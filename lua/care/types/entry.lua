@@ -32,3 +32,5 @@
 ---@field get_replace_range fun(self: care.entry): lsp.Range
 --- Gets the default range for entry (if there is no textEdit)
 ---@field _get_default_range fun(self: care.entry): lsp.Range
+--- Gets the documentation for an entry. This includes adding the detail.
+---@field get_documentation fun(self: care.entry) : string[]?, string?

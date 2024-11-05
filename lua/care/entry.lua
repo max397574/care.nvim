@@ -168,4 +168,35 @@ function Entry:get_replace_range()
     end
 end
 
+function Entry:get_documentation()
+    local completion_item = self.completion_item
+    local documentation = completion_item.documentation
+    ---@diagnostic disable-next-line: param-type-mismatch
+    local documentation_text = vim.trim(type(documentation) == "table" and documentation.value or documentation or "")
+    if (documentation_text):match("^%s*$") and (completion_item.detail or ""):match("^%s*$") then
+        return nil, nil
+    end
+    local format = "markdown"
+    local contents
+    if documentation_text ~= "" then
+        if type(documentation) == "table" and documentation.kind == "plaintext" then
+            format = "plaintext"
+            contents = vim.split(documentation.value or "", "\n", { trimempty = true })
+        else
+            contents = vim.lsp.util.convert_input_to_markdown_lines(documentation_text)
+        end
+    end
+
+    if completion_item.detail and completion_item.detail ~= "" then
+        if not contents then
+            contents = {}
+        end
+        table.insert(contents, 1, vim.trim(completion_item.detail))
+        if documentation_text ~= "" then
+            table.insert(contents, 2, "---")
+        end
+    end
+    return contents, format
+end
+
 return Entry
