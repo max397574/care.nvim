@@ -70,7 +70,7 @@ function care.initialize(options)
     end
     require("care.utils.log").log("Initial Setup")
     require("care.mappings").setup()
-    require("care.highlights")
+    require("care.highlights").setup()
 
     local augroup = vim.api.nvim_create_augroup("care", {})
     vim.api.nvim_create_autocmd("InsertEnter", {

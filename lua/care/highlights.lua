@@ -29,6 +29,8 @@ local hl = function(...)
     vim.api.nvim_set_hl(0, ...)
 end
 
+local M = {}
+
 local kinds = {
     Text = "@string",
     Method = "@function.method",
@@ -57,49 +59,59 @@ local kinds = {
     TypeParameter = "@type",
 }
 
-vim.api.nvim_create_autocmd("ColorSchemePre", {
-    callback = function()
-        for name, _ in pairs(kinds) do
-            hl(string.format("@care.type.%s", name), {})
-            hl(string.format("@care.type.fg.%s", name), {})
-            hl(string.format("@care.type.blended.%s", name), {})
-        end
-        hl("@care", {})
-        hl("@care.type", {})
-        hl("@care.selected", {})
-        hl("@care.match", {})
-        hl("@care.menu", {})
-        hl("@care.scrollbar", {})
-        hl("@care.entry", {})
-        hl("@care.ghost_text", {})
-        hl("@care.scrollbar.thumb", {})
-    end,
-})
+local function setup_highlights()
+    for name, group in pairs(kinds) do
+        local highlights = vim.api.nvim_get_hl(0, { name = group, link = false })
+        local normal_float = vim.api.nvim_get_hl(0, { name = "NormalFloat" })
+        local normal = vim.api.nvim_get_hl(0, { name = "Normal" })
+        local fg = string.format("#%06x", highlights.fg or normal_float.fg or normal.fg)
+        hl(string.format("@care.type.%s", name), { link = group, default = true })
+        hl(string.format("@care.type.fg.%s", name), { fg = fg, default = true })
+        hl(string.format("@care.type.blended.%s", name), {
+            fg = fg,
+            bg = blend_colors(fg, string.format("#%06x", normal_float.bg or normal.bg), 0.15),
+            default = true,
+        })
+    end
 
-vim.api.nvim_create_autocmd("ColorScheme", {
-    callback = function()
-        for name, group in pairs(kinds) do
-            local highlights = vim.api.nvim_get_hl(0, { name = group, link = false })
-            local normal_float = vim.api.nvim_get_hl(0, { name = "NormalFloat" })
-            local normal = vim.api.nvim_get_hl(0, { name = "Normal" })
-            local fg = string.format("#%06x", highlights.fg or normal_float.fg or normal.fg)
-            hl(string.format("@care.type.%s", name), { link = group, default = true })
-            hl(string.format("@care.type.fg.%s", name), { fg = fg, default = true })
-            hl(string.format("@care.type.blended.%s", name), {
-                fg = fg,
-                bg = blend_colors(fg, string.format("#%06x", normal_float.bg or normal.bg), 0.15),
-                default = true,
-            })
-        end
+    hl("@care", { link = "Normal", default = true })
+    hl("@care.type", { link = "Normal", default = true })
+    hl("@care.selected", { link = "Visual", default = true })
+    hl("@care.match", { link = "Special", default = true })
+    hl("@care.menu", { link = "NormalFloat", default = true })
+    hl("@care.scrollbar", { link = "PmenuSbar", default = true })
+    hl("@care.entry", { italic = true, default = true })
+    hl("@care.ghost_text", { link = "Comment", default = true })
+    hl("@care.scrollbar.thumb", { link = "PmenuSbar", default = true })
+end
 
-        hl("@care", { link = "Normal", default = true })
-        hl("@care.type", { link = "Normal", default = true })
-        hl("@care.selected", { link = "Visual", default = true })
-        hl("@care.match", { link = "Special", default = true })
-        hl("@care.menu", { link = "NormalFloat", default = true })
-        hl("@care.scrollbar", { link = "PmenuSbar", default = true })
-        hl("@care.entry", { italic = true, default = true })
-        hl("@care.ghost_text", { link = "Comment", default = true })
-        hl("@care.scrollbar.thumb", { link = "PmenuSbar", default = true })
-    end,
-})
+function M.setup()
+    vim.api.nvim_create_autocmd("ColorSchemePre", {
+        callback = function()
+            for name, _ in pairs(kinds) do
+                hl(string.format("@care.type.%s", name), {})
+                hl(string.format("@care.type.fg.%s", name), {})
+                hl(string.format("@care.type.blended.%s", name), {})
+            end
+            hl("@care", {})
+            hl("@care.type", {})
+            hl("@care.selected", {})
+            hl("@care.match", {})
+            hl("@care.menu", {})
+            hl("@care.scrollbar", {})
+            hl("@care.entry", {})
+            hl("@care.ghost_text", {})
+            hl("@care.scrollbar.thumb", {})
+        end,
+    })
+
+    setup_highlights()
+
+    vim.api.nvim_create_autocmd("ColorScheme", {
+        callback = function()
+            setup_highlights()
+        end,
+    })
+end
+
+return M
