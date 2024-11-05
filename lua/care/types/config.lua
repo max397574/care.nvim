@@ -172,6 +172,10 @@
 --- Position of docs view.
 --- Auto will prefer right if there is enough space
 ---@field position? "auto"|"left"|"right"
+--- Use advanced styling for the documentation.
+--- This will use treesitter to make the menu prettier which comes with quite a big
+--- performance cost though.
+---@field advanced_styling? boolean
 
 --- Additional data passed to format function to allow more advanced formatting
 ---@class care.format_data

@@ -23,6 +23,7 @@ config.defaults = {
             border = "rounded",
             scrollbar = { enabled = true, character = "┃", offset = 0 },
             position = "auto",
+            advanced_styling = false,
         },
         type_icons = {
             Class = "󰠱",

@@ -34,7 +34,7 @@ function Menu:close()
     end
 end
 
-function Menu:draw_docs(entry)
+Menu.draw_docs = require("care.utils.async").throttle(function(self, entry)
     if not entry or self.index == 0 or self.menu_window.winnr == nil then
         if self:docs_visible() then
             self.docs_window:close()
@@ -82,36 +82,36 @@ function Menu:draw_docs(entry)
 
         width = width - (has_border and 2 or 0)
 
-        local contents, format = doc_entry:get_documentation()
+        local docs = doc_entry:get_documentation()
 
-        if contents == nil then
+        if docs == nil or #docs == 0 then
             self.docs_window:close()
             return
         end
 
-        local do_stylize = format == "markdown" and vim.g.syntax_on ~= nil
-        if do_stylize then
-            contents = vim.lsp.util._normalize_markdown(
-                vim.split(table.concat(contents, "\n"), "\n", { trimempty = true }),
+        if self.config.ui.docs_view.advanced_styling then
+            docs = vim.lsp.util._normalize_markdown(
+                vim.split(table.concat(docs, "\n"), "\n", { trimempty = true }),
                 { width = width }
             )
             vim.bo[self.docs_window.buf].filetype = "markdown"
             vim.treesitter.start(self.docs_window.buf)
-            vim.api.nvim_buf_set_lines(self.docs_window.buf, 0, -1, false, contents)
+            vim.api.nvim_buf_set_lines(self.docs_window.buf, 0, -1, false, docs)
         else
-            -- Clean up input: trim empty lines
-            contents = vim.split(table.concat(contents, "\n"), "\n", { trimempty = true })
+            docs = vim.lsp.util._normalize_markdown(
+                vim.split(table.concat(docs, "\n"), "\n", { trimempty = true }),
+                { width = width }
+            )
 
-            if format then
-                vim.bo[self.docs_window.buf].syntax = format
-            end
-            vim.api.nvim_buf_set_lines(self.docs_window.buf, 0, -1, true, contents)
+            vim.api.nvim_buf_call(self.docs_window.buf, function()
+                vim.cmd([[syntax clear]])
+                vim.api.nvim_buf_set_lines(self.docs_window.buf, 0, -1, false, {})
+            end)
+
+            vim.lsp.util.stylize_markdown(self.docs_window.buf, docs, { max_width = width })
         end
-        if #contents == 0 then
-            self.docs_window:close()
-            return
-        end
-        width = math.min(width, require("care.utils").longest(contents))
+
+        width = math.min(width, require("care.utils").longest(docs))
 
         local win_offset
         if position == "right" then
@@ -141,6 +141,9 @@ function Menu:draw_docs(entry)
             })
         end
 
+        vim.wo[self.docs_window.winnr][0].conceallevel = 2
+        vim.wo[self.docs_window.winnr][0].concealcursor = "n"
+
         self.docs_window:set_scroll(1, 1, false)
         self.docs_window:draw_scrollbar()
     end
@@ -158,7 +161,7 @@ function Menu:draw_docs(entry)
     else
         open_docs_window(entry)
     end
-end
+end, 10)
 
 local function preselect(menu)
     if not menu.config.preselect then
