@@ -1,5 +1,7 @@
 local async = {}
 
+local uv = vim.loop or vim.uv
+
 --- Returns a function which can be called to execute the callback
 --- After the first time executes earliest after `timeout` ms again
 ---@param fn function
