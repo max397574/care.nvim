@@ -65,10 +65,11 @@ function care_sources.complete(context, source, callback)
             }
         end
     elseif context.reason == 3 then
-        if vim.tbl_contains(source:get_trigger_characters(), last_char) then
+        local char_before = string.match(context.line_before_cursor, "(.)%s*$")
+        if vim.tbl_contains(source:get_trigger_characters(), char_before) then
             completion_context = {
                 triggerKind = 2,
-                triggerCharacter = last_char,
+                triggerCharacter = char_before,
             }
         else
             callback({})
