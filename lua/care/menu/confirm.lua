@@ -16,7 +16,9 @@ return function(entry)
     Log.log("Confirming Entry")
     Log.log("Completion item", function()
         local item = vim.deepcopy(entry.completion_item)
-        item.documentation = "<documentation>"
+        if item.documentation then
+            item.documentation = "<documentation>"
+        end
         return item
     end)
     Log.log("Entry context:", entry.context)
