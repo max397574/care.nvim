@@ -56,8 +56,12 @@
 --- indicates the visible position in the menu.
 ---
 --- This is really useful to create shortcuts to certain entries like in the
---- [example in configuration recipes](/configuration_recipes#labels-and-shortcuts).
+--- [Example usage](/configuration_recipes#labels-and-shortcuts).
 ---@field select_visible fun(index: integer): nil
 --- Indicated whether the menu is reversed
 --- Only relevant when using sorting direction "away-from-cursor"
 ---@field is_reversed fun(): boolean
+--- Get the documentation of the currently selected entry.
+--- Will return an empty table if no documentation is available.
+--- [Example usage](/configuration_recipes#access-documentation)
+---@field get_documentation fun(): string[]

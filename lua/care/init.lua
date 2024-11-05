@@ -34,7 +34,7 @@ care.api = {
         return care.core and care.core.menu and care.core.menu:docs_visible()
     end,
     get_documentation = function()
-        return care.core.menu:docs_visible()
+        return (care.core and care.core.menu and care.core.menu:docs_visible())
                 and vim.api.nvim_buf_get_lines(care.core.menu.docs_window.buf, 0, -1, false)
             or {}
     end,
