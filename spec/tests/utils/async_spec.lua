@@ -1,6 +1,32 @@
 ---@diagnostic disable: need-check-nil
 local async = require("care.utils.async")
 
+describe("Debounce", function()
+    local count
+    before_each(function()
+        count = 0
+    end)
+    local test_func = function()
+        count = count + 1
+    end
+    it("only calls once with two calls right after each other", function()
+        local fn = async.debounce(test_func, 100)
+        fn()
+        fn()
+        vim.wait(120, function() end)
+        assert.is.truthy(count == 1)
+    end)
+
+    it("can call second time after timeout", function()
+        local fn = async.debounce(test_func, 100)
+        fn()
+        vim.wait(105, function() end)
+        fn()
+        vim.wait(105, function() end)
+        assert.are.equal(2, count)
+    end)
+end)
+
 describe("Throttle", function()
     local count
     before_each(function()
