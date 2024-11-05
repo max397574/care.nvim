@@ -41,6 +41,44 @@ for i, label in ipairs(labels) do
         require("care").api.confirm()
     end)
 end
+
+```
+
+## Access Documentation
+
+You can use these function to access documentation. This e.g. allows to copy it
+to somewhere for reference or to click links in it easily.
+
+They have to be called while the documentation window of care is actually open.
+
+### Open in split
+
+This function opens the documentation in a split window.
+
+```lua
+local documentation = require("care").api.get_documentation()
+if #documentation == 0 then
+    return
+end
+local old_win = vim.api.nvim_get_current_win()
+vim.cmd.wincmd("s")
+local buf = vim.api.nvim_create_buf(false, true)
+vim.bo[buf].ft = "markdown"
+vim.api.nvim_buf_set_lines(buf, 0, -1, false, documentation)
+vim.api.nvim_win_set_buf(0, buf)
+vim.api.nvim_set_current_win(old_win)
+```
+
+### Copy to clipboard
+
+This function copies the documentation to the clipboard (or any other register).
+
+```lua
+local documentation = require("care").api.get_documentation()
+if #documentation == 0 then
+    return
+end
+vim.fn.setreg("+", table.concat(documentation, "\n"))
 ```
 
 ## Manual completion like builtin neovim
