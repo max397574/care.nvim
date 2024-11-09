@@ -24,9 +24,7 @@ Completion And Recommendation Engine for Neovim
 
 </div>
 
-## Features
-
-# ✨ Features
+## ✨ Features
 
 - Fully configurable menu
 - API for keybindings and various utilities
