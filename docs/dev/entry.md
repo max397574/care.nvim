@@ -51,6 +51,11 @@ Gets the range for inserting the entry (insert of InsertReplaceEdit)
 `entry:_get_default_range(): lsp.Range`
 
 Gets the default range for entry (if there is no textEdit)
+
+## Get Documentation
+`entry:get_documentation(string?`
+
+Gets the documentation for an entry. This includes adding the detail.
 # Fields
 
 ## Completion Item
