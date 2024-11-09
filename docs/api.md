@@ -96,10 +96,17 @@ end
 This function is used to select the entry at index `index` where `index`
 indicates the visible position in the menu.
 This is really useful to create shortcuts to certain entries like in the
-[example in configuration recipes](/configuration_recipes#labels-and-shortcuts).
+[Example usage](/configuration_recipes#labels-and-shortcuts).
 
 ## Is Reversed
 `api.is_reversed(): boolean`
 
 Indicated whether the menu is reversed
 Only relevant when using sorting direction "away-from-cursor"
+
+## Get Documentation
+`api.get_documentation(): string[]`
+
+Get the documentation of the currently selected entry.
+Will return an empty table if no documentation is available.
+[Example usage](/configuration_recipes#access-documentation)
