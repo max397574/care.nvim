@@ -170,33 +170,37 @@ end
 
 function Entry:get_documentation()
     local completion_item = self.completion_item
-    local documentation = completion_item.documentation
-    ---@diagnostic disable-next-line: param-type-mismatch
-    local documentation_text = vim.trim(type(documentation) == "table" and documentation.value or documentation or "")
-    if (documentation_text):match("^%s*$") and (completion_item.detail or ""):match("^%s*$") then
-        return nil, nil
+
+    local documents = {}
+
+    if completion_item.detail and completion_item.detail ~= "" then
+        local ft = vim.bo.ft
+        table.insert(documents, {
+            kind = "markdown",
+            value = ("```%s\n%s\n```"):format(ft, vim.trim(completion_item.detail)),
+        })
     end
-    local format = "markdown"
-    local contents
-    if documentation_text ~= "" then
-        if type(documentation) == "table" and documentation.kind == "plaintext" then
-            format = "plaintext"
-            contents = vim.split(documentation.value or "", "\n", { trimempty = true })
-        else
-            contents = vim.lsp.util.convert_input_to_markdown_lines(documentation_text)
+
+    local docs = completion_item.documentation
+    if type(docs) == "string" and vim.trim(docs) ~= "" then
+        table.insert(documents, {
+            kind = "plaintext",
+            value = vim.trim(docs),
+        })
+    elseif type(docs) == "table" and #docs.value > 0 then
+        if docs.value ~= "" then
+            table.insert(documents, {
+                kind = docs.kind,
+                value = vim.trim(docs.value),
+            })
         end
     end
 
-    if completion_item.detail and completion_item.detail ~= "" then
-        if not contents then
-            contents = {}
-        end
-        table.insert(contents, 1, vim.trim(completion_item.detail))
-        if documentation_text ~= "" then
-            table.insert(contents, 2, "---")
-        end
+    if #documents == 2 then
+        documents[1].value = documents[1].value .. "\n---"
     end
-    return contents, format
+
+    return vim.lsp.util.convert_input_to_markdown_lines(documents)
 end
 
 return Entry
