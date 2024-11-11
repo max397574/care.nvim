@@ -31,6 +31,7 @@
     -   [Bottom-up sorting](https://max397574.github.io/care.nvim/config#sorting-direction)
         and
         [keybindings for it](https://max397574.github.io/care.nvim/configuration_recipes/#reverse-keybindings-for-reversed-menu)
+    -   [Integrations with various icon providers](https://max397574.github.io/care.nvim/configuration_recipes/#integrations-for-icons)
 
 # 🚀 Getting started
 
