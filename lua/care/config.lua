@@ -86,6 +86,35 @@ function config.setup(opts)
     else
         config.options = vim.tbl_deep_extend("force", config.options, opts or {})
     end
+
+    if type(config.options.ui.type_icons) == "string" then
+        if config.options.ui.type_icons == "mini.icons" then
+            ---@diagnostic disable-next-line: undefined-field
+            if not _G.MiniIcons then
+                vim.notify("[care.nvim] Using an unavailable source ui.type_icons (mini.icons)", vim.log.levels.WARN)
+                config.options.ui.type_icons = config.defaults.ui.type_icons
+                return
+            end
+            local icons = {}
+            ---@diagnostic disable-next-line: param-type-mismatch
+            for name, _ in pairs(config.defaults.ui.type_icons) do
+                icons[name] = _G.MiniIcons.get("lsp", string.lower(name))
+            end
+            config.options.ui.type_icons = icons
+        elseif config.options.ui.type_icons == "lspkind" then
+            local ok, lsp_kind = pcall(require, "lspkind")
+            if not ok then
+                vim.notify("[care.nvim] Using an unavailable source ui.type_icons (lspkind)", vim.log.levels.WARN)
+                config.options.ui.type_icons = config.defaults.ui.type_icons
+                return
+            else
+                config.options.ui.type_icons = lsp_kind.symbol_map
+            end
+        else
+            vim.notify("[care.nvim] Using an invalid string value for ui.type_icons", vim.log.levels.WARN)
+            config.options.ui.type_icons = config.defaults.ui.type_icons
+        end
+    end
 end
 
 config.setup({})

@@ -85,7 +85,7 @@
 --- window. It also has a field to define the character used for the scrollbar.
 ---@field docs_view? care.config.ui.docs
 --- This is a table which defines the different icons.
----@field type_icons? care.config.ui.type_icons
+---@field type_icons? care.config.ui.type_icons|string
 --- Configuration of ghost text.
 ---@field ghost_text? care.config.ui.ghost_text
 
