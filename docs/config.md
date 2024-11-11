@@ -28,6 +28,7 @@ config.defaults = {
             border = "rounded",
             scrollbar = { enabled = true, character = "┃", offset = 0 },
             position = "auto",
+            advanced_styling = false,
         },
         type_icons = {
             Class = "󰠱",
@@ -376,6 +377,13 @@ Configuration of the scrollbar
 
 Position of docs view.
 Auto will prefer right if there is enough space
+
+## Advanced Styling
+`config.ui.docs.advanced_styling? boolean`
+
+Use advanced styling for the documentation.
+This will use treesitter to make the menu prettier which comes with quite a big
+performance cost though.
 
 Additional data passed to format function to allow more advanced formatting
 # `care.format_data`
