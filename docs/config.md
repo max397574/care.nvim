@@ -223,7 +223,7 @@ of some basic window properties like the border and the maximum height of the
 window. It also has a field to define the character used for the scrollbar.
 
 ## Type Icons
-`config.ui.type_icons? care.config.ui.type_icons`
+`config.ui.type_icons? care.config.ui.type_icons|string`
 
 This is a table which defines the different icons.
 

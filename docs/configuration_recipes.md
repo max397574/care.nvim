@@ -81,6 +81,44 @@ end
 vim.fn.setreg("+", table.concat(documentation, "\n"))
 ```
 
+## Integrations for icons
+
+There are various integrations with different plugins for icons in care.nvim
+
+### Mini.icons
+
+Install mini.icons as described in
+[the readme](https://github.com/echasnovski/mini.icons/tree/main). (Don't forget
+to call `require"mini.icons".setup()`!).
+
+Then use the following configuration for care.
+
+```lua
+require("care").setup({
+    ui = {
+        type_icons = "mini.icons"
+    }
+})
+```
+
+Mini.icons also allows you to use ascii icons by using `{ style = "ascii" }` in
+the setup.
+
+### Lspkind.nvim
+
+Install lspkind.nvim as described in
+[the readme](https://github.com/onsails/lspkind.nvim/tree/master).
+
+Then use the following configuration for care.
+
+```lua
+require("care").setup({
+    ui = {
+        type_icons = "lspkind"
+    }
+})
+```
+
 ## Manual completion like builtin neovim
 
 You can use filters to only complete certain sources. This can be used to create
