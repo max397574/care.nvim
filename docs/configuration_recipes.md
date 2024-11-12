@@ -239,3 +239,48 @@ config = function()
     end)
 end,
 ```
+
+## Common Configurations
+
+### Luasnip and friendly-snippets
+
+-   Optional: Install
+    [friendly-snippets](https://github.com/rafamadriz/friendly-snippets)
+-   Install [LuaSnip](https://github.com/L3MON4D3/LuaSnip)
+-   Install [care-cmp](https://github.com/max397574/care-cmp)
+-   Install [cmp_luasnip](https://github.com/saadparwaiz1/cmp_luasnip)
+
+<details>
+<summary>Lazy.nvim Example</summary>
+
+```lua
+{
+    "max397574/care.nvim",
+    dependencies = {
+        "max397574/care-cmp",
+        "saadparwaiz1/cmp_luasnip",
+        "rafamadriz/friendly-snippets",
+        "L3MON4D3/LuaSnip",
+    },
+    config = function()
+        ...
+    end
+}
+```
+
+</details>
+
+Then you can use the following configuration to use luasnip for snippet
+completion and to load the friendly-snippets snippets.
+
+```lua
+config = function()
+    require("luasnip.loaders.from_vscode").lazy_load()
+    require("care").setup({
+        snippet_expansion = function(body)
+            require("luasnip").lsp_expand(body)
+        end,
+        ...
+    })
+end
+```
