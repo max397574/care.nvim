@@ -53,6 +53,28 @@ return function(entry)
     local is_snippet = completion_item.insertTextFormat == 2
     local snippet_text
 
+    -- Integrates nvim-autopairs with care.nvim
+    if config.integration.autopairs then
+        local autopairs = require("nvim-autopairs")
+        local rules = autopairs.get_rules("(")
+        local handlers = require("nvim-autopairs.completion.handlers")
+        local is_function, is_method = completion_item.kind == 3, completion_item.kind == 2
+        local lisp_filetypes = { clojure = true, clojurescript = true, fennel = true, janet = true }
+        local is_lisp = lisp_filetypes[vim.bo.ft] == true
+        local is_python = vim.bo.ft == "python"
+        local buf = vim.api.nvim_get_current_buf()
+
+        if is_function or is_method then
+            if is_lisp then
+                handlers.lisp("(", completion_item, buf)
+            elseif is_python then
+                handlers.python("(", completion_item, buf, rules)
+            else
+                handlers["*"]("(", completion_item, buf, rules)
+            end
+        end
+    end
+
     if not completion_item.textEdit then
         ---@diagnostic disable-next-line: missing-fields
         completion_item.textEdit = {

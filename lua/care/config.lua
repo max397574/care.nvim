@@ -58,6 +58,7 @@ config.defaults = {
             position = "overlay",
         },
     },
+    integration = { autopairs = false },
     snippet_expansion = function(snippet_body)
         vim.snippet.expand(snippet_body)
     end,

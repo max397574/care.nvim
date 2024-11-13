@@ -177,6 +177,11 @@
 --- performance cost though.
 ---@field advanced_styling? boolean
 
+--- Configuration of integrations with other plugin
+---@class care.config.integration
+--- Enables the autopairs integration (default false)
+---@field autopairs? boolean
+
 --- Additional data passed to format function to allow more advanced formatting
 ---@class care.format_data
 --- Index of the entry in the completion menu
