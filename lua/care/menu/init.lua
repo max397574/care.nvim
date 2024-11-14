@@ -108,7 +108,20 @@ Menu.draw_docs = require("care.utils.async").throttle(function(self, entry)
                 vim.api.nvim_buf_set_lines(self.docs_window.buf, 0, -1, false, {})
             end)
 
-            vim.lsp.util.stylize_markdown(self.docs_window.buf, docs, { max_width = width })
+            local stylize_markdown = function(bufnr, contents, opts)
+                local new_contents = {}
+
+                -- Filter out links/anchors
+                for _, line in ipairs(contents) do
+                    -- Remove markdown links like [text](url) and ![text](url)
+                    local cleaned_line = line:gsub("!?%b[]%b()", "")
+                    table.insert(new_contents, cleaned_line)
+                end
+
+                return vim.lsp.util.stylize_markdown(bufnr, new_contents, opts)
+            end
+
+            stylize_markdown(self.docs_window.buf, docs, { max_width = width })
         end
 
         width = math.min(width, require("care.utils").longest(docs))
