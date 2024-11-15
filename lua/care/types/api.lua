@@ -61,3 +61,6 @@
 --- Indicated whether the menu is reversed
 --- Only relevant when using sorting direction "away-from-cursor"
 ---@field is_reversed fun(): boolean
+--- Sets an event listener.
+--- Registers an event with the specified callback function.
+---@field set_event fun(event: string, callback: fun()): nil

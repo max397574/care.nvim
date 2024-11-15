@@ -55,6 +55,9 @@ care.api = {
     is_reversed = function()
         return care.core.menu.reversed
     end,
+    set_event = function (event, callback)
+        require("care.utils.events"):on(event, callback)
+    end
 }
 
 ---@param options? care.config
