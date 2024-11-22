@@ -105,5 +105,5 @@ snippet to your config.
 
 ## Development
 
-See the [devloper documentation](./dev) for more information about the code and
+See the [developer documentation](./dev) for more information about the code and
 developing sources.
