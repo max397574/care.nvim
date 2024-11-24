@@ -31,7 +31,7 @@ function Core:complete(reason, source_filter)
     self.context.reason = reason
     local offset = self.context.cursor.col
     for i, source in ipairs(sources) do
-        if source.source.is_available() and source:is_enabled() then
+        if source.source:is_available() and source:is_enabled() then
             require("care.sources").complete(self.context, source, function(items, is_incomplete)
                 source.incomplete = is_incomplete or false
                 source.entries = items

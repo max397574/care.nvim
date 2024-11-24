@@ -16,7 +16,7 @@
 ---
 --- This function will be called quite often so developers should try to keep it more or less
 --- performant. This won't be an issue in the vast majority of cases though.
----@field is_available? fun(): boolean
+---@field is_available? fun(self: care.source): boolean
 --- This is a function used to get additional details for completion items. This is especially
 --- important for the lsp source which needs to send the `completionItem/resolve` request.
 --- Resolving completion items is used for performance reasons so e.g. the documentation for an item
