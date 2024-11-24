@@ -11,7 +11,7 @@ The sources are used to get get completions for care.nvim.
 # Methods
 
 ## Is Available
-`source.is_available?(): boolean`
+`source:is_available?(): boolean`
 
 Each source can have a function to show whether it's available or not. If your source should
 for example be enabled for a certain filetype you can just do it like this:
