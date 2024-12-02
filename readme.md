@@ -24,7 +24,7 @@
 -   Well documented source code
     ([developer documentation](https://max397574.github.io/care.nvim/dev/))
 -   Many QoL features for UX and extensibility
-    -   [Shortcuts and lables to select entries](https://max397574.github.io/care.nvim/configuration_recipes#labels-and-shortcuts)
+    -   [Shortcuts and labels to select entries](https://max397574.github.io/care.nvim/configuration_recipes#labels-and-shortcuts)
     -   [Extensive API](https://max397574.github.io/care.nvim/api)
     -   [Access documentation](https://max397574.github.io/care.nvim/configuration_recipes/#access-documentation)
     -   [Usage like builtin completion](https://max397574.github.io/care.nvim/configuration_recipes/#manual-completion-like-builtin-neovim)
