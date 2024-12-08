@@ -57,4 +57,17 @@ function PresetUtils.kind_highlight(entry, style)
     return style == "fg" and ("@care.type.fg.%s"):format(entry_kind) or ("@care.type.blended.%s"):format(entry_kind)
 end
 
+function PresetUtils.get_label_detail(entry)
+    local label_detail = ""
+    if entry.completion_item.labelDetails then
+        if entry.completion_item.labelDetails.detail then
+            label_detail = label_detail .. entry.completion_item.labelDetails.detail
+        end
+        if entry.completion_item.labelDetails.description then
+            label_detail = label_detail .. entry.completion_item.labelDetails.description
+        end
+    end
+    return label_detail
+end
+
 return PresetUtils

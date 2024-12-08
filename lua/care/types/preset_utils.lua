@@ -13,3 +13,6 @@
 --- With this function you can get the kind highlight group for a specific entry. The style can either be foreground
 --- or blended.
 ---@field kind_highlight fun(entry: care.entry, style: "fg"|"blended"): string
+--- Gets the label detail if provided by the language serve.
+--- This is equivalent to the `vim_item.menu` from nvim-cmp
+---@field get_label_detail fun(entry: care.entry): string
