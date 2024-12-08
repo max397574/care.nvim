@@ -38,3 +38,11 @@ See [care.entry](/dev/entry)
 
 With this function you can get the kind highlight group for a specific entry. The style can either be foreground
 or blended.
+
+## Get Label Detail
+`preset_utils.get_label_detail(entry: care.entry): string`
+
+See [care.entry](/dev/entry)
+
+Gets the label detail if provided by the language serve.
+This is equivalent to the `vim_item.menu` from nvim-cmp
