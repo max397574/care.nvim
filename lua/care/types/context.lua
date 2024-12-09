@@ -25,7 +25,7 @@
 --- The complete line on which the cursor was when the context was created.
 ---@field line string
 --- The line before the cursor. This is mostly important to be correct in insert
---- mode. In normal mode the character on which the cursor is is not included.
+--- mode. In normal mode the character on which the cursor is not included.
 ---@field line_before_cursor string
 
 --- A cursor position

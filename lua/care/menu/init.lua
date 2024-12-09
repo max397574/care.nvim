@@ -152,7 +152,7 @@ Menu.draw_docs = require("care.utils.async").throttle(function(self, entry)
         entry.source.source:resolve_item(entry.completion_item, function(resolved_item)
             entry.completion_item = resolved_item
             -- TODO: perhaps better solution for this?, e.g. cancel callback?
-            -- Required to not run into issues when closing immediatelly after selection
+            -- Required to not run into issues when closing immediately after selection
             if not self.menu_window:is_open() then
                 return
             end
