@@ -5,7 +5,7 @@ description: Type description of care.source
 
 # Source
 
-The sources are used to get get completions for care.nvim.
+The sources are used to get completions for care.nvim.
 # `care.source`
 
 # Methods

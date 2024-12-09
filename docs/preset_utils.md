@@ -13,7 +13,7 @@ This module contains lower level utilities for the presets and the preset compon
 ## Label Entries
 `preset_utils.label_entries(labels: string[]): fun(_,data: care.format_data): string`
 
-This function can be used to get a function to label the entries with shortscuts as [described
+This function can be used to get a function to label the entries with shortcuts as [described
 here](/configuration_recipes#labels-and-shortcuts).
 
 ## Get Color
@@ -29,7 +29,7 @@ completion item.
 
 This function allows to get a highlight group for a certain hex color code. This is useful because like that the
 user doesn't have to constantly create new highlight groups to apply a hex value to a certain thing. The
-highlight group will have the hex value as foregroung color.
+highlight group will have the hex value as foreground color.
 
 ## Kind Highlight
 `preset_utils.kind_highlight(entry: care.entry, style: "fg"|"blended"): string`
@@ -44,5 +44,5 @@ or blended.
 
 See [care.entry](/dev/entry)
 
-Gets the label detail if provided by the language serve.
+Gets the label detail if provided by the language server.
 This is equivalent to the `vim_item.menu` from nvim-cmp

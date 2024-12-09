@@ -204,7 +204,7 @@ The default value is 200 which will open the menu instantly in most cases so the
 isn't much need for a lower value.
 Values of up to about 1000 should also not cause performance issue.
 
-# Ui Configuration
+# UI Configuration
 This is used to configure the whole UI of care.
 # `care.config.ui`
 
@@ -272,7 +272,7 @@ sections which are represented by tables and can have a different alignment
 each. This is specified with another field which takes a table with the
 alignment of each section.
 For example you want to have the label of an entry in a red highlight and an
-icon in a entry-kind specific color left aligned first and then the source of
+icon in an entry-kind specific color left aligned first and then the source of
 the entry right aligned in blue. You could do that like this:
 ```lua
 format_entry = function(entry)

@@ -85,4 +85,4 @@ the last time. This is used to determine when to reopen the completion window.
 `core.completing boolean`
 
 Boolean to indicate if care is currently completing. This is used to avoid
-compmleting and sorting on the same keystroke.
+completing and sorting on the same keystroke.
