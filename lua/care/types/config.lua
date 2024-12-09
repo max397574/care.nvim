@@ -75,7 +75,7 @@
 --- Values of up to about 1000 should also not cause performance issue.
 ---@field max_view_entries? integer
 
---- # Ui Configuration
+--- # UI Configuration
 --- This is used to configure the whole UI of care.
 ---@class care.config.ui
 --- Configuration of the completion menu of care.nvim
@@ -122,7 +122,7 @@
 --- alignment of each section.
 ---
 --- For example you want to have the label of an entry in a red highlight and an
---- icon in a entry-kind specific color left aligned first and then the source of
+--- icon in an entry-kind specific color left aligned first and then the source of
 --- the entry right aligned in blue. You could do that like this:
 ---
 --- ```lua

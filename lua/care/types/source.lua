@@ -1,4 +1,4 @@
---- The sources are used to get get completions for care.nvim.
+--- The sources are used to get completions for care.nvim.
 ---@class care.source
 --- The `name` field is used for configuring the source. It should just contain characters, `_`, and `-`.
 ---@field name string

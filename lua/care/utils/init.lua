@@ -1,6 +1,6 @@
 local utils = {}
 
---- Gets lenght of longest string of an array
+--- Gets length of longest string of an array
 ---@param lines table<string>
 ---@return number
 function utils.longest(lines)
