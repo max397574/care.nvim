@@ -99,7 +99,7 @@ function lsp_source.new(client)
             end)
         end,
         get_trigger_characters = function()
-            return client.server_capabilities.completionProvider.triggerCharacters
+            return client.server_capabilities.completionProvider.triggerCharacters or {}
         end,
         is_available = function()
             return not client.is_stopped()
