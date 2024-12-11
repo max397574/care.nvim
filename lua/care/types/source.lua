@@ -28,7 +28,7 @@
 --- An example for this could be `.`, `\\` and `/` when working with paths.
 ---
 --- ```lua
---- function my_source:get_trigger_characters(self)
+--- function my_source:get_trigger_characters()
 ---     return { ".", "\\", "/" }
 --- end
 --- ```
