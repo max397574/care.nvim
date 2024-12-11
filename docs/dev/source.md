@@ -32,14 +32,14 @@ Resolving completion items is used for performance reasons so e.g. the documenta
 doesn't always have to be sent.
 
 ## Get Trigger Characters
-`source.get_trigger_characters?(): string[]`
+`source:get_trigger_characters?(): string[]`
 
 This function should return characters which trigger completion for the source. If one of those
 characters is types the completion will be retriggered. Otherwise newly entered characters are
 used for sorting and filtering.
 An example for this could be `.`, `\\` and `/` when working with paths.
 ```lua
-function my_source.get_trigger_characters()
+function my_source:get_trigger_characters()
     return { ".", "\\", "/" }
 end
 ```
