@@ -39,7 +39,7 @@ end
 function Source:get_trigger_characters()
     local trigger_characters = {}
     if self.source.get_trigger_characters then
-        return self.source.get_trigger_characters()
+        return self.source:get_trigger_characters()
     end
     return trigger_characters
 end

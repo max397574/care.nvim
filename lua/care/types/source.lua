@@ -28,11 +28,11 @@
 --- An example for this could be `.`, `\\` and `/` when working with paths.
 ---
 --- ```lua
---- function my_source.get_trigger_characters()
+--- function my_source:get_trigger_characters()
 ---     return { ".", "\\", "/" }
 --- end
 --- ```
----@field get_trigger_characters? fun(): string[]
+---@field get_trigger_characters? fun(self: care.source): string[]
 --- The keyword pattern is used to overwrite the keyword pattern from the config per source. It
 --- should basically represent the format of entries the source will provide as regex.
 ---@field keyword_pattern? string
