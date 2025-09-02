@@ -73,6 +73,55 @@ return function(entry)
 
     vim.lsp.util.apply_text_edits({ completion_item.textEdit }, cur_ctx.bufnr, "utf-16")
 
+    -- get dot-repeat to work
+    -- TODO: works, but some issues with ghost text no properly cleaned up
+    if false then
+        local og_setting = vim.opt.eventignore
+        vim.opt.eventignore = "all"
+
+        local og_buf = entry.context.bufnr
+        local buf = vim.api.nvim_create_buf(false, true)
+        vim.api.nvim_win_set_buf(0, buf)
+
+        local text = ""
+
+        if not is_snippet then
+            text = completion_item.textEdit.newText
+        else
+            -- TODO: replace with stable api once available
+            local ok, parsed = pcall(vim.lsp._snippet_grammar.parse, snippet_text)
+            if ok then
+                local parsed_text = tostring(parsed)
+                -- TODO: perhaps change?
+                if parsed_text == snippet_text then
+                    text = parsed_text
+                end
+            end
+        end
+
+        vim.cmd(vim.keycode([[normal! a<c-\><c-o>]]))
+
+        vim.api.nvim_paste(text, false, -1)
+
+        -- local chars_to_delete = cur_ctx.cursor.col - entry:get_offset() + 1
+        -- vim.api.nvim_buf_set_text(0, 0, 0, 0, 0, { "_" .. string.rep("a", chars_to_delete) })
+        -- vim.api.nvim_win_set_cursor(0, { 1, chars_to_delete + 1 })
+        --
+        -- local saved_completeopt = vim.opt.completeopt
+        -- local saved_shortmess = vim.o.shortmess
+        -- vim.opt.completeopt = ""
+        -- if not vim.o.shortmess:match("c") then
+        --     vim.o.shortmess = vim.o.shortmess .. "c"
+        -- end
+        -- vim.fn.complete(1, { "_" .. text })
+        -- vim.opt.completeopt = saved_completeopt
+        -- vim.o.shortmess = saved_shortmess
+        -- vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-x><C-z>", true, true, true), "in", false)
+
+        vim.opt.eventignore = og_setting
+        vim.api.nvim_win_set_buf(0, og_buf)
+    end
+
     local start = completion_item.textEdit.range.start
     if is_snippet then
         vim.api.nvim_win_set_cursor(0, { start.line + 1, start.character })

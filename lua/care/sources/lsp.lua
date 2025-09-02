@@ -101,8 +101,8 @@ function lsp_source.new(client)
         get_trigger_characters = function()
             return client.server_capabilities.completionProvider.triggerCharacters or {}
         end,
-        is_available = function()
-            return not client.is_stopped()
+        is_available = function(_, context)
+            return (not client:is_stopped()) and vim.lsp.buf_is_attached(context.bufnr, client.id)
         end,
         resolve_item = client.server_capabilities.completionProvider.resolveProvider and function(_, item, callback)
             client.request(vim.lsp.protocol.Methods.completionItem_resolve, item, function(err, result)
