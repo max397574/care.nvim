@@ -4,34 +4,42 @@
 
 # care.nvim
 
+## Project Status
+
+The project should be usable as-is. I used it daily for nearly a year (currently
+using another completion engine). I don't currently have the time to work on
+this, but might pick this up again in the future. So you can't expect any
+updates, fixes, or quick responses to issues (I'll try to take a look if
+something pops up in my inbox, but can't guarantee anything).
+
 [Documentation Website](https://max397574.github.io/care.nvim/)
 
 </div>
 
 # ✨ Features
 
--   Fully configurable menu
--   API for keybindings and various utilities
--   [Different presets](https://max397574.github.io/care.nvim/presets) for the
-    menu
--   [Components](https://max397574.github.io/care.nvim/preset_components) and
-    [utilities](https://max397574.github.io/care.nvim/preset_utils) for easy
-    configuration of menu
--   Compatibility with nvim-cmp sources with
-    [care-cmp](https://github.com/max397574/care-cmp)
--   Really fast performance (can draw thousands of items per keystroke without
-    problems)
--   Well documented source code
-    ([developer documentation](https://max397574.github.io/care.nvim/dev/))
--   Many QoL features for UX and extensibility
-    -   [Shortcuts and labels to select entries](https://max397574.github.io/care.nvim/configuration_recipes#labels-and-shortcuts)
-    -   [Extensive API](https://max397574.github.io/care.nvim/api)
-    -   [Access documentation](https://max397574.github.io/care.nvim/configuration_recipes/#access-documentation)
-    -   [Usage like builtin completion](https://max397574.github.io/care.nvim/configuration_recipes/#manual-completion-like-builtin-neovim)
-    -   [Bottom-up sorting](https://max397574.github.io/care.nvim/config#sorting-direction)
-        and
-        [keybindings for it](https://max397574.github.io/care.nvim/configuration_recipes/#reverse-keybindings-for-reversed-menu)
-    -   [Integrations with various icon providers](https://max397574.github.io/care.nvim/configuration_recipes/#integrations-for-icons)
+- Fully configurable menu
+- API for keybindings and various utilities
+- [Different presets](https://max397574.github.io/care.nvim/presets) for the
+  menu
+- [Components](https://max397574.github.io/care.nvim/preset_components) and
+  [utilities](https://max397574.github.io/care.nvim/preset_utils) for easy
+  configuration of menu
+- Compatibility with nvim-cmp sources with
+  [care-cmp](https://github.com/max397574/care-cmp)
+- Really fast performance (can draw thousands of items per keystroke without
+  problems)
+- Well documented source code
+  ([developer documentation](https://max397574.github.io/care.nvim/dev/))
+- Many QoL features for UX and extensibility
+    - [Shortcuts and labels to select entries](https://max397574.github.io/care.nvim/configuration_recipes#labels-and-shortcuts)
+    - [Extensive API](https://max397574.github.io/care.nvim/api)
+    - [Access documentation](https://max397574.github.io/care.nvim/configuration_recipes/#access-documentation)
+    - [Usage like builtin completion](https://max397574.github.io/care.nvim/configuration_recipes/#manual-completion-like-builtin-neovim)
+    - [Bottom-up sorting](https://max397574.github.io/care.nvim/config#sorting-direction)
+      and
+      [keybindings for it](https://max397574.github.io/care.nvim/configuration_recipes/#reverse-keybindings-for-reversed-menu)
+    - [Integrations with various icon providers](https://max397574.github.io/care.nvim/configuration_recipes/#integrations-for-icons)
 
 # 🚀 Getting started
 
@@ -46,9 +54,9 @@ You can find more detailed installation instructions on the website
 
 # 📆 Planned features
 
--   More integrations with existing ecosystem (e.g. mini.icons and lspkind)
--   UI for configuration and overview e.g. over sources
--   Cmdline Completion (relatively low priority)
+- More integrations with existing ecosystem (e.g. mini.icons and lspkind)
+- UI for configuration and overview e.g. over sources
+- Cmdline Completion (relatively low priority)
 
 # Support
 
@@ -58,14 +66,13 @@ Every support motivates me to continue working on my open source projects.
 
 # Credits
 
--   [MariaSolOs](https://github.com/MariaSolOs) for work in core and core in
-    general
+- [MariaSolOs](https://github.com/MariaSolOs) for work in core and core in
+  general
 
--   [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) was a big inspiration for
-    this
+- [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) was a big inspiration for this
 
--   [mfussenegger](https://github.com/mfussenegger) for helping me out with my
-    beginner questions
+- [mfussenegger](https://github.com/mfussenegger) for helping me out with my
+  beginner questions
 
--   [mrcjkb](https://github.com/mrcjkb) for helping me out with test
-    infrastructure and luarocks setup
+- [mrcjkb](https://github.com/mrcjkb) for helping me out with test
+  infrastructure and luarocks setup
